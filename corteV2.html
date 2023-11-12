@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Máquina de Cortes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d4d4d4;
+    }
+    #banner {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    #menu {
+      background-color: #1d1c1c;
+      color: white;
+      text-align: center;
+    }
+    #menu button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #content,#formHorizontal {
+      display: none;
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    input[type='number'] {
+      width: 100px;
+      padding: 5px;
+    }
+    #submit-button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id='banner'>
+    <h2>Control de Maquina de Cortes</h2>
+  </div>
+  <div id='menu'>
+    <button onclick='showForm(1)'>Corte Vertical</button>
+    <button onclick='HorizontalOptions()'>Corte Horizontal</button>
+    <button onclick='formModoProlijo()'>Modo Prolijo</button>
+    <button onclick='showForm(4)'>Velocidad</button>
+    <button onclick='showForm(5)'>Cargar Placa</button>
+    <button onclick='showForm(6)'>Estado actual</button>
+    <button onclick='showForm(7)'>Modo Rebaje H</button>
+    <button onclick='showForm(8)'>Menu configuracion</button>
+    <button onclick='showForm(9)'>Reinicar carros</button>
+    <button onclick='showForm(10)'>Reset</button>
+  </div>
+
+  <div id='content'>
+    <form action='/corte' method='POST' id='corteForm'>
+      <input type='number' name='valor' step='0.01' placeholder='Ingrese un valor numérico' id='valor_input'>
+      <input type='hidden' name='accion' id='accion_input'>
+      <button type='submit' name='enviar' value='Enviar' onclick='sendValue()'>OK</button>
+    </form>
+  </div>
+
+  <div id="horizontalOptions" style="display: none;">
+    <button onclick='showCorteOption("Desde Arriba")'>Desde Arriba</button>
+    <button onclick='showCorteOption("Desde Abajo")'>Desde Abajo</button>
+    <button onclick='showCorteOption("Sobre Regla Media")'>Sobre Regla Media</button>
+  </div>
+
+  <div id="formModoProlijo" style="display: none;">
+    <button onclick='showCorteOption("1 pasada de sierra")'>Desde Arriba</button>
+    <button onclick='showCorteOption("2 pasadas de sierra")'>Desde Abajo</button>
+  </div>
+
+  <script>
+    function showForm(option) {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'block';
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+    }
+
+    function formModoProlijo() {
+      formModoProlijo();
+      const ModoProlijoOptions = document.getElementById('ModoProlijoOptions');
+      ModoProlijoOptions.style.display = 'block';
+    }
+
+    function showHorizontalOptions() {
+      horizontalOptions();
+      const horizontalOptions = document.getElementById('horizontalOptions');
+      horizontalOptions.style.display = 'block';
+    }
+
+    function showCorteOption(option) {
+      const valorInput = document.getElementById('valor_input');
+      valorInput.placeholder = `Ingrese un valor numérico para ${option}`;
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+    }
+
+    function sendValue() {
+      const valorInput = document.getElementById('valor_input');
+      const valor = valorInput.value;
+      const accionInput = document.getElementById('accion_input');
+      const option = accionInput.value;
+      console.log(`Valor: ${valor}, Opción: ${option}`);
+      // Envía los datos por serial aquí (puedes agregar tu lógica aquí)
+
+      // Limpia el campo de valor y vuelve a ocultar el formulario
+      valorInput.value = '';
+      formModoProlijo();
+    }
+  </script>
+</body>
+</html>

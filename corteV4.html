@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maquina de Cortes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+    }
+    #banner {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    #menu {
+      background-color: #1d1c1c;
+      color: white;
+      text-align: center;
+    }
+    #menu button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #menu2 {
+      background-color: #4d4d4d;
+      color: rgb(146, 146, 146);
+      text-align: center;
+    }
+    #menu2 button {
+      background-color: #363636;
+      color: rgb(207, 206, 206);
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #content,#formHorizontal,#horizontalOptions, #formModoProlijo, #formModoVelocidad, #horizontalReglamediaOptions {
+      display: none;
+      background-color: #686868;
+      padding: 10px;
+      text-align: center;
+    }
+    input[type='number'] {
+      width: 300px;
+      padding: 15px;
+    }
+    #submit-button {
+      background-color: #444;
+      color: rgb(106, 201, 98);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id='banner'>
+    <h2>Seccionadora Vertical</h2>
+  </div>
+  <div id='menu'>
+    <button onclick='Apagoreglamedia(26),showForm(1)'>Corte Vertical</button>
+    <button onclick='showHorizontalOptions()'>Corte Horizontal</button>
+  </div>
+
+  <div id='menu2'>
+    <button onclick='showModoProlijo()'>Modo Prolijo</button>
+    <button onclick='formModoVelocidad()'>Velocidad</button>
+    <button onclick='sendoptionForm(5)'>Cargar Placa</button>
+     <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='sendoptionForm(6)'>Estado actual</button>
+    <button onclick='sendoptionForm()'>Modo Rebaje H</button>
+    <button onclick='sendoptionForm(8)'>Menu configuracion</button>
+    <button onclick='sendoptionForm(0)'>Reinicar carros</button>
+    <button onclick='sendoptionForm(9)'>Reset</button>
+  </div>
+
+  <div id='content'>  <!-- de esto solo entiendo que se hace un post a /corte y despues se ejecuta sendvalue. -->
+    <form action='/corte' method='POST' id='corteForm'>
+      <input type='number' name='valor' step='0.01' placeholder='Ingrese la medida' id='valor_input'>
+      <input type='hidden' name='accion' id='accion_input'>
+      <button type='submit' name='enviar' value='Enviar' onclick='sendValue()'>OK</button>
+    </form>
+  </div>
+
+  <div id="horizontalOptions">
+    <button onclick='Apagoreglamedia(26),showForm(21) '>Desde Abajo</button>
+    <button onclick='Apagoreglamedia(26),showForm(22)'>Desde Arriba</button> 
+    <!-- aca hay que hacer funciones que envien solo los valores option y luego permitan ingresar luego omgrear el numero en el cuadro -->
+    <button onclick='showhorizontalReglamediaOptions(25)'>Sobre Regla Media</button>
+  </div>
+
+  <div id="horizontalReglamediaOptions">
+    <button onclick='showForm(23)'>Desde Regla</button>
+    <button onclick='showForm(24)'>Desde Arriba</button> 
+  </div>
+
+  <div id="formModoProlijo">
+    <button onclick='sendoptionForm(31)'>1 pasada de sierra</button> 
+    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='sendoptionForm(32)'>2 pasadas de sierra</button>
+    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+  </div>
+
+  <div id="formModoVelocidad">
+    <button onclick='sendoptionForm(41)'>Velocidad Baja</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='sendoptionForm(42)'>Velocidad Normal</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='sendoptionForm(43)'>Velocidad Rapida</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+  </div>
+  <script>
+
+function showForm2(option) {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'block';
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
+
+    function Apagoreglamedia(option) {
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      // como tengo que tratar los valores para enviarlos? por consola se ven bien. 
+      
+      // Por ejemplo:
+      fetch('http://192.168.0.123/corte', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+       },
+      body: `valor=${0}&accion=${accionInput.value}`
+      }).then(response => {
+      // Lógica para manejar la respuesta si es necesario
+      });
+
+      console.log(`valor: ${0}, accion: ${option}`);
+   
+     }
+
+
+
+    function showForm(option) {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'block';
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
+
+    function sendoptionForm(option) {
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      // como tengo que tratar los valores para enviarlos? por consola se ven bien. 
+      
+  // Por ejemplo:
+  fetch('http://192.168.0.123/corte', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: `valor=${0}&accion=${accionInput.value}`
+}).then(response => {
+  // Lógica para manejar la respuesta si es necesario
+});
+
+  // Restablecer los campos del formulario y ocultar las opciones
+ //valorInput.value = '';
+
+      console.log(`valor: ${0}, accion: ${option}`);
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+     }
+
+
+
+    function showModoProlijo() {
+      const formModoProlijo = document.getElementById('formModoProlijo');
+      formModoProlijo.style.display = 'block';
+    }
+
+    function showHorizontalOptions() {
+      const horizontalOptions = document.getElementById('horizontalOptions');
+      horizontalOptions.style.display = 'block';
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
+
+    function showhorizontalReglamediaOptions(option) {
+      const horizontalreglamediaOptions = document.getElementById('horizontalReglamediaOptions');
+      horizontalreglamediaOptions.style.display = 'block';
+
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      
+      fetch('http://192.168.0.123/corte', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+       },
+       body: `valor=${0}&accion=${accionInput.value}`
+       }).then(response => {
+       // Lógica para manejar la respuesta si es necesario
+       });
+    }
+    
+    function formModoVelocidad() {
+      const formModoVelocidad = document.getElementById('formModoVelocidad');
+      formModoVelocidad.style.display = 'block';
+    }
+
+    function NOshowOptions(parametro) {
+      const horizontalOptions = document.getElementById(parametro);
+      horizontalOptions.style.display = 'none';
+
+    }
+
+    function sendValue() {
+      const valorInput = document.getElementById('valor_input');
+      const valor = valorInput.value;
+      const accionInput = document.getElementById('accion_input');
+      const option = accionInput.value;
+      console.log(`Valor: ${valor}, Opción: ${option}`);
+      
+      // Aquí puedes agregar tu lógica para enviar los datos por serial o realizar otras acciones necesarias
+      //NOshowOptions('horizontalOptions','formModoProlijo','formModoVelocidad')
+
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
+
+  </script>
+</body>
+</html>

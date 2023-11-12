@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Máquina de Cortes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d4d4d4;
+    }
+    #banner {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    #menu {
+      background-color: #1d1c1c;
+      color: white;
+      text-align: center;
+    }
+    #menu button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #content,#formHorizontal {
+      display: none;
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    input[type='number'] {
+      width: 100px;
+      padding: 5px;
+    }
+    #submit-button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id='banner'>
+    <h2>Control de Maquina de Cortes</h2>
+  </div>
+  <div id='menu'>
+    <button onclick='showForm(1)'>Corte Vertical</button>
+    <button onclick='showHorizontalForm()'>Corte Horizontal</button>
+    <button onclick='formModoProlijo()'>Modo Prolijo</button>
+    <button onclick='showForm(4)'>Velocidad</button>
+    <button onclick='showForm(5)'>Cargar Placa</button>
+    <button onclick='showForm(6)'>Estado actual</button>
+    <button onclick='showForm(7)'>Modo Rebaje H</button>
+    <button onclick='showForm(8)'>Menu configuracion</button>
+    <button onclick='showForm(9)'>Reinicar carros</button>
+    <button onclick='showForm(10)'>Reset</button>
+
+  </div>
+  <div id='content'>
+    <form action='/corte' method='POST'>
+      <input type='number' name='valor' step='0.01' placeholder='Ingrese un valor numérico'>
+      <input type='hidden' name='accion' id='accion_input'>
+      <button type='submit' name='enviar' value='Enviar' onclick='sendValue()'>OK</button>
+    </form>
+  </div>
+  <div id="formHorizontal">
+    <button onclick='showForm(21)'>Desde Arriba</button>
+    <button onclick='showForm(22)'>Desde Abajo</button>
+</div>
+
+  </div>
+  <script>
+    function showForm(option) {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'block';
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+    }
+    function formModoProlijo (option) {
+        const horizontalForm = document.getElementById('formModoProlijo');
+        horizontalForm.style.display = 'block'; // "none"
+     }
+    function showHorizontalForm (option) {
+        const horizontalForm = document.getElementById('formHorizontal');
+        horizontalForm.style.display = 'block'; // "none"
+      }
+
+    function hideForm() {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'none';
+      const valorInput = document.getElementById('valor');
+      valorInput.value = '';
+    }
+
+    function sendValue() {
+      const valorInput = document.getElementById('valor');
+      const valor = valorInput.value;
+      const accionInput = document.getElementById('accion_input');
+      const option = accionInput.value;
+      console.log(`Valor: ${valor}, Opción: ${option}`);
+      // Envía los datos por serial aquí
+
+      // Limpia el campo de valor y vuelve a ocultar el formulario
+      valorInput.value = '';
+      hideForm();
+    }
+  </script>
+</body>
+</html>
