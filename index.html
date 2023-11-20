@@ -7,16 +7,16 @@
     body {
   font-family: 'Arial', sans-serif;
   background-color: #000000; 
-  color: rgb(192, 192, 192);
+  color: rgb(199, 199, 199);
   margin: 0;
   padding: 0;
 }
  
 #banner {
   background-color: rgb(56, 56, 56);
-  color: #fff;
+  color: #b3b3b3;
   padding: 1px;
-  text-align: center;
+  text-align:center;
 }
  
 #menu {
@@ -234,7 +234,6 @@ input[type='number']:focus {
       height: 200px;
       display: none; 
     }
- 
   </style>
 </head>
  
@@ -277,6 +276,9 @@ input[type='number']:focus {
     const corteForm = document.getElementById('corteForm')
     corteForm.onsubmit = handleCorteForm
  
+    const accionInputvalor = document.getElementById('valor_input');
+    
+
     function handleCorteForm (event) {
       event.preventDefault() // prevenir el comportamiento por defecto
  
@@ -296,6 +298,9 @@ input[type='number']:focus {
       })
       .catch(console.error)
       NOshowOptions(['horizontalOptions','formModoProlijo','content','rebajeHorizontalOpcion','formModoVelocidad','PanelDeEstado']);
+
+      accionInputvalor.value = "";
+
     }
   </script>
  
