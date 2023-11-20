@@ -15,23 +15,23 @@
 #banner {
   background-color: rgb(56, 56, 56);
   color: #fff;
-  padding: 10px;
+  padding: 1px;
   text-align: center;
 }
  
 #menu {
-  background-color: #444;
+  background-color: #444444;
   color: #fff;
   text-align: center;
-  padding: 10px;
+  padding: 2px;
 }
  
 #menu button {
   background-color: #666;
   color: #fff;
   border: none;
-  padding: 10px 20px;
-  margin: 5px;
+  padding: 5px 10px;
+  margin: 2px;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
@@ -45,14 +45,14 @@
   background-color: #333;
   color: #ccc;
   text-align: center;
-  padding: 10px;
+  padding: 2px;
 }
  
 #menu2 button {
-  background-color: #444;
-  color: #fff;
+  background-color: #616161b4;
+  color: #e2e2e2;
   border: none;
-  padding: 10px 20px;
+  padding: 3px 6px;
   margin: 5px;
   cursor: pointer;
   border-radius: 5px;
@@ -60,7 +60,7 @@
 }
  
 #menu2 button:hover {
-  background-color: #3a5749; 
+  background-color: #465750; 
 }
  
 #content, #formHorizontal, #horizontalOptions, #formModoProlijo, #formModoVelocidad, #horizontalReglamediaOptions {
@@ -76,11 +76,11 @@
 #content, #formHorizontal, #horizontalOptions, #rebajeHorizontalOpcion, #formModoProlijo, #formModoVelocidad, #horizontalReglamediaOptions {
   display: none;
   background-color: #333;
-  padding: 20px;
+  padding: 5px;
   text-align: center;
-  margin: 20px auto;
+  margin: 5px auto;
   max-width: 400px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
  
 #content4 {
@@ -151,7 +151,7 @@ border: 1px solid rgb(90, 87, 87);
 .Box6 {
  
 display: none;
-background-color: rgba(255, 0, 0, 0.452);
+background-color: rgba(255, 0, 0, 0.123);
 border: 1px solid rgb(90, 87, 87); 
 position:absolute;
 bottom: 0px;
@@ -240,7 +240,7 @@ input[type='number']:focus {
  
 <body>
   <div id='banner'>
-    <h1>Seccionadora Vertical</h1>
+    <h2>Seccionadora Vertical</h2>
   </div>
   <div id='menu'>
     <button onclick='Apagoreglamedia(26),showForm(1),ActivoModo_V()'>Corte Vertical</button>
@@ -755,7 +755,7 @@ fetch('http://192.168.0.123/corte', {
       const box5_1 = document.getElementsByClassName('Box5')[0]
       const box6_1 = document.getElementsByClassName('Box6')[0]
  
-      const Coeficiente_reduccion = 8
+      const Coeficiente_reduccion = 10
       const Placa_Maximo = 2600 
       const Placa_Ancho = 1830
       const Grosor_linea_corte = 2 
@@ -813,6 +813,7 @@ fetch('http://192.168.0.123/corte', {
         box5_1.style.height = ( Placa_Ancho / Coeficiente_reduccion ) - 6  + 'px'
         box5_1.style.marginLeft = 1 + 'px' 
         box5_1.style.width =  (valor - 1) + 'px'
+        box6_1.style.display = 'none'
  
       }   else if (Modo_H1) {
  
@@ -826,6 +827,7 @@ fetch('http://192.168.0.123/corte', {
         box5_1.style.marginTop = 0 + 'px' 
         box5_1.style.height =  valor + 'px'
         box5_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
+        box6_1.style.display = 'none'
       }
  
       else if (Modo_H2) {
@@ -835,11 +837,12 @@ box3_1.style.width = ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
 box4_1.style.marginTop =  valor + 'px'
 box4_1.style.marginLeft = 0 + 'px'
 box4_1.style.height = Grosor_linea_corte + 'px'
-box4_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
+box4_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion )-4 + 'px'
 box5_1.style.marginLeft = 0 + 'px'
 box5_1.style.marginTop = -valor + 'px' 
 box5_1.style.height =  valor + 'px'
 box5_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
+box6_1.style.display = 'none'
       }
  
       else if (Modo_H3) {
@@ -850,13 +853,13 @@ box5_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
         box6_1.style.display = 'block'
         box6_1.style.marginBottom = 0 + 'px'
         box6_1.style.marginLeft = 0 + 'px'
-        box6_1.style.height =( Altura_regla_media / Coeficiente_reduccion ) + 'px'
+        box6_1.style.height =( Altura_regla_media / Coeficiente_reduccion ) - 2 + 'px'
         box6_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
  
         box4_1.style.marginTop = ( Placa_Ancho / Coeficiente_reduccion ) - valor - ( Altura_regla_media / Coeficiente_reduccion ) + 'px'
         box4_1.style.marginLeft = 0 + 'px'
         box4_1.style.height = Grosor_linea_corte + 'px'
-        box4_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion ) + 'px'
+        box4_1.style.width =  ( Placa_Maximo / Coeficiente_reduccion )-2 + 'px'
  
         box5_1.style.marginLeft = 0 + 'px'
         box5_1.style.marginTop = 0 + 'px' 
