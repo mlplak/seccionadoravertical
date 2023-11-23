@@ -287,7 +287,7 @@ input[type='number']:focus {
  
       console.log(valor, accion)
  
-      fetch('http://192.168.0.123/corte', {
+      fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -423,7 +423,7 @@ input[type='number']:focus {
         const campo = event.target.configId.value;
         const valor = event.target[1].value;
  
-       fetch('http://192.168.0.123/corte', {
+       fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -454,7 +454,7 @@ input[type='number']:focus {
       const accionInput = document.getElementById('accion_input');
       accionInput.value = option;
  
-      fetch('http://192.168.0.123/corte', {
+      fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -487,7 +487,7 @@ input[type='number']:focus {
       const accionInput = document.getElementById('accion_input2');
       accionInput.value = option;
  
-      fetch('http://192.168.0.123/rebajeH', {
+      fetch('https://staging.mlplak.com:442/wemos/rebajeH', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -503,7 +503,7 @@ input[type='number']:focus {
       const accionInput = document.getElementById('accion_input');
       accionInput.value = option;
  
-      fetch('http://192.168.0.123/corte', {
+      fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -530,7 +530,7 @@ input[type='number']:focus {
        PanelDeEstado.style.display = 'block';
  
        NOshowOptions(['horizontalOptions','content','formModoVelocidad','modalConfig','rebajeHorizontalOpcion','formModoProlijo']);
-       const response = await fetch('http://192.168.0.123/panel').catch(console.error)
+       const response = await fetch('https://staging.mlplak.com:442/wemos/panel').catch(console.error)
        const body = await response.json()
        console.log(body.modoProlijo)
        console.log(body.velocidad)
@@ -579,7 +579,7 @@ const accionInput = document.getElementById('accion_input');
 accionInput.value = option;
 NOshowOptions(['formModoProlijo','content','formModoVelocidad','modalConfig','horizontalOptions','PanelDeEstado']);
  
-fetch('http://192.168.0.123/corte', {
+fetch('https://staging.mlplak.com:442/wemos/corte', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -598,7 +598,7 @@ fetch('http://192.168.0.123/corte', {
       accionInput.value = option;
       NOshowOptions(['formModoProlijo','content','rebajeHorizontalOpcion','formModoVelocidad','modalConfig','PanelDeEstado']);
  
-      fetch('http://192.168.0.123/corte', {
+      fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -616,7 +616,7 @@ fetch('http://192.168.0.123/corte', {
       const accionInput = document.getElementById('accion_input');
       accionInput.value = option;
  
-      fetch('http://192.168.0.123/corte', {
+      fetch('https://staging.mlplak.com:442/wemos/corte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -711,7 +711,7 @@ fetch('http://192.168.0.123/corte', {
     async function getConfig () {
  
       const configuracionASeleccionar = select.value
-      const URL = 'http://192.168.0.123/config?id=' + configuracionASeleccionar
+      const URL = 'https://staging.mlplak.com:442/wemos/config?id=' + configuracionASeleccionar
       const response = await fetch(URL)
       const body = await response.json()
       console.log(body)
