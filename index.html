@@ -299,29 +299,31 @@ input[type='number']:focus {
       .catch(console.error)
       NOshowOptions(['horizontalOptions','formModoProlijo','content','rebajeHorizontalOpcion','formModoVelocidad','PanelDeEstado']);
 
-      accionInputvalor.value = "";
+      event.target.reset()
 
     }
   </script>
+
+  
  
   <div id='content4'>
-    <form action='/rebajeH' method='POST' id='miFormulario'>
+    <form id='miFormulario'>
       <div>
       <label for='valor1'>Altura de placa:</label>
       </div> <div>
-      <input type='number' name='valor1'  step='0.1' placeholder='Altura de placa' id='valor1'>
+      <input type='number' name='Altura'  step='0.1' placeholder='Altura de placa' id='valor1'>
       </div> <div>
       <label for='valor2'>Margen de separacion entre el borde y el inicio del rebaje:</label>
       </div> <div>
-      <input type='number' name='valor2' step='0.1' placeholder='Margen' id='valor2'>
+      <input type='number' name='margen' step='0.1' placeholder='Margen' id='valor2'>
       </div> <div> 
       <label for='valor3'>Ancho total del rebaje :</label>
     </div> <div>
-      <input type='number' name='valor3' step='0.1' placeholder='Ancho del rebaje' id='valor3'>
+      <input type='number' name='ancho' step='0.1' placeholder='Ancho del rebaje' id='valor3'>
    </div>  <div>
     <label for='valor4'>Profundidad del rebaje:</label>
     </div> <div>
-    <input type='number' name='valor4' step='0.1' placeholder='Profundidad' id='valor4'>
+    <input type='number' name='profundidad' step='0.1' placeholder='Profundidad' id='valor4'>
   </div> 
       <input type='hidden' name='accion' id='accion_input2'>
       <button type='submit' name='enviar'>Enviar</button>
@@ -329,6 +331,57 @@ input[type='number']:focus {
     <div class = "Box"><div class = "Box2"> </div></div>
   </div>  
  
+  
+  <script>
+
+    const rebajeForm = document.getElementById('miFormulario')
+    rebajeForm.onsubmit = handlerebajeForm
+ 
+   // const accionInputvalor = document.getElementById('valor_input2');
+    
+
+    function handlerebajeForm (event) {
+      event.preventDefault() // prevenir el comportamiento por defecto
+ 
+      /*console.log(event.target[0].value)
+      console.log(event.target[1].value)
+      console.log(event.target[2].value)
+      console.log(event.target[3].value)
+      console.log(event.target[4].value)
+      console.log(event.target.Altura.value)
+      console.log(event.target.margen.value)*/
+
+
+
+      
+      const Altura = event.target.Altura.value
+      const margen = event.target.margen.value
+      const ancho = event.target.ancho.value
+      const profundidad = event.target.profundidad.value
+      const accion = event.target.accion.value
+
+
+ 
+      //console.log(valor, accion)
+ 
+      fetch('https://staging.mlplak.com:442/wemos/rebajeH', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `Altura=${Altura}&margen=${margen}&ancho=${ancho}&profundidad=${profundidad}&accion=${accion}`
+      }).then(response => {
+        //aca el alert
+      })
+      .catch(console.error)
+      NOshowOptions(['horizontalOptions','content4','formModoProlijo','content','rebajeHorizontalOpcion','formModoVelocidad','PanelDeEstado']);
+
+     event.target.reset()
+
+    }
+  </script>
+
+
   <div id="horizontalOptions">
     <button onclick='Apagoreglamedia(26),showForm(21),ActivoModo_H1()'>Desde Abajo</button>
     <button onclick='Apagoreglamedia(26),showForm(22),ActivoModo_H2()'>Desde Arriba</button>
