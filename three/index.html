@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Escena Three.js</title>
+</head>
+<body>
+    <div id='menu'>
+        <button onclick='distancia2()'>Alejar</button>
+      </div>
+     
+    <div id="container"></div> <!-- Div donde se renderizará la escena -->
+
+    <!-- Importamos Three.js desde la CDN -->
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        
+
+// Configurar la escena, cámara y renderizador
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Crear el cubo
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+const cube = new THREE.LineSegments(new THREE.WireframeGeometry(geometry), material);
+scene.add(cube);
+
+const distancia = 5
+// Posicionar la cámara
+camera.position.z = distancia;
+
+renderer.render(scene, camera)
+
+
+/*
+// Animar el cubo
+function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    camera.position.z += 0.05;
+
+    renderer.render(scene, camera);
+
+    if(camera.position.z > 20){
+        distancia2(); 
+    }
+}
+animate(); 
+*/
+
+function distancia2(){
+    camera.position.z += 0.5;
+    renderer.render(scene, camera)
+    console.log("llegue")
+}
+
+/*
+
+
+        // Función para animar la escena
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotamos la esfera
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        // Llamamos a la función animate
+        animate();*/
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Escena Three.js</title>
+</head>
+<body>
+    <div id="container"></div> <!-- Div donde se renderizará la escena -->
+
+    <!-- Importamos Three.js desde la CDN -->
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        // Creamos la escena
+        const scene = new THREE.Scene();
+
+        // Creamos la cámara
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Creamos el renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('container').appendChild(renderer.domElement);
+
+        // Creamos una esfera
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Creamos una luz
+        const light = new THREE.PointLight(0xffffff, 1);
+        light.position.set(2, 2, 5);
+        scene.add(light);
+
+        // Función para cambiar la intensidad de la luz
+        function Cambiarluz() {
+            light.intensity = Math.abs(Math.sin(Date.now() * 0.001)) + 0.1; // Cambia la intensidad de la luz automáticamente
+            renderer.render(scene, camera);
+        }
+
+        // Llamamos a la función Cambiarluz cada segundo (1000 milisegundos)
+        setInterval(Cambiarluz, 1);
+
+        // Función para animar la escena
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotamos la esfera
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        // Llamamos a la función animate
+        animate();
+    </script>
+</body>
+</html>

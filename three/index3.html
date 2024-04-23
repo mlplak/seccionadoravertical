@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Escena Three.js</title>
+</head>
+
+<body>
+    <!-- Importamos Three.js desde la CDN -->
+    <script type="module">
+        //import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        import * as THREE from './three.module.js';
+        import { OrbitControls } from './OrbitControls.js';
+        import { TransformControls } from './TransformControls.js';
+        //import { GLTFExporter } from './Exporter.js';
+        //import { OBJExporter } from './OBJExporter.js';
+
+
+        // Variables para almacenar las coordenadas del mouse
+        let mouseX = 0;
+        let mouseY = 0;
+
+
+
+
+        // Creamos la escena
+        const scene = new THREE.Scene();
+
+        var intencidad = 1
+        var xluz = 1
+        var yluz = 1
+        var zluz = 1
+        var Xgrados = 0
+
+        const mouse = new THREE.Vector2();
+
+        const raycaster = new THREE.Raycaster();
+
+        // Definir e inicializar la variable mouse
+
+        // Crear un cargador de texturas
+        const textureLoader = new THREE.TextureLoader();
+
+        // Crear el exportador GLTF
+        // const exporter = new THREE.GLTFExporter();
+
+        window.addEventListener('click', onClick);
+
+        // Cargar la textura desde una imagen
+        const textureConcreto = textureLoader.load('./concreto.jpg');
+        const textureparedladrillorojo = textureLoader.load('./paredladrillorojo.jpg');
+        const texturepisoparquet = textureLoader.load('./pisoparquet.jpg');
+
+        // Crear un material utilizando la textura cargada
+        const materialContextureConcreto = new THREE.MeshStandardMaterial({ map: textureConcreto });
+        const materialConparedladrillorojo = new THREE.MeshStandardMaterial({ map: textureparedladrillorojo });
+        const materialpisoparquet = new THREE.MeshStandardMaterial({ map: texturepisoparquet });
+
+        // Creamos la cámara
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Creamos el renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('container').appendChild(renderer.domElement);
+        renderer.shadowMap.enabled = true;
+
+        // Creamos una esfera
+        const geometry = new THREE.SphereGeometry(5, 15, 15);
+        const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const sphere = new THREE.Mesh(geometry, materialpisoparquet);
+        sphere.position.set(-10, 10, 20);
+        sphere.visible = true;
+        sphere.castShadow = true;
+
+        sphere.name = 'Esfera chica'; // Asigna un nombre único al objeto
+        scene.add(sphere);
+
+        // Creamos una esfera2
+        const geometry3 = new THREE.SphereGeometry(10, 32, 32);
+        const material3 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const sphere3 = new THREE.Mesh(geometry3, materialConparedladrillorojo);
+        sphere3.position.set(20, 5, 20);
+        sphere3.castShadow = true;
+        sphere3.name = 'Esfera Grande';
+        scene.add(sphere3);
+
+        // creramos un cubo 
+        const geometry2 = new THREE.BoxGeometry(12, 12, 12);
+        const material2 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const cube = new THREE.Mesh(geometry2, materialpisoparquet);
+        cube.position.set(12, 12, -10);
+        cube.castShadow = true;
+        cube.name = 'cubo1';
+
+        cube.receiveShadow = true;
+        scene.add(cube);
+
+        //creamos una linea entre dos puntos 
+        const puntos = [];
+        puntos.push(new THREE.Vector3(-10, 10, 0));
+        puntos.push(new THREE.Vector3(50, 10, 0));
+
+        const geometriaLinea = new THREE.BufferGeometry().setFromPoints(puntos);
+        const materialLinea = new THREE.LineBasicMaterial({ color: 0xff0000 });
+        const linea = new THREE.Line(geometriaLinea, materialLinea);
+        scene.add(linea);
+
+        // creamos una liena tipo puntewro
+        // Definir los puntos para la línea en cada eje
+        const puntosX = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(10, 0, 0)];
+        const puntosY = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 10, 0)];
+        const puntosZ = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 10)];
+
+        // Crear geometrías para cada línea
+        const geometriaX = new THREE.BufferGeometry().setFromPoints(puntosX);
+        const geometriaY = new THREE.BufferGeometry().setFromPoints(puntosY);
+        const geometriaZ = new THREE.BufferGeometry().setFromPoints(puntosZ);
+
+        // Crear materiales para cada línea
+        const materialX = new THREE.LineBasicMaterial({ color: 0xff0000 });
+        const materialY = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+        const materialZ = new THREE.LineBasicMaterial({ color: 0x0000ff });
+
+        // Crear las líneas en cada eje
+        const lineaX = new THREE.Line(geometriaX, materialX);
+        const lineaY = new THREE.Line(geometriaY, materialY);
+        const lineaZ = new THREE.Line(geometriaZ, materialZ);
+
+        // Añadir las líneas a la escena
+        scene.add(lineaX, lineaY, lineaZ);
+
+        // creramos un cubo 2
+        const geometry5 = new THREE.BoxGeometry(4, 10, 4);
+        const material5 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const cube2 = new THREE.Mesh(geometry5, materialContextureConcreto);
+        cube2.position.set(0, 5, 2);
+        cube2.castShadow = true;
+        cube2.receiveShadow = true;
+        cube2.name = 'cubo 2';
+        scene.add(cube2);
+
+        const btnSubir = document.getElementById('btn-subir');
+        const btnBajar = document.getElementById('btn-bajar');
+        const btnluziz = document.getElementById('btn-luziz');
+        const btnluzder = document.getElementById('btn-luzder');
+        const Mover = document.getElementById('Mover');
+
+        // creamos un piso o pared 
+        const geometry4 = new THREE.PlaneGeometry(100, 100);
+        const material4 = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const Plano = new THREE.Mesh(geometry4, materialConparedladrillorojo);
+        //Plano.rotation.x = -Math.PI / 2; 
+        Plano.position.set(0, 0, 0);
+        Plano.name = 'Piso';
+
+        const grados = -90;
+        const xradianes = THREE.MathUtils.degToRad(grados);
+        Plano.rotation.set(xradianes, 0, 0);
+
+        Plano.castShadow = true;
+        Plano.receiveShadow = true;
+        scene.add(Plano);
+
+
+        btnluziz.onclick = function () {
+            Moverluz(-0.5, 0, 0, 90);
+            cube.visible = false;
+        }
+        btnluzder.onclick = function () {
+            Moverluz(0.5, 0, 0, 90);
+            cube.visible = false;
+        }
+        btnSubir.onclick = function () {
+            Cambiarluz(2);
+            cube.visible = false;
+        }
+        btnBajar.onclick = function () {
+            Cambiarluz(-2);
+            cube.visible = true;
+            //exportarObjetoComoOBJ();
+
+        }
+        Mover.onclick = function () {
+            mover();
+
+        }
+
+        /*
+                // Creamos una 2 luz
+                const light2 = new THREE.PointLight(0xffffff, intencidad);
+                light2.position.set(0, 10, 0);
+                scene.add(light2);
+        */
+        // Creamos una luz
+        const light = new THREE.DirectionalLight(0xffffff, intencidad);
+        light.position.set(20, 20, 100);
+        light.castShadow = true;
+        scene.add(light);
+
+
+        /*    
+    // Función para exportar la escena como un archivo GLTF
+    function exportarEscenaComoGLTF() {
+        exporter.parse(scene, function (resultado) {
+            // Código para manejar los resultados (descarga, mensaje al usuario, etc.)
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+    
+            const blob = new Blob([JSON.stringify(resultado)], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'mi_escena.glb'; // Cambia el nombre del archivo según tu preferencia
+            link.click();
+    
+            URL.revokeObjectURL(url);
+    
+            document.body.removeChild(link);
+        });
+    }
+    
+    // Llamar a la función exportarEscenaComoGLTF() cuando sea necesario, por ejemplo, al hacer clic en un botón de exportación
+    botonExportar.addEventListener('click', exportarEscenaComoGLTF);
+    
+    
+    */
+        // Función para exportar el objeto como archivo OBJ
+        /*
+         function exportarObjetoComoOBJ() {
+                  const exporter = new THREE.OBJExporter();
+                  const objetoExportado = exporter.parse(cube);
+                  console.log(objetoExportado);
+      
+                  // Descargar el archivo OBJ
+                  const blob = new Blob([objetoExportado], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = 'mi_objeto.obj';
+                  link.click();
+      
+                  URL.revokeObjectURL(url);
+              }
+      
+              // Llamar a la función exportarObjetoComoOBJ al hacer clic en un botón
+              const botonExportar = document.createElement('button');
+              botonExportar.textContent = 'Exportar como OBJ';
+              botonExportar.addEventListener('click', exportarObjetoComoOBJ);
+              document.body.appendChild(botonExportar);
+      */
+
+        // Función para cambiar la intensidad de la luz
+        function Cambiarluz(parametro,) {
+
+            intencidad += parametro
+            //light2.intensity = intencidad;
+            light.intensity = intencidad;
+            renderer.render(scene, camera);
+        }
+        // Función para cambiar la intensidad de la luz
+        function Moverluz(X, Y, Z, XG) {
+
+            xluz += X
+            yluz += Y
+            zluz += Z
+            Xgrados += XG
+
+            const grados2 = Xgrados;
+            const xradianes2 = THREE.MathUtils.degToRad(grados2);
+            cube2.rotation.set(xradianes2, 0, 0);
+
+            // sphere3.position.set(xluz - 1, yluz - 1, zluz);
+            light.position.set(xluz, yluz, zluz);
+            renderer.render(scene, camera);
+        }
+    
+        // Event listener para capturar la posición del mouse
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        camera.position.set(0, 20, 100);
+        controls.minDistanse = 1
+        controls.maxDistance = 300
+        //controls.update();
+
+
+        const tcontrols = new TransformControls(camera, renderer.domElement);
+
+
+        tcontrols.addEventListener('dragging-changed', (e) => (
+            controls.enabled = !e.value
+
+        ));
+
+        tcontrols.attach(cube, cube2, sphere, sphere3)
+        scene.add(tcontrols)
+
+        tcontrols.setMode('translate')
+
+        function mover() {
+            if (tcontrols.object) {
+                // TransformControls está activo, así que lo desactivamos
+                tcontrols.detach(); // Desvincula TransformControls del objeto controlado
+                scene.remove(tcontrols); // Remueve TransformControls de la escena
+                //console.log('TransformControls desactivado');
+            } else {
+                // TransformControls está inactivo, así que lo activamos
+                //const objeto = obtenerObjetoParaControlar(); // Función para obtener el objeto que deseas controlar
+                tcontrols.attach(cube2); // Asocia TransformControls con el objeto
+                scene.add(tcontrols); // Añade TransformControls a la escena
+                //console.log('TransformControls activado');
+            }
+
+        }
+
+        // Función para actualizar las coordenadas del mouse en respuesta al evento mousemove
+        function onClick(event) {
+            // Actualiza las coordenadas del mouse en función del evento clic
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            // Realiza el raycasting desde la cámara hacia los objetos en la escena
+            raycaster.setFromCamera(mouse, camera);
+
+           // Obtiene una lista de objetos intersectados por el rayo
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            console.log('Objetos intersectados:', intersects);
+
+            if (intersects.length > 0) {
+                const objetoIntersectado = intersects[0].object;
+                const nombreObjeto = objetoIntersectado.name;
+                console.log('Nombre del objeto seleccionado:', nombreObjeto);
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            cube2.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            //controls.update();
+            // console.log('Coordenadas del mouse:', mouse.x, mouse.y);
+            const posicionMouse = new THREE.Vector3(mouseX, mouseY, 0);
+            linea.position.copy(posicionMouse);
+
+            renderer.render(scene, camera);
+        }
+
+
+        // Llamamos a la función animate
+        animate();
+    </script>
+
+    <div id="Luzcambio">
+        <button id="btn-subir">Subir luz</button>
+        <button id="btn-bajar">Bajar luz</button>
+        <button id="btn-luziz">luz Iz</button>
+        <button id="btn-luzder">Luz der</button>
+        <button id="Mover">Mover</button>
+
+
+    </div>
+
+    <div id="container"></div> <!-- Div donde se renderizará la escena -->
+</body>
+
+</html>
