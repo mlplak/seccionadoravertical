@@ -1,82 +1,406 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
     <title>Mi Escena Three.js</title>
 </head>
-<body>
-    <div id='menu'>
-        <button onclick='distancia2()'>Alejar</button>
-      </div>
-     
-    <div id="container"></div> <!-- Div donde se renderizará la escena -->
 
+<style>
+    #modal p {
+        margin-bottom: 10px;
+        margin-right: 10px;
+        background-color: #fff;
+        padding: 1px;
+        border-radius: 1px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #modal input {
+        width: 100px;
+        margin-right: 10px;
+    }
+
+    #info {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 100;
+        display: block;
+    }
+</style>
+
+<body>
     <!-- Importamos Three.js desde la CDN -->
     <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        //import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        import * as THREE from './three.module.js';
+        import { OrbitControls } from './OrbitControls.js';
+        import { TransformControls } from './TransformControls.js';
 
+        // import camino from './camino.jpg';
+        // import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+        //import * as dat from 'dat.gui';
+        // import { OBJExporter } from './OBJExporter.js';
+        //import { GLTFLoader } from './GLTFLoader.js';
+        //import { GLTFExporter } from './GLTFExporter.js';
+
+        // Variables para almacenar las coordenadas del mouse
+        let mouseX = 0;
+        let mouseY = 0;
+        var estadoMover = true;
+
+        // Creamos la escena
+        const scene = new THREE.Scene();
+
+        const mouse = new THREE.Vector2();
+
+        const raycaster = new THREE.Raycaster();
+
+        // Definir e inicializar la variable mouse
+
+        // Crear un cargador de texturas
+        const textureLoader = new THREE.TextureLoader();
+        // Crear el exportador GLTF
+        // const exporter = new THREE.GLTFExporter();
+        window.addEventListener('click', onClick);
+
+        // Creamos la cámara
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Creamos el renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('container').appendChild(renderer.domElement);
+        renderer.shadowMap.enabled = true;
+
+        // le pongo niebla 
+        scene.fog = new THREE.FogExp2(0xcccccc, 0.001);
+
+
+
+
+        const btnCrearCubo = document.getElementById('btn-crear-cubo');
+        const btnTransladar = document.getElementById('btn-translate');
+        const btnRedimencionar = document.getElementById('btn-scale');
+        const btnRotar = document.getElementById('btn-rotate');
+
+        const btnluziz = document.getElementById('btn-luziz');
+        const btnluzder = document.getElementById('btn-luzder');
+
+
+
+
+        const modal = document.getElementById('modal');
+
+        const inputNumx = document.getElementById('inputNumx');
+        const inputNumy = document.getElementById('inputNumy')
+        const inputNumz = document.getElementById('inputNumz')
+
+        const inputNumAncho = document.getElementById('inputNumAncho')
+        const inputNumAlto = document.getElementById('inputNumAlto')
+        const inputNumProf = document.getElementById('inputNumProf')
+
+        const modalcubo = document.getElementById('modalcubo');
+
+        const inputAncho = document.getElementById('inputAncho');
+        const inputAlto = document.getElementById('inputAlto')
+        const inputProf = document.getElementById('inputProf')
+
+
+
+
+        // creamos un piso o pared 
+        const geometry4 = new THREE.PlaneGeometry(5000, 5000);
+        const material4 = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const Plano = new THREE.Mesh(geometry4, material4);
+        //Plano.rotation.x = -Math.PI / 2; 
+        Plano.position.set(0, 0, 0);
+        Plano.name = 'Piso';
+
+        //convertir grados en radianes
+        const grados = -90;
+        const xradianes = THREE.MathUtils.degToRad(grados);
+        Plano.rotation.set(xradianes, 0, 0);
+
+        Plano.castShadow = true;
+        Plano.receiveShadow = true;
+        //scene.add(Plano);
+
+        const geometry = new THREE.SphereGeometry(0.3, 32, 32);
+        const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const sphere = new THREE.Mesh(geometry, material);
+        sphere.position.set(-10, 10, 20);
+        sphere.visible = true;
+        sphere.castShadow = true;
+
+        sphere.name = 'Esfera chica'; // Asigna un nombre único al objeto
+        scene.add(sphere);
+
+        var contadorCubos = 0;
+
+
+        function agregarNuevoCubo() {
+
+
+            const geometry = new THREE.BoxGeometry(12, 12, 12);
+
+            const material = new THREE.MeshStandardMaterial({ color: 0xFFFFEE });
+
+            const nuevoCubo = new THREE.Mesh(geometry, material);
+            nuevoCubo.position.set(12 * contadorCubos, 12 * contadorCubos, 12 * contadorCubos);
+            nuevoCubo.castShadow = true;
+            nuevoCubo.name = 'cubo' + contadorCubos;
+            nuevoCubo.receiveShadow = true;
+            scene.add(nuevoCubo);
+            console.log("cubo creado");
+
+            contadorCubos++;
+        }
+
+
+        var modoTransform = 'scale';
+
+        btnluziz.onclick = function () {
+
+            if (modalcubo.open) {
+                modalcubo.close();
+            } else {
+                modalcubo.show();
+                modal.close();
+
+            }
+        }
+
+        btnluzder.onclick = function () {
+            //cube.visible = false;
+        }
+
+
+        btnCrearCubo.onclick = function () {
+
+            agregarNuevoCubo()
+            console.log("ejecuto funcion");
+        }
+
+        btnTransladar.onclick = function () {
+
+            if (tcontrols.object) {
+                // TransformControls está activo, así que lo desactivamos
+                tcontrols.detach(); // Desvincula TransformControls del objeto controlado
+                scene.remove(tcontrols);
+            } else {
+                tcontrols.attach(objetoSelecionado); // Asocia TransformControls con el objeto
+                scene.add(tcontrols); // Añade TransformControls a la escena}
+            }
+            modoTransform = 'translate';
+        }
+        btnRedimencionar.onclick = function () {
+            modoTransform = 'scale';
+        }
+        btnRotar.onclick = function () {
+            modoTransform = 'rotate';
+        }
+
+
+        /*
+                btnBajar.onclick = function () {
         
+                    if (modoTransform === 'translate') {
+                        modoTransform = 'rotate';
+                        estadoMover = true;
+                        console.log("Primer if");
+                        console.log(modoTransform);
+                    } else if (modoTransform === 'rotate') {
+                        modoTransform = 'scale';
+                        estadoMover = true;
+                        console.log("segun if");
+                        console.log(modoTransform);
+                    } else if (modoTransform === 'scale') {
+                        modoTransform = 'translate';
+                        estadoMover = true;
+                        console.log("terce if");
+                        console.log(modoTransform);
+                    }
+                }
+        */
+        // Creamos una luz
+        const light = new THREE.SpotLight(0xFFFFEE, 50);
+        light.position.set(10, 25, 25);
+        light.castShadow = true;
+        light.userData.selectable = true;
 
-// Configurar la escena, cámara y renderizador
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+        scene.add(light);
 
-// Crear el cubo
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.LineBasicMaterial({ color: 0xffffff });
-const cube = new THREE.LineSegments(new THREE.WireframeGeometry(geometry), material);
-scene.add(cube);
+        // Creamos una luz
+        const lightdirec = new THREE.DirectionalLight(0xFFFFEE, 1.5);
+        lightdirec.position.set(10, 20, 20);
+        lightdirec.castShadow = true;
+        scene.add(lightdirec);
 
-const distancia = 5
-// Posicionar la cámara
-camera.position.z = distancia;
+        // Event listener para capturar la posición del mouse
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
 
-renderer.render(scene, camera)
+        const controls = new OrbitControls(camera, renderer.domElement);
 
+        camera.position.set(0, 20, 100);
+        controls.minDistanse = 1
+        controls.maxDistance = 300
+        //controls.update();
 
-/*
-// Animar el cubo
-function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    camera.position.z += 0.05;
+        const tcontrols = new TransformControls(camera, renderer.domElement);
 
-    renderer.render(scene, camera);
+        tcontrols.addEventListener('dragging-changed', function (event) {
 
-    if(camera.position.z > 20){
-        distancia2(); 
-    }
-}
-animate(); 
-*/
+            controls.enabled = !event.value
+            // spotLightHelper.update();
+        }
+        );
 
-function distancia2(){
-    camera.position.z += 0.5;
-    renderer.render(scene, camera)
-    console.log("llegue")
-}
-
-/*
+        //scene.add(tcontrols)
 
 
-        // Función para animar la escena
+
+        function mover(objetoSelecionado) {
+            tcontrols.setMode(modoTransform)
+
+            if (tcontrols.object) {
+                // TransformControls está activo, así que lo desactivamos
+                tcontrols.detach(); // Desvincula TransformControls del objeto controlado
+                scene.remove(tcontrols); // Remueve TransformControls de la escena
+                //console.log('TransformControls desactivado');
+            } else {
+                // TransformControls está inactivo, así que lo activamos
+                //const objeto = obtenerObjetoParaControlar(); // Función para obtener el objeto que deseas controlar
+                tcontrols.attach(objetoSelecionado); // Asocia TransformControls con el objeto
+                scene.add(tcontrols); // Añade TransformControls a la escena
+                //console.log('TransformControls activado');
+                modal.show();
+
+                inputNumx.value = objetoSelecionado.position.x;
+                inputNumy.value = objetoSelecionado.position.y;
+                inputNumz.value = objetoSelecionado.position.z;
+
+                inputNumAncho.value = objetoSelecionado.scale.x;
+                inputNumAlto.value = objetoSelecionado.scale.y;
+                inputNumProf.value = objetoSelecionado.scale.z;
+
+
+                //modal.innerText = objetoSelecionado.name
+                inputNumx.onchange = function () {
+                    objetoSelecionado.position.x = inputNumx.value;
+                }
+                inputNumy.onchange = function () {
+                    objetoSelecionado.position.y = inputNumy.value;
+                }
+                inputNumz.onchange = function () {
+                    objetoSelecionado.position.z = inputNumz.value;
+                }
+
+                inputNumAncho.onchange = function () {
+                    objetoSelecionado.scale.x = inputNumAncho.value;
+                }
+                inputNumAlto.onchange = function () {
+                    objetoSelecionado.scale.y = inputNumAlto.value;
+                }
+                inputNumProf.onchange = function () {
+                    objetoSelecionado.scale.z = inputNumProf.value;
+                }
+            }
+
+        }
+
+        // Función para actualizar las coordenadas del mouse en respuesta al evento mousemove
+        function onClick(event) {
+            // Actualiza las coordenadas del mouse en función del evento clic
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            // Realiza el raycasting desde la cámara hacia los objetos en la escena
+            raycaster.setFromCamera(mouse, camera);
+
+            // Obtiene una lista de objetos intersectados por el rayo
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            console.log('Objetos intersectados:', intersects);
+
+            if (intersects.length > 0) {
+                const objetoIntersectado = intersects[0].object;
+                const nombreObjeto = objetoIntersectado.name;
+                console.log('Nombre del objeto seleccionado:', nombreObjeto);
+
+                if (estadoMover) {
+                    mover(intersects[0].object)
+                }
+            }
+        }
+
         function animate() {
             requestAnimationFrame(animate);
 
-            // Rotamos la esfera
-            sphere.rotation.x += 0.01;
-            sphere.rotation.y += 0.01;
+            // console.log('Coordenadas del mouse:', mouse.x, mouse.y);
+            const posicionMouse = new THREE.Vector3(mouseX, mouseY, 0);
+            //   linea.position.copy(posicionMouse);
 
             renderer.render(scene, camera);
+
         }
 
         // Llamamos a la función animate
-        animate();*/
+        animate();
+
     </script>
+
+    </script>
+
+    <div id="Luzcambio">
+        <button id="btn-crear-cubo">Crear Cubo</button>
+        <button id="btn-translate">Transladar</button>
+        <button id="btn-scale">Redimencionar</button>
+        <button id="btn-rotate">Rotar</button>
+
+
+        <button id="btn-luziz">luz Iz</button>
+        <button id="btn-luzder">Luz der</button>
+
+
+    </div>
+
+    <dialog id="modal">
+        <p>X
+            <input id="inputNumx" type="number">
+            Y
+            <input id="inputNumy" type="number">
+            Z
+            <input id="inputNumz" type="number">
+        </p>
+        <p>Ancho
+            <input id="inputNumAncho" type="number">
+            Alto
+            <input id="inputNumAlto" type="number">
+            Profundidad
+            <input id="inputNumProf" type="number">
+        </p>
+
+
+    </dialog>
+    <dialog id="modalcubo">
+        <p>Ancho <input id="inputAncho" type="number"></p>
+        <p>Alto <input id="inputAlto" type="number"></p>
+        <p>Prof  <input id="inputProf" type="number"></p>
+        <button id="btn-crear-cubo">Crear Cubo</button>
+    </dialog>
+
+    <div id="container"></div> <!-- Div donde se renderizará la escena -->
+
+
+
 </body>
+
 </html>
