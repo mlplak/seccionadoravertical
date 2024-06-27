@@ -133,7 +133,8 @@
         }
 
 
-        .Box3 {
+        .areaPlacaid,
+        .areaPlacaMd {
             display: none;
             width: 400px;
             height: 200px;
@@ -149,21 +150,24 @@
 
         }
 
-        .Box4 {
+        .areaDesplazoCorteV,
+        .AreaPlacaMed {
             display: none;
             background-color: #000000;
             border: 1px solid rgb(90, 87, 87);
 
         }
 
-        .Box5 {
+        .areaACortar,
+        .PlacaMedida {
             display: none;
             background-color: rgba(75, 150, 61, 0.412);
             border: 1px solid rgb(90, 87, 87);
 
         }
 
-        .Box6 {
+        .areaBajoReglaMedia,
+        .areaBajoReglaMediaMedicion {
 
             display: none;
             background-color: rgba(255, 0, 0, 0.123);
@@ -317,13 +321,24 @@
             <input type='hidden' name='accion' id='accion_input'>
             <button type='submit' name='enviar' id='submit-button'>OK</button>
         </form>
-        <div class="Box3">
-            <div class="Box4">
-                <div class="Box5"></div>
+        <div class="areaPlacaid">
+            <div class="areaDesplazoCorteV">
+                <div class="areaACortar"></div>
             </div>
-            <div class="Box6"></div>
+            <div class="areaBajoReglaMedia"></div>
         </div>
     </div>
+
+    <div id='graficoMedida'>
+        <div class="areaPlacaMd">
+            <div class="AreaPlacaMed">
+                <div class="PlacaMedida"></div>
+            </div>
+            <div class="areaBajoReglaMediaMedicion"></div>
+        </div>
+    </div>
+
+
 
     <div id='content4'>
         <form action='/rebajeH' method='POST' id='miFormulario'>
@@ -512,7 +527,7 @@
             event.target.reset()
         }
 
-            function BotonMedicion() {
+        function BotonMedicion() {
 
             NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'PanelDeEstado']);
 
@@ -526,7 +541,7 @@
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
 
-            }
+        }
 
 
         function procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion, Espera_De_30seg_OBJ) {
@@ -671,70 +686,70 @@
             console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
 
             actualizarListaProximosCortes();
-            
-                  fetch('http://192.168.0.123/corte', {
-            
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `valor=${valor}&accion=${accion}&eepromDir=${eepromDir}&margen=${margen}&ancho=${ancho}&profundidad=${profundidad}$posicion_de_guardado_Obj=${posicion_de_guardado_Obj}$pos_de_ejec_Obj=${posicion_de_ejecucion_OBJ}`
-            
-                  }).then(response => {
-                    console.log("respuesta del server; ")
-                    console.log(response)
-                    contador = 0;
-                    if (!fetch_consulta_Obj) {
-                      posicion_de_ejecucion++;
-                      proceso_de_corte_finalizado = false;
-                    } else if (fetch_consulta_Obj) {
-                      proceso_de_corte_finalizado = true;
-                      fetch_consulta = false;
-                    }
-                  })
-                    .catch(async (error) => {
-                      if (contador < 4) {
+
+            fetch('http://192.168.0.123/corte', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `valor=${valor}&accion=${accion}&eepromDir=${eepromDir}&margen=${margen}&ancho=${ancho}&profundidad=${profundidad}$posicion_de_guardado_Obj=${posicion_de_guardado_Obj}$pos_de_ejec_Obj=${posicion_de_ejecucion_OBJ}`
+
+            }).then(response => {
+                console.log("respuesta del server; ")
+                console.log(response)
+                contador = 0;
+                if (!fetch_consulta_Obj) {
+                    posicion_de_ejecucion++;
+                    proceso_de_corte_finalizado = false;
+                } else if (fetch_consulta_Obj) {
+                    proceso_de_corte_finalizado = true;
+                    fetch_consulta = false;
+                }
+            })
+                .catch(async (error) => {
+                    if (contador < 4) {
                         await wait(ms);
                         console.log("reenviando el fetch ")
                         console.log("valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta")
                         console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
                         fetchcorte(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj);
                         contador++;
-                      } else {
+                    } else {
                         contador = 0;
-                      }
-                    });
-            
-                       /*
-            if (!fetch_consulta_Obj) {
-                posicion_de_ejecucion++;
-                proceso_de_corte_finalizado = false;
+                    }
+                });
 
-            } else if (fetch_consulta_Obj) {
-                proceso_de_corte_finalizado = true;
-                fetch_consulta = false;
-            }
-             if(tamañoLista > posicion_de_ejecucion){
-                  Tiempo_Actualizacion_lista = 500;
-                  }else if (tamañoLista == posicion_de_ejecucion){
-                  Tiempo_Actualizacion_lista = 5000;
-                  }*/
+            /*
+ if (!fetch_consulta_Obj) {
+     posicion_de_ejecucion++;
+     proceso_de_corte_finalizado = false;
+
+ } else if (fetch_consulta_Obj) {
+     proceso_de_corte_finalizado = true;
+     fetch_consulta = false;
+ }
+  if(tamañoLista > posicion_de_ejecucion){
+       Tiempo_Actualizacion_lista = 500;
+       }else if (tamañoLista == posicion_de_ejecucion){
+       Tiempo_Actualizacion_lista = 5000;
+       }*/
 
             actualizarListaProximosCortes();
         }
-         
+
         async function fetchmedicion(fetch_consulta_Obj) {
-     
+
             //idear como hacer el envio del pedido y luego la espera.
             console.log("ESTOY EN FETCH MEDICION");
-            
-            if (!fetch_consulta_Obj) {
-                      posicion_de_ejecucion++;
-                      proceso_de_corte_finalizado = false;
-                    } 
 
-            actualizarListaProximosCortes()      
-           
+            if (!fetch_consulta_Obj) {
+                posicion_de_ejecucion++;
+                proceso_de_corte_finalizado = false;
+            }
+
+            actualizarListaProximosCortes()
+
             const Medicion = document.getElementById('PanelDeMedicion-dato')
             Medicion.innerText = "esperando...";
 
@@ -743,47 +758,65 @@
 
             NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'formModoProlijo']);
 
-            //const response = await fetch('http://192.168.0.123/panelmedicion').catch(console.error)
-            //const body = await response.json()
+            const GrficoContainer = document.getElementById('graficoMedida');
+            GrficoContainer.style.display = 'block';
+
+            areaPlacaMd.style.display = 'block'
+            areaPlacaMd.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+            areaPlacaMd.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+
+            const response = await fetch('http://192.168.0.123/panelmedicion').catch(console.error)
+            const body = await response.json()
+
+            console.log(body.Medicion)
+
+            var MedicionAncho = body.MedicionAncho
+            var MedicionAlto = body.MedicionAlto
+
+            console.log("En display ");
+
+            areaPlacaMd.style.display = 'block'
+            AreaPlacaMed.style.display = 'block'
+
+            AreaPlacaMed.style.marginTop = 1 + 'px'
+            AreaPlacaMed.style.marginLeft = (MedicionAlto / Coeficiente_reduccion) + 'px'
+            AreaPlacaMed.style.width = Grosor_linea_corte + 'px'
+            AreaPlacaMed.style.height = (MedicionAncho / Coeficiente_reduccion) + 'px'
             
-            //console.log(body.Medicion)
 
-                 console.log("En display ");
-
+            Medicion.innerText = body.MedicionDual
 
 
-                 const formContainer = document.getElementById('content');
-                 formContainer.style.display = 'block';
-                 const formContainer2 = document.getElementById('corteForm');
-                 formContainer2.style.display = 'none';
+            //areaDesplazoCorteV.style.display = 'block'
+            //areaACortar_1.style.display = 'block'
+
+            /*areaACortar_1.style.display = 'block'
+                   areaBajoReglaMedia_1.style.display = 'block'
+                   areaPlaca.style.display = 'block'
+                   areaDesplazoCorteV.style.display = 'block'
+                   areaACortar_1.style.display = 'block'
+
+                   const areaPlacaMd = document.getElementsByClassName('areaPlacaMd')[0]
+       const AreaPlacaMed = document.getElementsByClassName('AreaPlacaMed')[0]
+       const PlacaMedida = document.getElementsByClassName('PlacaMedida')[0]
+       const areaBajoReglaMediaMedicion = document.getElementsByClassName('areaBajoReglaMediaMedicion')[0]
+                   */
 
 
 
-                 box1_1.style.display = 'block'
-                                  
-                    box3_1.style.display = 'block'
-                    /*box4_1.style.display = 'block'
-                    box5_1.style.display = 'block'
-                    box6_1.style.display = 'block'
-                    box3_1.style.display = 'block'
-                    box4_1.style.display = 'block'
-                    box5_1.style.display = 'block'*/
-                    
+            /*areaDesplazoCorteV.style.marginTop = 1 + 'px'
+            areaDesplazoCorteV.style.marginLeft = (Placa_Maximo / Coeficiente_reduccion) - 500 + 'px'
+            areaDesplazoCorteV.style.width = Grosor_linea_corte + 'px'
+            areaDesplazoCorteV.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
 
-                box3_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box3_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginTop = 1 + 'px'
-                box4_1.style.marginLeft = (Placa_Maximo / Coeficiente_reduccion) - 500 + 'px'
-                box4_1.style.width = Grosor_linea_corte + 'px'
-                box4_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box5_1.style.marginTop = 0 + 'px'
-                box5_1.style.height = (Placa_Ancho / Coeficiente_reduccion) - 6 + 'px'
-                box5_1.style.marginLeft = 1 + 'px'
-                box5_1.style.width = (200 - 1) + 'px'
-                box6_1.style.display = 'block'
 
-            
-            //Medicion.innerText = body.Medicion
+            areaACortar_1.style.marginTop = 0 + 'px'
+            areaACortar_1.style.height = (Placa_Ancho / Coeficiente_reduccion) - 6 + 'px'
+            areaACortar_1.style.marginLeft = 1 + 'px'
+            areaACortar_1.style.width = (200 - 1) + 'px'
+            areaBajoReglaMedia_1.style.display = 'block'*/
+
+
         }
 
         function Pausarlista() {
@@ -902,8 +935,8 @@
                 Medida0.innerText = "No hay cortes pendientes";
             }
             else if (//(posicion_de_ejecucion == 0 && tamañoLista > 0 && posicion_de_ejecucion > 0) ||
-            (posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
-                            (!proceso_de_corte_finalizado && posicion_de_ejecucion === tamañoLista && tamañoLista > 0 && posicion_de_ejecucion > 0)) {
+                (posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
+                (!proceso_de_corte_finalizado && posicion_de_ejecucion === tamañoLista && tamañoLista > 0 && posicion_de_ejecucion > 0)) {
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
                 Medida0.innerText = listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
             }
@@ -1339,10 +1372,17 @@
         }
 
         const inputHeight3 = document.getElementById('valor_input')
-        const box3_1 = document.getElementsByClassName('Box3')[0]
-        const box4_1 = document.getElementsByClassName('Box4')[0]
-        const box5_1 = document.getElementsByClassName('Box5')[0]
-        const box6_1 = document.getElementsByClassName('Box6')[0]
+        const areaPlaca = document.getElementsByClassName('areaPlacaid')[0]
+        const areaDesplazoCorteV = document.getElementsByClassName('areaDesplazoCorteV')[0]
+        const areaACortar_1 = document.getElementsByClassName('areaACortar')[0]
+        const areaBajoReglaMedia_1 = document.getElementsByClassName('areaBajoReglaMedia')[0]
+
+
+        const areaPlacaMd = document.getElementsByClassName('areaPlacaMd')[0]
+        const AreaPlacaMed = document.getElementsByClassName('AreaPlacaMed')[0]
+        const PlacaMedida = document.getElementsByClassName('PlacaMedida')[0]
+        const areaBajoReglaMediaMedicion = document.getElementsByClassName('areaBajoReglaMediaMedicion')[0]
+
 
         const Coeficiente_reduccion = 10
         const Placa_Maximo = 2750
@@ -1350,7 +1390,7 @@
         const Grosor_linea_corte = 2
         const Altura_regla_media = 500
 
-        inputHeight3.oninput = actualizarBox3Height
+        inputHeight3.oninput = actualizarareaPlacaidHeight
 
         Modo_V = false
         Modo_H1 = false // H1 desde abajo
@@ -1382,10 +1422,10 @@
             Modo_H3 = true
         }
 
-        function actualizarBox3Height() {
-            box3_1.style.display = 'block'
-            box4_1.style.display = 'block'
-            box5_1.style.display = 'block'
+        function actualizarareaPlacaidHeight() {
+            areaPlaca.style.display = 'block'
+            areaDesplazoCorteV.style.display = 'block'
+            areaACortar_1.style.display = 'block'
 
             const valorInput = document.getElementById('valor_input');
             const valorIngresado = valorInput.value;
@@ -1393,70 +1433,70 @@
 
 
             if (valorIngresado <= 0) {
-                box5_1.style.display = 'none'
+                areaACortar_1.style.display = 'none'
             }
 
             if (Modo_V) {
 
-                box3_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box3_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginTop = 1 + 'px'
-                box4_1.style.marginLeft = (Placa_Maximo / Coeficiente_reduccion) - valor + 'px'
-                box4_1.style.width = Grosor_linea_corte + 'px'
-                box4_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box5_1.style.marginTop = 0 + 'px'
-                box5_1.style.height = (Placa_Ancho / Coeficiente_reduccion) - 6 + 'px'
-                box5_1.style.marginLeft = 1 + 'px'
-                box5_1.style.width = (valor - 1) + 'px'
-                box6_1.style.display = 'none'
+                areaPlaca.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = 1 + 'px'
+                areaDesplazoCorteV.style.marginLeft = (Placa_Maximo / Coeficiente_reduccion) - valor + 'px'
+                areaDesplazoCorteV.style.width = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = (Placa_Ancho / Coeficiente_reduccion) - 6 + 'px'
+                areaACortar_1.style.marginLeft = 1 + 'px'
+                areaACortar_1.style.width = (valor - 1) + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
 
             } else if (Modo_H1) {
 
-                box3_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box3_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginTop = (Placa_Ancho / Coeficiente_reduccion) - valor + 'px'
-                box4_1.style.marginLeft = 0 + 'px'
-                box4_1.style.height = Grosor_linea_corte + 'px'
-                box4_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box5_1.style.marginLeft = 0 + 'px'
-                box5_1.style.marginTop = 0 + 'px'
-                box5_1.style.height = valor + 'px'
-                box5_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box6_1.style.display = 'none'
+                areaPlaca.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = (Placa_Ancho / Coeficiente_reduccion) - valor + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = valor + 'px'
+                areaACortar_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
             }
 
             else if (Modo_H2) {
 
-                box3_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box3_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginTop = valor + 'px'
-                box4_1.style.marginLeft = 0 + 'px'
-                box4_1.style.height = Grosor_linea_corte + 'px'
-                box4_1.style.width = (Placa_Maximo / Coeficiente_reduccion) - 4 + 'px'
-                box5_1.style.marginLeft = 0 + 'px'
-                box5_1.style.marginTop = -valor + 'px'
-                box5_1.style.height = valor + 'px'
-                box5_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box6_1.style.display = 'none'
+                areaPlaca.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = valor + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Maximo / Coeficiente_reduccion) - 4 + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = -valor + 'px'
+                areaACortar_1.style.height = valor + 'px'
+                areaACortar_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
             }
 
             else if (Modo_H3) {
 
-                box3_1.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-                box3_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box6_1.style.display = 'block'
-                box6_1.style.marginBottom = 0 + 'px'
-                box6_1.style.marginLeft = 0 + 'px'
-                box6_1.style.height = (Altura_regla_media / Coeficiente_reduccion) - 2 + 'px'
-                box6_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginTop = (Placa_Ancho / Coeficiente_reduccion) - valor - (Altura_regla_media / Coeficiente_reduccion) + 'px'
-                box4_1.style.marginLeft = 0 + 'px'
-                box4_1.style.height = Grosor_linea_corte + 'px'
-                box4_1.style.width = (Placa_Maximo / Coeficiente_reduccion) - 2 + 'px'
-                box5_1.style.marginLeft = 0 + 'px'
-                box5_1.style.marginTop = 0 + 'px'
-                box5_1.style.height = valor + 'px'
-                box5_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.height = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaBajoReglaMedia_1.style.display = 'block'
+                areaBajoReglaMedia_1.style.marginBottom = 0 + 'px'
+                areaBajoReglaMedia_1.style.marginLeft = 0 + 'px'
+                areaBajoReglaMedia_1.style.height = (Altura_regla_media / Coeficiente_reduccion) - 2 + 'px'
+                areaBajoReglaMedia_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = (Placa_Ancho / Coeficiente_reduccion) - valor - (Altura_regla_media / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Maximo / Coeficiente_reduccion) - 2 + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = valor + 'px'
+                areaACortar_1.style.width = (Placa_Maximo / Coeficiente_reduccion) + 'px'
             }
         }
     </script>
