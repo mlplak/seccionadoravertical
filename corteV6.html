@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -20,6 +18,15 @@
             color: #b3b3b3;
             padding: 1px;
             text-align: center;
+            margin-left: 30%;
+            margin-right: 1%;
+            margin-top: 1%;
+            border: 2px solid #d11818d7;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            z-index: 5;
+            background-color: rgb(0, 0, 0)
         }
 
         #menu,
@@ -28,6 +35,13 @@
             color: #fff;
             text-align: center;
             padding: 2px;
+
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
         }
 
         #menu button,
@@ -47,22 +61,32 @@
         }
 
         #texto_ancho {
-            position: absolute; /* Se posiciona en relación al contenedor .box */
-            top: 0; /* Alineado al borde superior del contenedor .box */
-            left: 0; /* Alineado al borde derecho del contenedor .box */
-            width: calc(100% - 20px); /* Ocupa el ancho del contenedor menos el padding */
+            position: absolute;
+            /* Se posiciona en relación al contenedor .box */
+            top: 0;
+            /* Alineado al borde superior del contenedor .box */
+            left: 0;
+            /* Alineado al borde derecho del contenedor .box */
+            width: calc(100% - 20px);
+            /* Ocupa el ancho del contenedor menos el padding */
             text-align: justify;
             color: rgb(255, 255, 255);
             padding: 1px;
         }
 
         #texto_alto {
-            position: absolute; /* Se posiciona en relación al contenedor .box */
-            bottom: 0; /* Alineado al borde superior del contenedor .box */
-            right: 0; /* Alineado al borde derecho del contenedor .box */
-            transform: rotate(90deg); /* Rota el texto 90 grados */
-            transform-origin: top right; /* Define el punto de origen de la rotación */
-            white-space: nowrap; /* Evita que el texto se quiebre en múltiples líneas */
+            position: absolute;
+            /* Se posiciona en relación al contenedor .box */
+            bottom: 0;
+            /* Alineado al borde superior del contenedor .box */
+            right: 0;
+            /* Alineado al borde derecho del contenedor .box */
+            transform: rotate(90deg);
+            /* Rota el texto 90 grados */
+            transform-origin: top right;
+            /* Define el punto de origen de la rotación */
+            white-space: nowrap;
+            /* Evita que el texto se quiebre en múltiples líneas */
             color: rgb(255, 254, 254);
             padding: 1px;
         }
@@ -72,6 +96,13 @@
             color: #ccc;
             text-align: center;
             padding: 2px;
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
+
         }
 
         #menu2 button {
@@ -89,45 +120,42 @@
             background-color: #465750;
         }
 
-        #content,
-        #formHorizontal,
-        #horizontalOptions,
-        #formModoProlijo,
-        #formModoVelocidad,
-        #horizontalReglamediaOptions {
-            display: none;
-            background-color: #333;
-            padding: 20px;
-            text-align: center;
-            margin: 20px auto;
-            max-width: 400px;
-            border-radius: 10px;
-        }
 
-        #content,
-        #formHorizontal,
-        #horizontalOptions,
-        #rebajeHorizontalOpcion,
-        #formModoProlijo,
-        #formModoVelocidad,
+        #content, #formHorizontal, #horizontalOptions,
+        #rebajeHorizontalOpcion, #formModoProlijo, #formModoVelocidad,
         #horizontalReglamediaOptions {
             display: none;
             background-color: #333;
             padding: 5px;
             text-align: center;
-            margin: 5px auto;
-            max-width: 400px;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
             border-radius: 5px;
         }
 
         #content4 {
             display: none;
             background-color: #333;
-            padding: 20px;
+            padding: 2px;
             text-align: center;
-            margin: 20px auto;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
             max-width: 600px;
 
+        }
+
+
+        #graficoMedida {
+            display: none;
+            background-color: #333;
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
         }
 
         .Box {
@@ -178,12 +206,10 @@
             display: none;
             background-color: #000000;
             border: 1px solid rgb(90, 87, 87);
-
         }
 
         .areaACortar,
         .PlacaMedida {
-
             display: none;
             position: relative;
             background-color: rgba(75, 150, 61, 0.412);
@@ -193,7 +219,6 @@
 
         .areaBajoReglaMedia,
         .areaBajoReglaMediaMedicion {
-
             display: none;
             background-color: rgba(255, 0, 0, 0.123);
             border: 1px solid rgb(90, 87, 87);
@@ -212,6 +237,20 @@
             font-size: 20px;
         }
 
+        #Altura[type='number'] {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: rgb(158, 157, 157);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #000000;
+            font-size: 20px;
+        }
+
+
+        
+
 
         input[type='number']:focus {
             border: 1px solid #fff;
@@ -227,13 +266,11 @@
             border-radius: 5px;
         }
 
-
-        #PanelDeEstado,
         #PanelDeMedicion {
             display: none;
             position: absolute;
-            left: 15%;
-            right: 15%;
+            left: 30%;
+            right: 1%;
             top: 100;
             bottom: 5;
             height: min-content;
@@ -241,54 +278,70 @@
             color: #d8c6c6b9;
             font-size: 18px;
             text-align: center;
-            border: 2px solid #d11818d7;
+            border: 2px solid #18d121d7;
             border-radius: 10px;
             padding: 10px;
-            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            box-shadow: 0 0 10px rgba(157, 211, 155, 0.801);
             z-index: 5;
             background-color: rgb(0, 0, 0);
         }
 
-        #listaDeCortes {
-            display: inline-block;
-            /* Cambiado de block a inline-block */
+        #PanelDeEstado {
             position: absolute;
-            left: 5%;
-            right: 5%;
-            bottom: 5%;
-            /* Ajustado para pegar el elemento al borde inferior */
-            height: max-content;
+            left: 1%;
+            right: 1%;
+            bottom: 1%;
+            height: min-content;
+            margin-bottom: 1%;
+            color: #e2e2e2b9;
+            font-size: 16px;
+            text-align: center;
+            border: 2px solid #aa3535d7;
+            border-radius: 10px;
+            padding: 2px;
+            box-shadow: 0 0 10px rgba(204, 156, 156, 0.801);
+            z-index: 2;
+            background-color: rgb(0, 0, 0);
+            column-count: 5;
+            column-gap: 1px;
+            break-inside: avoid;
+            display: flow-root;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #listaDeCortes {
+            width: 26%;
+            /* Ajusta el ancho según lo necesites */
+            position: absolute;
+            top: 2%;
+            left: 1%;
             color: #d8c6c6b9;
             font-size: 14px;
-            line-height: 6%;
-            /* Valor ajustado para reducir el espacio entre líneas */
-            text-align: center;
+            line-height: 1.4;
+            text-align: left;
             border: 2px solid #d11818d7;
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
-            z-index: 0;
             background-color: rgb(0, 0, 0);
         }
 
         #listaDeCortes-dato0 {
             font-size: 18px;
-            color: #f0eaea;
-
+            color: #ffffff;
         }
 
-        #PanelDeEstado div:first-child {
-            margin-top: -20px;
+        #listaDeCortes-dato1, #listaDeCortes-dato2, #listaDeCortes-dato3, #listaDeCortes-dato4,
+        #listaDeCortes-dato5, #listaDeCortes-dato6, #listaDeCortes-dato7, #listaDeCortes-dato8,
+        #listaDeCortes-dato9, #listaDeCortes-dato10 {
+            font-size: 14px;
+            color: #e4e4e4;
         }
 
-        #PanelDeEstado {
-            column-count: 2;
-            column-gap: 5px;
-        }
 
-        #PanelDeEstado div {
-            break-inside: avoid;
-        }
 
         .modalConfig {
             width: 100%;
@@ -308,34 +361,31 @@
             height: 200px;
             display: none;
         }
+
     </style>
 </head>
 
 <body>
     <div id='banner'>
-        <h2>Seccionadora Vertical</h2>
+        <h3>Seccionadora Vertical</h3>
     </div>
     <div id='menu'>
-        <button onclick='showForm(101),ActivoModo_V()'>Corte Vertical !! </button>
-        <button onclick='showHorizontalOptions(20)'>Corte Horizontal -> </button>
-        <button onclick='sendoptionForm(5)'>Cargar Placa ° </button>
-        <button onclick='showHorizontalRebajeOptions()'>Modo Rebaje H </button>
+        <button onclick='showForm(101),ActivoModo_V()'>Corte Vertical</button>
+        <button onclick='showHorizontalOptions(20)'>Corte Horizontal </button>
+        <button onclick='showHorizontalRebajeOptions()'>Modo Rebaje H</button>
         <button onclick='sendoptionForm()'>Refilar</button>
     </div>
-    </div>
     <div id='menu1'>
-        <button onclick='BotonMedicion()'>Medir Placa |--|</button>
-        <button onclick='sendoptionForm(26)'>regla media OFF</button>
-        <button onclick='Agregarespera()'> Agregar una pausa</button>
+        <button onclick='sendoptionForm(5)'>Cargar Placa</button>
+        <button onclick='BotonMedicion()'>Medir Placa|--|</button>
+        <button onclick='Agregarespera()'>Agregar pausa</button>
         <button onclick='Pausarlista()'>Pausar || Continuar |> </button>
 
     </div>
-
     <div id='menu2'>
         <button onclick='showModoProlijo()'>Modo Prolijo</button>
         <button onclick='formModoVelocidad()'>Velocidad</button>
         <button onclick='sendoptionForm(9)'>Reset</button>
-        <button onclick='actualizarpanel()'>Actualizar panel</button>
         <button onclick='showModalConfig()'>Configuracion</button>
 
     </div>
@@ -365,7 +415,6 @@
             <div class="areaBajoReglaMediaMedicion"></div>
         </div>
     </div>
-
 
     <div id='content4'>
         <form action='/rebajeH' method='POST' id='miFormulario'>
@@ -425,54 +474,32 @@
     </div>
     <div id="PanelDeEstado">
         <div>
-            <p>Modo </p>
-            <p id="panelDeEstado-modoProlijo">--</p>
+            <p>Modo : <span id="panelDeEstado-modoProlijo">--</span></p>
+            <p>Velocidad : <span id="panelDeEstado-velocidad">--</span></p>
+            <p>temperatura : <span id="panelDeEstado-Temperatura">--</span></p>
         </div>
         <div>
-            <p>Velocidad</p>
-            <p id="panelDeEstado-velocidad">--</p>
+            <p>Ultimo corte Vertical : <span id="panelDeEstado-Ultimo_Corte_V">--</span></p>
+            <p>Ultimo corte Horizontal : <span id="panelDeEstado-Ultimo_Corte_H">--</span></p>
+            <p>Regla media : <span id="panelDeEstado-Regla_Media">--</span></p>
         </div>
         <div>
-            <p>Ultimo corte Vertical</p>
-            <p id="panelDeEstado-Ultimo_Corte_V">--</p>
+            <p>Posicion CP : <span id="panelDeEstado-Pos_CP">--</span></p>
+            <p>Posicion CV : <span id="panelDeEstado-Pos_CV">--</span></p>
+            <p>Posicion CT : <span id="panelDeEstado-Pos_CT">--</span></p>
         </div>
         <div>
-            <p>Ultimo corte Horizontal</p>
-            <p id="panelDeEstado-Ultimo_Corte_H">--</p>
+            <p>Parrilla  : <span id="panelDeEstado-parrilla">--</span></p>
+            <p>Ultima Med : <span id="panelDeEstado-UltimaMediccion">--</span></p>
+            <p>-- : <span id="panelDeEstado-Libre">--</span></p>
         </div>
         <div>
-            <p>temperatura</p>
-            <p id="panelDeEstado-Temperatura">--</p>
-        </div>
-        <div>
-            <p>Posicion CP</p>
-            <p id="panelDeEstado-Pos_CP">--</p>
-        </div>
-        <div>
-            <p>Posicion CV</p>
-            <p id="panelDeEstado-Pos_CV">--</p>
-        </div>
-        <div>
-            <p>Posicion CT</p>
-            <p id="panelDeEstado-Pos_CT">--</p>
-        </div>
-        <div>
-            <p>Posicion TVV</p>
-            <p id="panelDeEstado-Pos_TVV">--</p>
-        </div>
-        <div>
-            <p>Posicion TVH</p>
-            <p id="panelDeEstado-Pos_TVH">--</p>
-        </div>
-        <div>
-            <p>Regla media</p>
-            <p id="panelDeEstado-Regla_Media">--</p>
-        </div>
-        <div>
-            <p>Reporte de error</p>
-            <p id="panelDeEstado-Error">--</p>
+            <p>Posicion TVH : <span id="panelDeEstado-Pos_TVH">--</span></p>
+            <p>Posicion TVV : <span id="panelDeEstado-Pos_TVV">--</span></p>
+            <p>Reporte de error : <span id="panelDeEstado-Error">--</span></p>
         </div>
     </div>
+
     <div class="modalConfig" id="modalConfig">
         <form id="modalConfig-form">
             <select name="configId" id="configId">
@@ -504,6 +531,8 @@
             <p id="listaDeCortes-dato6">--</p>
             <p id="listaDeCortes-dato7">--</p>
             <p id="listaDeCortes-dato8">--</p>
+            <p id="listaDeCortes-dato9">--</p>
+            <p id="listaDeCortes-dato10">--</p>
         </div>
     </div>
 
@@ -530,7 +559,43 @@
         let pausar_lista = false;
         let Tiempo_Actualizacion_lista = 5000;
         let accion_Rebaje;
-        //--------------------------------------------------------
+        //------------------------------------------------------------
+
+        var Coeficiente_reduccion = 10
+        var Placa_Ancho = 2750
+        var Placa_Alto = 1830
+        var Grosor_linea_corte = 2
+        const Altura_regla_media = 500
+
+        //------- ajusto el coeficiente segun tamaño de pantalla------
+
+        function AjusteDeCoeficienteReducccion() {
+
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            console.log("ancho :" + width + " alto: " + height)
+
+            if (width < 410) {
+                Coeficiente_reduccion = 12;
+            } else if (width > 410 && width < 610) {
+                Coeficiente_reduccion = 10;
+            }
+            else if (width > 610 && width < 910) {
+                Coeficiente_reduccion = 7;
+            }
+            else if (width > 910 && width < 1210) {
+                Coeficiente_reduccion = 6;
+            }
+            else if (width > 1210) {
+                Coeficiente_reduccion = 5;
+            }
+            console.log("Coeficiente_reduccion " + Coeficiente_reduccion)
+        }
+
+
+        AjusteDeCoeficienteReducccion();
+
 
         const corteForm = document.getElementById('corteForm')
         corteForm.onsubmit = handleCorteForm
@@ -540,7 +605,7 @@
         function handleCorteForm(event) {
 
             event.preventDefault() // prevenir el comportamiento por defecto
-            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida',]);
 
             const valor = event.target[0].value
             const accion = parseInt(event.target[1].value)
@@ -557,7 +622,7 @@
 
         function BotonMedicion() {
 
-            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida','PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida',]);
 
             const valor = "Accion/ "
             const accion = 10;
@@ -656,7 +721,7 @@
             // meter objetoDeCOrte a listaDeCortes
             listaDeCortes[posicion_de_guardado] = objectoDeCorte;
             posicion_de_guardado++;
-            console.log(listaDeCortes);          
+            console.log(listaDeCortes);
 
             actualizarListaProximosCortes();
         }
@@ -715,7 +780,8 @@
 
             actualizarListaProximosCortes();
 
-            fetch('http://192.168.0.123/corte', {
+
+                fetch('http://192.168.0.123/corte', {
 
                 method: 'POST',
                 headers: {
@@ -748,23 +814,24 @@
                     }
                 });
 
-         /*   
- if (!fetch_consulta_Obj) {
-     posicion_de_ejecucion++;
-     proceso_de_corte_finalizado = false;
 
- } else if (fetch_consulta_Obj) {
-     proceso_de_corte_finalizado = true;
-     fetch_consulta = false;
- }
-  */
- 
+
+
+            /*   
+    if (!fetch_consulta_Obj) {
+        posicion_de_ejecucion++;
+        proceso_de_corte_finalizado = false;
+   
+    } else if (fetch_consulta_Obj) {
+        proceso_de_corte_finalizado = true;
+        fetch_consulta = false;
+    }
+     */
+
 
 
             actualizarListaProximosCortes();
         }
-
-
         // esta es solo para probar los graficos de las mediciones 
 
         function getRandomInt(min, max) {
@@ -787,11 +854,10 @@
 
             const Medicion = document.getElementById('PanelDeMedicion-dato')
             Medicion.innerText = "esperando...";
-
             const PanelDeMedicion = document.getElementById('PanelDeMedicion');
             PanelDeMedicion.style.display = 'block';
 
-            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'graficoMedida','formModoProlijo']);
+            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'graficoMedida', 'formModoProlijo']);
 
             const GrficoContainer = document.getElementById('graficoMedida');
             GrficoContainer.style.display = 'block';
@@ -799,19 +865,16 @@
             areaPlacaMd.style.display = 'block'
             areaPlacaMd.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
             areaPlacaMd.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
-            
-                        const response = await fetch('http://192.168.0.123/panelmedicion').catch(console.error)
-                        const body = await response.json()
-            
-                        console.log(body.Medicion)
-            
-                        var MedicionAncho = body.MedicionAncho
-                        var MedicionAlto = body.MedicionAlto
 
-            
+            const response = await fetch('http://192.168.0.123/panelmedicion').catch(console.error)
+            const body = await response.json()
 
-           // console.log("En display ");
+            console.log(body.Medicion)
 
+            var MedicionAncho = body.MedicionAncho
+            var MedicionAlto = body.MedicionAlto
+
+            // console.log("En display ");
             areaPlacaMd.style.display = 'block'
             //AreaPlacaMed.style.display = 'block'
             PlacaMedida.style.display = 'block'
@@ -877,7 +940,7 @@
 
         const accionInputvalor2 = document.getElementById('accion_input2');
 
-        
+
 
         function handlerebajeForm(event) {
             event.preventDefault() // prevenir el comportamiento por defecto
@@ -895,11 +958,11 @@
 
 
             //enviar al array
-            NOshowOptions(['horizontalOptions', 'content4', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'graficoMedida','PanelDeMedicion', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'content4', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'graficoMedida', 'PanelDeMedicion']);
             event.target.reset()
 
 
-            
+
         }
 
     </script>
@@ -910,27 +973,27 @@
         actualizarListaauto();
 
 
-       // setInterval(modificadorDeTiempo,5000)
-/*
-        let contador_de_espera;
-        function  modificadorDeTiempo(){
-
-            //console.log("hola!");
-
-            var tamañoLista = listaDeCortes.length;
-            if(tamañoLista > posicion_de_ejecucion){
-                       actualizarListaauto();
-       console.log("actualizolista!");
-       }else if (tamañoLista == posicion_de_ejecucion){
-       contador_de_espera++;
-       if (contador_de_espera > 100) {
-        actualizarListaauto();
-        console.log("actualizolista porque paso 10");
-        contador_de_espera = 0;
-       }
-       }
-        }
-        */
+        // setInterval(modificadorDeTiempo,5000)
+        /*
+                let contador_de_espera;
+                function  modificadorDeTiempo(){
+        
+                    //console.log("hola!");
+        
+                    var tamañoLista = listaDeCortes.length;
+                    if(tamañoLista > posicion_de_ejecucion){
+                               actualizarListaauto();
+               console.log("actualizolista!");
+               }else if (tamañoLista == posicion_de_ejecucion){
+               contador_de_espera++;
+               if (contador_de_espera > 100) {
+                actualizarListaauto();
+                console.log("actualizolista porque paso 10");
+                contador_de_espera = 0;
+               }
+               }
+                }
+                */
 
         setInterval(actualizarListaauto, Tiempo_Actualizacion_lista);
 
@@ -947,6 +1010,8 @@
                     console.log("antes del fetch consulta")
                     fetch_consulta = true;
                     fetchcorte(0, 0, 0, 0, 0, 0, 0, 0, fetch_consulta);
+                    console.log("antes del fetch Axcctualzizar panel")
+                    actualizarpanel();
                     //contador_consulta = 0;
                 }
             } else {
@@ -980,16 +1045,11 @@
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
                 Medida0.innerText = "No hay cortes pendientes";
             }
-            else if (//(posicion_de_ejecucion == 0 && tamañoLista > 0 && posicion_de_ejecucion > 0) ||
-                (posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
+            else if ((posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
                 (!proceso_de_corte_finalizado && posicion_de_ejecucion === tamañoLista && tamañoLista > 0 && posicion_de_ejecucion > 0)) {
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
                 Medida0.innerText = listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
             }
-            /*else if (posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) {
-                const Medida0 = document.getElementById('listaDeCortes-dato0')
-                Medida0.innerText = listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
-            }*/
             else if (posicion_de_ejecucion == tamañoLista && proceso_de_corte_finalizado) {
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
                 Medida0.innerText = "No hay cortes pendientes, ulitmo: " + listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
@@ -1001,7 +1061,6 @@
             } else {
                 const Medida1 = document.getElementById('listaDeCortes-dato1')
                 Medida1.style.display = 'none'
-                //Medida1.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 1) {
                 const Medida2 = document.getElementById('listaDeCortes-dato2')
@@ -1010,7 +1069,6 @@
             } else {
                 const Medida2 = document.getElementById('listaDeCortes-dato2')
                 Medida2.style.display = 'none'
-                //Medida2.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 2) {
                 const Medida3 = document.getElementById('listaDeCortes-dato3')
@@ -1019,7 +1077,6 @@
             } else {
                 const Medida3 = document.getElementById('listaDeCortes-dato3')
                 Medida3.style.display = 'none'
-                //Medida3.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 3) {
                 const Medida4 = document.getElementById('listaDeCortes-dato4')
@@ -1028,7 +1085,6 @@
             } else {
                 const Medida4 = document.getElementById('listaDeCortes-dato4')
                 Medida4.style.display = 'none'
-                //Medida4.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 4) {
                 const Medida5 = document.getElementById('listaDeCortes-dato5')
@@ -1037,7 +1093,6 @@
             } else {
                 const Medida5 = document.getElementById('listaDeCortes-dato5')
                 Medida5.style.display = 'none'
-                //Medida5.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 5) {
                 const Medida6 = document.getElementById('listaDeCortes-dato6')
@@ -1046,7 +1101,6 @@
             } else {
                 const Medida6 = document.getElementById('listaDeCortes-dato6')
                 Medida6.style.display = 'none'
-                //Medida6.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 6) {
                 const Medida7 = document.getElementById('listaDeCortes-dato7')
@@ -1055,7 +1109,6 @@
             } else {
                 const Medida7 = document.getElementById('listaDeCortes-dato7')
                 Medida7.style.display = 'none'
-                //Medida7.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 7) {
                 const Medida8 = document.getElementById('listaDeCortes-dato8')
@@ -1064,12 +1117,27 @@
             } else {
                 const Medida8 = document.getElementById('listaDeCortes-dato8')
                 Medida8.style.display = 'none'
-                //Medida8.innerText = "--";
             }
             if (tamañoLista > posicion_de_ejecucion + 8) {
-                const Medida8 = document.getElementById('listaDeCortes-dato8')
-                Medida8.style.display = 'block'
-                Medida8.innerText = "Existen cortes que aun no se muestran. ";
+                const Medida9 = document.getElementById('listaDeCortes-dato9')
+                Medida9.style.display = 'block'
+                Medida9.innerText = listaDeCortes[posicion_de_ejecucion + 8].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 8].accion_nombre;
+            } else {
+                const Medida8 = document.getElementById('listaDeCortes-dato9')
+                Medida8.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 9) {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'block'
+                Medida10.innerText = listaDeCortes[posicion_de_ejecucion + 9].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 9].accion_nombre;
+            } else {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 10) {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'block'
+                Medida10.innerText = "Existen cortes que aun no se muestran. ";
             }
         }
 
@@ -1098,7 +1166,7 @@
 
             }).catch(error => { alert("Error en la operacion de guardado en la eeprom"); });
 
-            NOshowOptions(['horizontalOptions', 'rebajeHorizontalOpcion', 'formModoProlijo', 'content', 'modalConfig', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida','PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'rebajeHorizontalOpcion', 'formModoProlijo', 'content', 'modalConfig', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida']);
         }
 
 
@@ -1107,7 +1175,7 @@
         function showModalConfig() {
             const modalConfig = document.getElementById('modalConfig');
             modalConfig.style.display = 'flex';
-            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida']);
         }
 
         function Apagoreglamedia(option) {
@@ -1145,7 +1213,7 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content4', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content4', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
 
             //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
 
@@ -1156,7 +1224,7 @@
             const formContainer = document.getElementById('content4');
             formContainer.style.display = 'block';
 
-            const valor = 0;
+            const valor = "Accion /";
             const accion = option;
             accion_Rebaje = option;
             const eepromDir = 0;
@@ -1165,9 +1233,10 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida','PanelDeEstado']);
 
-            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida']);
+
+            //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
 
 
 
@@ -1183,7 +1252,7 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'rebajeHorizontalOpcion', 'modalConfig', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'rebajeHorizontalOpcion', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
 
@@ -1192,15 +1261,15 @@
         function showModoProlijo() {
             const formModoProlijo = document.getElementById('formModoProlijo');
             formModoProlijo.style.display = 'block';
-            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida']);
         }
 
         async function actualizarpanel() {
 
-            const PanelDeEstado = document.getElementById('PanelDeEstado');
-            PanelDeEstado.style.display = 'block';
+            //const PanelDeEstado = document.getElementById('PanelDeEstado');
+            //PanelDeEstado.style.display = 'flow-root';
 
-            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion','graficoMedida', 'formModoProlijo']);
+           // NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'formModoProlijo']);
             const response = await fetch('http://192.168.0.123/panel').catch(console.error)
             const body = await response.json()
 
@@ -1216,7 +1285,16 @@
             console.log(body.Pos_TVH)
             console.log(body.Regla_media)
             console.log(body.Error)
+            console.log(body.Mediciones)
+            console.log(body.Piston_Parrilla)
 
+           
+            const Parrilla = document.getElementById('panelDeEstado-parrilla')
+            Parrilla.innerText = body.Piston_Parrilla;
+            const UltimaMediccion = document.getElementById('panelDeEstado-UltimaMediccion')
+            UltimaMediccion.innerText = body.Mediciones;
+            const Libre = document.getElementById('panelDeEstado-Libre')
+            Libre.innerText = "Espacio disponible";
             const mP = document.getElementById('panelDeEstado-modoProlijo')
             mP.innerText = body.modoProlijo
             const vel = document.getElementById('panelDeEstado-velocidad')
@@ -1226,7 +1304,7 @@
             const Ultimo_Corte_H = document.getElementById('panelDeEstado-Ultimo_Corte_H')
             Ultimo_Corte_H.innerText = body.Ultimo_Corte_H.toFixed(2)
             const temp = document.getElementById('panelDeEstado-Temperatura')
-            temp.innerText = body.temperatura.toFixed(2)
+            temp.innerText = body.temperatura.toFixed(2)+ "grados / hum:" + body.humidity.toFixed(2) + " % "
             const Pos_CP = document.getElementById('panelDeEstado-Pos_CP')
             Pos_CP.innerText = body.Pos_CP.toFixed(2)
             const Pos_CV = document.getElementById('panelDeEstado-Pos_CV')
@@ -1241,6 +1319,9 @@
             Regla_Media.innerText = body.Regla_Media
             const Error = document.getElementById('panelDeEstado-Error')
             Error.innerText = body.Error
+
+
+
         }
 
         function showHorizontalRebajeOptions(option) {
@@ -1250,7 +1331,7 @@
             const accionInput = document.getElementById('accion_input');
             accionInput.value = option;
 
-            NOshowOptions(['formModoProlijo', 'content', 'formModoVelocidad', 'modalConfig', 'horizontalOptions', 'PanelDeMedicion', 'graficoMedida','PanelDeEstado']);
+            NOshowOptions(['formModoProlijo', 'content', 'formModoVelocidad', 'modalConfig', 'horizontalOptions', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
             // mandar a guardar al array 
         }
 
@@ -1260,7 +1341,7 @@
             const horizontalOptions = document.getElementById('horizontalOptions');
             horizontalOptions.style.display = 'block';
 
-            NOshowOptions(['formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'modalConfig', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
 
             const valor = "Accion /";
             const accion = option;
@@ -1296,7 +1377,7 @@
             const formModoVelocidad = document.getElementById('formModoVelocidad');
             formModoVelocidad.style.display = 'block';
 
-            NOshowOptions(['horizontalOptions', 'content', 'rebajeHorizontalOpcion', 'formModoProlijo', 'modalConfig', 'PanelDeMedicion','graficoMedida', 'PanelDeEstado']);
+            NOshowOptions(['horizontalOptions', 'content', 'rebajeHorizontalOpcion', 'formModoProlijo', 'modalConfig', 'PanelDeMedicion', 'graficoMedida']);
         }
 
         function NOshowOptions(parametros) {
@@ -1432,11 +1513,7 @@
         const areaBajoReglaMediaMedicion = document.getElementsByClassName('areaBajoReglaMediaMedicion')[0]
 
 
-        const Coeficiente_reduccion = 7
-        const Placa_Ancho = 2750
-        const Placa_Alto = 1830
-        const Grosor_linea_corte = 2
-        const Altura_regla_media = 500
+
 
         inputHeight3.oninput = actualizarareaPlacaidHeight
 
@@ -1477,7 +1554,7 @@
 
             const valorInput = document.getElementById('valor_input');
             const valorIngresado = valorInput.value;
-            const valor = inputHeight3.value / Coeficiente_reduccion
+            var valor = inputHeight3.value / Coeficiente_reduccion
 
 
             if (valorIngresado <= 0) {
@@ -1489,13 +1566,13 @@
                 areaPlaca.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
                 areaPlaca.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
                 areaDesplazoCorteV.style.marginTop = 0 + 'px'
-                areaDesplazoCorteV.style.marginLeft = (Placa_Ancho / Coeficiente_reduccion) - 1 - valor + 'px'
+                areaDesplazoCorteV.style.marginLeft = ((Placa_Ancho / Coeficiente_reduccion) - valor) - (1) + 'px'
                 areaDesplazoCorteV.style.width = Grosor_linea_corte + 'px'
                 areaDesplazoCorteV.style.height = (Placa_Alto / Coeficiente_reduccion) - 1 + 'px'
                 areaACortar_1.style.marginTop = 0 + 'px'
                 areaACortar_1.style.height = (Placa_Alto / Coeficiente_reduccion) - 4 + 'px'
                 areaACortar_1.style.marginLeft = -2 + 'px'
-                areaACortar_1.style.width = (valor - 1) + 'px'
+                areaACortar_1.style.width = ((valor) - 1) + 'px'
                 areaBajoReglaMedia_1.style.display = 'none'
 
             } else if (Modo_H1) {
@@ -1551,4 +1628,3 @@
 </body>
 
 </html>
-
