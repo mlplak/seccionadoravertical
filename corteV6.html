@@ -1,198 +1,1630 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Maquina de Cortes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #000000;
-    }
-    #banner {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    #menu {
-      background-color: #1d1c1c;
-      color: white;
-      text-align: center;
-    }
-    #menu button {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-    }
-    #menu2 {
-      background-color: #4d4d4d;
-      color: rgb(146, 146, 146);
-      text-align: center;
-    }
-    #menu2 button {
-      background-color: #363636;
-      color: rgb(207, 206, 206);
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-    }
-    #content,#formHorizontal,#horizontalOptions, #formModoProlijo, #formModoVelocidad, #horizontalReglamediaOptions {
-      display: none;
-      background-color: #686868;
-      padding: 10px;
-      text-align: center;
-    }
-    input[type='number'] {
-      width: 300px;
-      padding: 15px;
-    }
-    #submit-button {
-      background-color: #444;
-      color: rgb(106, 201, 98);
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-  </style>
+    <title>Maquina de Cortes</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            color: rgb(199, 199, 199);
+            margin: 0;
+            padding: 0;
+        }
+
+        #banner {
+            background-color: rgb(56, 56, 56);
+            color: #b3b3b3;
+            padding: 1px;
+            text-align: center;
+            margin-left: 30%;
+            margin-right: 1%;
+            margin-top: 1%;
+            border: 2px solid #d11818d7;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            z-index: 5;
+            background-color: rgb(0, 0, 0)
+        }
+
+        #menu,
+        #menu1 {
+            background-color: #444444;
+            color: #fff;
+            text-align: center;
+            padding: 2px;
+
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
+        }
+
+        #menu button,
+        #menu1 button {
+            background-color: #666;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #menu button:hover #menu1 button:hover {
+            background-color: #33343b;
+        }
+
+        #texto_ancho {
+            position: absolute;
+            /* Se posiciona en relación al contenedor .box */
+            top: 0;
+            /* Alineado al borde superior del contenedor .box */
+            left: 0;
+            /* Alineado al borde derecho del contenedor .box */
+            width: calc(100% - 20px);
+            /* Ocupa el ancho del contenedor menos el padding */
+            text-align: justify;
+            color: rgb(255, 255, 255);
+            padding: 1px;
+        }
+
+        #texto_alto {
+            position: absolute;
+            /* Se posiciona en relación al contenedor .box */
+            bottom: 0;
+            /* Alineado al borde superior del contenedor .box */
+            right: 0;
+            /* Alineado al borde derecho del contenedor .box */
+            transform: rotate(90deg);
+            /* Rota el texto 90 grados */
+            transform-origin: top right;
+            /* Define el punto de origen de la rotación */
+            white-space: nowrap;
+            /* Evita que el texto se quiebre en múltiples líneas */
+            color: rgb(255, 254, 254);
+            padding: 1px;
+        }
+
+        #menu2 {
+            background-color: #333;
+            color: #ccc;
+            text-align: center;
+            padding: 2px;
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
+
+        }
+
+        #menu2 button {
+            background-color: #616161b4;
+            color: #e2e2e2;
+            border: none;
+            padding: 3px 6px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #menu2 button:hover {
+            background-color: #465750;
+        }
+
+
+        #content, #formHorizontal, #horizontalOptions,
+        #rebajeHorizontalOpcion, #formModoProlijo, #formModoVelocidad,
+        #horizontalReglamediaOptions {
+            display: none;
+            background-color: #333;
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
+        }
+
+        #content4 {
+            display: none;
+            background-color: #333;
+            padding: 2px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            max-width: 600px;
+
+        }
+
+
+        #graficoMedida {
+            display: none;
+            background-color: #333;
+            padding: 5px;
+            text-align: center;
+            margin: 1px auto;
+            margin-left: 30%;
+            margin-right: 1%;
+            border-radius: 5px;
+        }
+
+        .Box {
+            display: none;
+            width: 400px;
+            height: 1px;
+            background-color: #979797;
+            max-width: 580px;
+            margin-top: 50px;
+            margin: 0 auto;
+            border-radius: 1px;
+            border-color: rgb(71, 68, 62);
+            border: 10px;
+            border: 2px solid rgb(32, 28, 28);
+
+        }
+
+        .Box2 {
+            display: none;
+            margin: 0px;
+            margin-top: 1px;
+            width: 400px;
+            height: 0px;
+            background-color: #000000;
+            border: 1px solid rgb(90, 87, 87);
+        }
+
+
+        .areaPlacaid,
+        .areaPlacaMd {
+            display: none;
+            width: 400px;
+            height: 200px;
+            background-color: #979797;
+            max-width: 580px;
+            margin-top: 50px;
+            margin: 0 auto;
+            border-radius: 1px;
+            border-color: rgb(71, 68, 62);
+            border: 10px;
+            border: 2px solid rgb(32, 28, 28);
+            position: relative;
+
+        }
+
+        .areaDesplazoCorteV,
+        .AreaPlacaMed {
+            display: none;
+            background-color: #000000;
+            border: 1px solid rgb(90, 87, 87);
+        }
+
+        .areaACortar,
+        .PlacaMedida {
+            display: none;
+            position: relative;
+            background-color: rgba(75, 150, 61, 0.412);
+            border: 1px solid rgb(90, 87, 87);
+
+        }
+
+        .areaBajoReglaMedia,
+        .areaBajoReglaMediaMedicion {
+            display: none;
+            background-color: rgba(255, 0, 0, 0.123);
+            border: 1px solid rgb(90, 87, 87);
+            position: absolute;
+            bottom: 0px;
+        }
+
+        input[type='number'] {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: rgb(158, 157, 157);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #000000;
+            font-size: 20px;
+        }
+
+        #Altura[type='number'] {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: rgb(158, 157, 157);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #000000;
+            font-size: 20px;
+        }
+
+
+        
+
+
+        input[type='number']:focus {
+            border: 1px solid #fff;
+            background: rgb(151, 148, 148);
+        }
+
+        #submit-button {
+            background-color: #666;
+            color: #33cc33;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #PanelDeMedicion {
+            display: none;
+            position: absolute;
+            left: 30%;
+            right: 1%;
+            top: 100;
+            bottom: 5;
+            height: min-content;
+            margin: auto;
+            color: #d8c6c6b9;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #18d121d7;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(157, 211, 155, 0.801);
+            z-index: 5;
+            background-color: rgb(0, 0, 0);
+        }
+
+        #PanelDeEstado {
+            position: absolute;
+            left: 1%;
+            right: 1%;
+            bottom: 1%;
+            height: min-content;
+            margin-bottom: 1%;
+            color: #e2e2e2b9;
+            font-size: 16px;
+            text-align: center;
+            border: 2px solid #aa3535d7;
+            border-radius: 10px;
+            padding: 2px;
+            box-shadow: 0 0 10px rgba(204, 156, 156, 0.801);
+            z-index: 2;
+            background-color: rgb(0, 0, 0);
+            column-count: 5;
+            column-gap: 1px;
+            break-inside: avoid;
+            display: flow-root;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #listaDeCortes {
+            width: 26%;
+            /* Ajusta el ancho según lo necesites */
+            position: absolute;
+            top: 2%;
+            left: 1%;
+            color: #d8c6c6b9;
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: left;
+            border: 2px solid #d11818d7;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            background-color: rgb(0, 0, 0);
+        }
+
+        #listaDeCortes-dato0 {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        #listaDeCortes-dato1, #listaDeCortes-dato2, #listaDeCortes-dato3, #listaDeCortes-dato4,
+        #listaDeCortes-dato5, #listaDeCortes-dato6, #listaDeCortes-dato7, #listaDeCortes-dato8,
+        #listaDeCortes-dato9, #listaDeCortes-dato10 {
+            font-size: 14px;
+            color: #e4e4e4;
+        }
+
+
+
+        .modalConfig {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgb(218, 216, 216);
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: 200px;
+            display: none;
+        }
+
+    </style>
 </head>
+
 <body>
-  <div id='banner'>
-    <h2>Seccionadora Vertical</h2>
-  </div>
-  <div id='menu'>
-    <button onclick='showForm(1)'>Corte Vertical</button>
-    <button onclick='showHorizontalOptions()'>Corte Horizontal</button>
-  </div>
+    <div id='banner'>
+        <h3>Seccionadora Vertical</h3>
+    </div>
+    <div id='menu'>
+        <button onclick='showForm(101),ActivoModo_V()'>Corte Vertical</button>
+        <button onclick='showHorizontalOptions(20)'>Corte Horizontal </button>
+        <button onclick='showHorizontalRebajeOptions()'>Modo Rebaje H</button>
+        <button onclick='sendoptionForm()'>Refilar</button>
+    </div>
+    <div id='menu1'>
+        <button onclick='sendoptionForm(5)'>Cargar Placa</button>
+        <button onclick='BotonMedicion()'>Medir Placa|--|</button>
+        <button onclick='Agregarespera()'>Agregar pausa</button>
+        <button onclick='Pausarlista()'>Pausar || Continuar |> </button>
 
-  <div id='menu2'>
-    <button onclick='showModoProlijo()'>Modo Prolijo</button>
-    <button onclick='formModoVelocidad()'>Velocidad</button>
-    <button onclick='sendoptionForm(5)'>Cargar Placa</button>
-     <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-    <button onclick='sendoptionForm(6)'>Estado actual</button>
-    <button onclick='sendoptionForm(7)'>Modo Rebaje H</button>
-    <button onclick='sendoptionForm(8)'>Menu configuracion</button>
-    <button onclick='sendoptionForm(9)'>Reinicar carros</button>
-    <button onclick='sendoptionForm(10)'>Reset</button>
-  </div>
+    </div>
+    <div id='menu2'>
+        <button onclick='showModoProlijo()'>Modo Prolijo</button>
+        <button onclick='formModoVelocidad()'>Velocidad</button>
+        <button onclick='sendoptionForm(9)'>Reset</button>
+        <button onclick='showModalConfig()'>Configuracion</button>
 
-  <div id='content'>  <!-- de esto solo entiendo que se hace un post a /corte y despues se ejecuta sendvalue. -->
-    <form action='/corte' method='POST' id='corteForm'>
-      <input type='number' name='valor' step='0.01' placeholder='Ingrese la medida' id='valor_input'>
-      <input type='hidden' name='accion' id='accion_input'>
-      <button type='submit' name='enviar' value='Enviar' onclick='sendValue()'>OK</button>
-    </form>
-  </div>
+    </div>
 
-  <div id="horizontalOptions">
-    <button onclick='showForm(21)'>Desde Abajo</button>
-    <button onclick='showForm(22)'>Desde Arriba</button> 
-    <!-- aca hay que hacer funciones que envien solo los valores option y luego permitan ingresar luego omgrear el numero en el cuadro -->
-    <button onclick='showhorizontalReglamediaOptions(23)'>Sobre Regla Media</button>
-  </div>
+    <div id='content'>
+        <form id='corteForm'>
+            <input type='number' name='valor' step='0.1' placeholder='Ingrese la medida' id='valor_input'>
+            <input type='hidden' name='accion' id='accion_input'>
+            <button type='submit' name='enviar' id='submit-button'>OK</button>
+        </form>
+        <div class="areaPlacaid">
+            <div class="areaDesplazoCorteV">
+                <div class="areaACortar"></div>
+            </div>
+            <div class="areaBajoReglaMedia"></div>
+        </div>
+    </div>
 
-  <div id="horizontalReglamediaOptions">
-    <button onclick='showForm(231)'>Desde Regla</button>
-    <button onclick='showForm(232)'>Desde Arriba</button> 
-  </div>
+    <div id='graficoMedida'>
+        <div class="areaPlacaMd">
 
-  <div id="formModoProlijo">
-    <button onclick='showFormOptions(31)'>1 pasada de sierra</button> 
-    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-    <button onclick='showFormOptions(32)'>2 pasadas de sierra</button>
-    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-  </div>
+            <div class="PlacaMedida">
+                <div id="texto_ancho">--</div>
+                <div id="texto_alto">--</div>
+            </div>
 
-  <div id="formModoVelocidad">
-    <button onclick='showFormOptions(41)'>Velocidad Baja</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-    <button onclick='showFormOptions(42)'>Velocidad Normal</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-    <button onclick='showFormOptions(43)'>Velocidad Rapida</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
-  </div>
-  <script>
+            <div class="areaBajoReglaMediaMedicion"></div>
+        </div>
+    </div>
 
-    function showForm(option) {
-      const formContainer = document.getElementById('content');
-      formContainer.style.display = 'block';
-      const accionInput = document.getElementById('accion_input');
-      accionInput.value = option;
-      NOshowOptions('horizontalOptions');
-      NOshowOptions('formModoProlijo');
-      NOshowOptions('formModoVelocidad');
+    <div id='content4'>
+        <form action='/rebajeH' method='POST' id='miFormulario'>
+            <div>
+                <label for='valor1'>Altura de placa:</label>
+            </div>
+            <div>
+                <input type='number' name='Altura' step='0.1' placeholder='Altura de placa' id='Altura'>
+            </div>
+            <div>
+                <label for='valor2'>Margen de separacion entre el borde y el inicio del rebaje:</label>
+            </div>
+            <div>
+                <input type='number' name='margen' step='0.1' placeholder='Margen' id='margen'>
+            </div>
+            <div>
+                <label for='valor3'>Ancho total del rebaje :</label>
+            </div>
+            <div>
+                <input type='number' name='ancho' step='0.1' placeholder='Ancho del rebaje' id='ancho'>
+            </div>
+            <div>
+                <label for='valor4'>Profundidad del rebaje:</label>
+            </div>
+            <div>
+                <input type='number' name='profundidad' step='0.1' placeholder='Profundidad' id='profundidad'>
+            </div>
+            <input type='hidden' name='accion' id='accion_input2'>
+            <button type='submit' name='enviar'>Enviar</button>
+        </form>
+        <div class="Box">
+            <div class="Box2"> </div>
+        </div>
+    </div>
+
+    <div id="horizontalOptions">
+        <button onclick='Apagoreglamedia(26),showForm(21),ActivoModo_H1()'>Desde Abajo</button>
+        <button onclick='Apagoreglamedia(26),showForm(22),ActivoModo_H2()'>Desde Arriba</button>
+        <button onclick='showhorizontalReglamediaOptions(25),ActivoModo_H3()'>Sobre Regla Media</button>
+    </div>
+    <div id="horizontalReglamediaOptions">
+        <button onclick='showForm(23)'>Desde Regla</button>
+        <button onclick='showForm(24)'>Desde Arriba</button>
+    </div>
+    <div id="formModoProlijo">
+        <button onclick='sendoptionForm(31)'>1 pasada de sierra</button>
+        <button onclick='sendoptionForm(32)'>2 pasadas de sierra</button>
+    </div>
+    <div id="formModoVelocidad">
+        <button onclick='sendoptionForm(41)'>Velocidad Baja</button>
+        <button onclick='sendoptionForm(42)'>Velocidad Normal</button>
+        <button onclick='sendoptionForm(43)'>Velocidad Rapida</button>
+    </div>
+    <div id="rebajeHorizontalOpcion">
+        <button onclick='showImputRebajeH(71)'>Desde Abajo</button>
+        <button onclick='showImputRebajeH(73)'>Desde Regla</button>
+    </div>
+    <div id="PanelDeEstado">
+        <div>
+            <p>Modo : <span id="panelDeEstado-modoProlijo">--</span></p>
+            <p>Velocidad : <span id="panelDeEstado-velocidad">--</span></p>
+            <p>temperatura : <span id="panelDeEstado-Temperatura">--</span></p>
+        </div>
+        <div>
+            <p>Ultimo corte Vertical : <span id="panelDeEstado-Ultimo_Corte_V">--</span></p>
+            <p>Ultimo corte Horizontal : <span id="panelDeEstado-Ultimo_Corte_H">--</span></p>
+            <p>Regla media : <span id="panelDeEstado-Regla_Media">--</span></p>
+        </div>
+        <div>
+            <p>Posicion CP : <span id="panelDeEstado-Pos_CP">--</span></p>
+            <p>Posicion CV : <span id="panelDeEstado-Pos_CV">--</span></p>
+            <p>Posicion CT : <span id="panelDeEstado-Pos_CT">--</span></p>
+        </div>
+        <div>
+            <p>Parrilla  : <span id="panelDeEstado-parrilla">--</span></p>
+            <p>Ultima Med : <span id="panelDeEstado-UltimaMediccion">--</span></p>
+            <p>-- : <span id="panelDeEstado-Libre">--</span></p>
+        </div>
+        <div>
+            <p>Posicion TVH : <span id="panelDeEstado-Pos_TVH">--</span></p>
+            <p>Posicion TVV : <span id="panelDeEstado-Pos_TVV">--</span></p>
+            <p>Reporte de error : <span id="panelDeEstado-Error">--</span></p>
+        </div>
+    </div>
+
+    <div class="modalConfig" id="modalConfig">
+        <form id="modalConfig-form">
+            <select name="configId" id="configId">
+            </select>
+            <input name="valor" type="number" step='0.01' required id="modalConfigInput">
+            <button>Actualizar</button>
+        </form>
+    </div>
+    </div>
+
+    <div id="PanelDeMedicion">
+        <div>
+            <p>Medicion de Placa </p>
+            <p id="PanelDeMedicion-dato">Esperando medicion</p>
+        </div>
+    </div>
+
+    <div id="listaDeCortes">
+        <div>
+            <p>Accion actual:</p>
+            <p id="listaDeCortes-dato0">--</p>
+            <p id="listaDeCortes-dato00">>> >></p>
+            <p>Proximos cortes en lista </p>
+            <p id="listaDeCortes-dato1">--</p>
+            <p id="listaDeCortes-dato2">--</p>
+            <p id="listaDeCortes-dato3">--</p>
+            <p id="listaDeCortes-dato4">--</p>
+            <p id="listaDeCortes-dato5">--</p>
+            <p id="listaDeCortes-dato6">--</p>
+            <p id="listaDeCortes-dato7">--</p>
+            <p id="listaDeCortes-dato8">--</p>
+            <p id="listaDeCortes-dato9">--</p>
+            <p id="listaDeCortes-dato10">--</p>
+        </div>
+    </div>
+
+    <script>
+
+        //decalracion de variables y constantes 
+        // tiempos de ejecucion y reitentos
+        var contador = 0;
+        var ms = 5000;
+        var contador_consulta = 0;
+        //--------------------------------------------------------
+        // Array y objetos de listas de guardado y ejecucion
+        let listaDeCortes = [];
+        let posicion_de_guardado = 0;
+        let posicion_de_ejecucion = 0;
+        let proceso_de_corte_finalizado = true;
+        let fetch_consulta = false;
+        var accion_nombre = "indefinida"
+        let regla_media_activada = false;
+        var Modo = "Vertical";
+        var Espera_De_30seg = false;
+        let tiempo_de_espera = 0;
+        let En_espera = false;
+        let pausar_lista = false;
+        let Tiempo_Actualizacion_lista = 5000;
+        let accion_Rebaje;
+        //------------------------------------------------------------
+
+        var Coeficiente_reduccion = 10
+        var Placa_Ancho = 2750
+        var Placa_Alto = 1830
+        var Grosor_linea_corte = 2
+        const Altura_regla_media = 500
+
+        //------- ajusto el coeficiente segun tamaño de pantalla------
+
+        function AjusteDeCoeficienteReducccion() {
+
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            console.log("ancho :" + width + " alto: " + height)
+
+            if (width < 410) {
+                Coeficiente_reduccion = 12;
+            } else if (width > 410 && width < 610) {
+                Coeficiente_reduccion = 10;
+            }
+            else if (width > 610 && width < 910) {
+                Coeficiente_reduccion = 7;
+            }
+            else if (width > 910 && width < 1210) {
+                Coeficiente_reduccion = 6;
+            }
+            else if (width > 1210) {
+                Coeficiente_reduccion = 5;
+            }
+            console.log("Coeficiente_reduccion " + Coeficiente_reduccion)
+        }
+
+
+        AjusteDeCoeficienteReducccion();
+
+
+        const corteForm = document.getElementById('corteForm')
+        corteForm.onsubmit = handleCorteForm
+
+        const accionInputvalor = document.getElementById('valor_input');
+
+        function handleCorteForm(event) {
+
+            event.preventDefault() // prevenir el comportamiento por defecto
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida',]);
+
+            const valor = event.target[0].value
+            const accion = parseInt(event.target[1].value)
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+            event.target.reset()
+        }
+
+        function BotonMedicion() {
+
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida',]);
+
+            const valor = "Accion/ "
+            const accion = 10;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = true;
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+        }
+
+
+        function procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion, Espera_De_30seg_OBJ) {
+
+            switch (accion) {
+
+                case 101:
+                    accion_nombre = "Corte vertical"
+                    break;
+                case 202:
+                    accion_nombre = "Pausa Agregada por el usuario"
+                    break;
+                case 5:
+                    accion_nombre = "Cargar placa"
+                    break;
+                case 9:
+                    accion_nombre = "REINICIO DE Seccionadora"
+                    break;
+                case 10:
+                    accion_nombre = "Medicion de placa"
+                    break;
+                case 20:
+                    accion_nombre = "Preparar para corte Horizontal"
+                    break;
+                case 21:
+                    accion_nombre = "Corte Horizontal desde abajo"
+                    break;
+                case 22:
+                    accion_nombre = "Corte horizontal desde arriba"
+                    break;
+                case 23:
+                    accion_nombre = "Corte horizontal Sobre Regla"
+                    break;
+                case 24:
+                    accion_nombre = "horiz. sobre regla, desde arriba"
+                    break;
+                case 25:
+                    accion_nombre = "Desplegar regla media"
+                    break;
+                case 26:
+                    accion_nombre = "Desactivar regla Media"
+                    break;
+                case 31:
+                    accion_nombre = "Set: 1 pasada de sierra"
+                    break;
+                case 32:
+                    accion_nombre = "Set: 2 pasadas de sierra"
+                    break;
+                case 41:
+                    accion_nombre = "Set: Velocidad Baja"
+                    break;
+                case 42:
+                    accion_nombre = "Set: Velocidad Normal"
+                    break;
+                case 43:
+                    accion_nombre = "Set: Velocidad Rapida"
+                    break;
+                case 71:
+                    accion_nombre = "Rebaje, desde Abajo"
+                    break;
+                case 73:
+                    accion_nombre = "Rebaje, desde regla"
+                    break;
+                default:
+                    accion_nombre = "Desconocido"
+                    break;
+            }
+
+            let objectoDeCorte = {};
+
+            objectoDeCorte["valor"] = valor;
+            objectoDeCorte["accion"] = accion;
+            objectoDeCorte["eepromDir"] = 0;
+            objectoDeCorte["margen"] = margen;
+            objectoDeCorte["ancho"] = ancho;
+            objectoDeCorte["profundidad"] = profundidad;
+            objectoDeCorte["a_procesar"] = true;
+            objectoDeCorte["Solicitud_Medicion"] = Solicitud_Medicion;
+            objectoDeCorte["accion_nombre"] = accion_nombre;
+            objectoDeCorte["posicion_de_guardado_Obj"] = posicion_de_guardado;
+            objectoDeCorte["Espera_30Seg"] = Espera_De_30seg_OBJ;
+
+
+            // meter objetoDeCOrte a listaDeCortes
+            listaDeCortes[posicion_de_guardado] = objectoDeCorte;
+            posicion_de_guardado++;
+            console.log(listaDeCortes);
+
+            actualizarListaProximosCortes();
+        }
+
+
+        function procesadorDeCortes() {
+            console.log("proceso pero no entro em if lista de corte");
+
+            var tamañoLista = listaDeCortes.length;
+
+            if ((tamañoLista > 0) && (tamañoLista > posicion_de_guardado - 1) && (posicion_de_ejecucion < tamañoLista)) {
+                console.log("Dentro de if tamañoLista >=  posicion_de_ejecucion:");
+                console.log(tamañoLista);
+                console.log(posicion_de_ejecucion);
+
+                if (listaDeCortes[posicion_de_ejecucion]["a_procesar"]) {
+
+                    //hay que hacer una analisis aca, porque es probanle que este falando eso
+                    console.log("Dentro de lista d cortes a_procesar, envio:");
+                    console.log(listaDeCortes[posicion_de_ejecucion]);
+
+                    const valor = listaDeCortes[posicion_de_ejecucion].valor;
+                    const accion = listaDeCortes[posicion_de_ejecucion].accion;
+                    const eepromDir = listaDeCortes[posicion_de_ejecucion].eepromDir;
+                    const margen = listaDeCortes[posicion_de_ejecucion].margen;
+                    const ancho = listaDeCortes[posicion_de_ejecucion].ancho;
+                    const profundidad = listaDeCortes[posicion_de_ejecucion].profundidad;
+                    const posicion_de_guardado_Obj = listaDeCortes[posicion_de_ejecucion].posicion_de_guardado_Obj
+
+                    listaDeCortes[posicion_de_ejecucion]["a_procesar"] = false;
+                    //proceso_de_corte_finalizado = false;
+                    actualizarListaProximosCortes();
+                    fetch_consulta = false;
+
+                    //-----si el pedido es de medicion, ejecuto el fetch medicion y no ejcuto el fecth corte 
+                    if (listaDeCortes[posicion_de_ejecucion]["Solicitud_Medicion"]) {
+                        fetchmedicion(fetch_consulta);
+                    } else {
+                        fetchcorte(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta);
+                    }
+                }
+            }
+        }
+
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms))
+        }
+
+        function fetchcorte(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj) {
+
+            var tamañoLista = listaDeCortes.length;
+
+            console.log("Enviando al server")
+            console.log("valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta")
+            console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
+
+            actualizarListaProximosCortes();
+
+
+                fetch('http://192.168.0.123/corte', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `valor=${valor}&accion=${accion}&eepromDir=${eepromDir}&margen=${margen}&ancho=${ancho}&profundidad=${profundidad}$posicion_de_guardado_Obj=${posicion_de_guardado_Obj}$pos_de_ejec_Obj=${posicion_de_ejecucion_OBJ}`
+
+            }).then(response => {
+                console.log("respuesta del server; ")
+                console.log(response)
+                contador = 0;
+                if (!fetch_consulta_Obj) {
+                    posicion_de_ejecucion++;
+                    proceso_de_corte_finalizado = false;
+                } else if (fetch_consulta_Obj) {
+                    proceso_de_corte_finalizado = true;
+                    fetch_consulta = false;
+                }
+            })
+                .catch(async (error) => {
+                    if (contador < 4) {
+                        await wait(ms);
+                        console.log("reenviando el fetch ")
+                        console.log("valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta")
+                        console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
+                        fetchcorte(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj);
+                        contador++;
+                    } else {
+                        contador = 0;
+                    }
+                });
+
+
+
+
+            /*   
+    if (!fetch_consulta_Obj) {
+        posicion_de_ejecucion++;
+        proceso_de_corte_finalizado = false;
+   
+    } else if (fetch_consulta_Obj) {
+        proceso_de_corte_finalizado = true;
+        fetch_consulta = false;
     }
-
-    function showFormOptions(option) {
-      const accionInput = document.getElementById('accion_input');
-      accionInput.value = option;
-      // como tengo que tratar los valores para enviarlos? por consola se ven bien. 
-      
-  // Por ejemplo:
-  fetch('http://192.168.0.123/corte', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  body: `valor=${0}&accion=${accionInput.value}`
-}).then(response => {
-  // Lógica para manejar la respuesta si es necesario
-});
-
-  // Restablecer los campos del formulario y ocultar las opciones
- //valorInput.value = '';
-
-      console.log(`valor: ${0}, accion: ${option}`);
-      NOshowOptions('horizontalOptions');
-      NOshowOptions('formModoProlijo');
-      NOshowOptions('formModoVelocidad');
-     }
+     */
 
 
 
-    function showModoProlijo() {
-      const formModoProlijo = document.getElementById('formModoProlijo');
-      formModoProlijo.style.display = 'block';
-    }
+            actualizarListaProximosCortes();
+        }
+        // esta es solo para probar los graficos de las mediciones 
 
-    function showHorizontalOptions() {
-      const horizontalOptions = document.getElementById('horizontalOptions');
-      horizontalOptions.style.display = 'block';
-      NOshowOptions('formModoProlijo');
-      NOshowOptions('formModoVelocidad');
-    }
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
-    function showhorizontalReglamediaOptions() {
-      const horizontalreglamediaOptions = document.getElementById('horizontalReglamediaOptions');
-      horizontalreglamediaOptions.style.display = 'block';
-    }
-    
-    function formModoVelocidad() {
-      const formModoVelocidad = document.getElementById('formModoVelocidad');
-      formModoVelocidad.style.display = 'block';
-    }
+        async function fetchmedicion(fetch_consulta_Obj) {
 
-    function NOshowOptions(parametro) {
-      const horizontalOptions = document.getElementById(parametro);
-      horizontalOptions.style.display = 'none';
+            //idear como hacer el envio del pedido y luego la espera.
+            console.log("ESTOY EN FETCH MEDICION");
 
-    }
+            if (!fetch_consulta_Obj) {
+                posicion_de_ejecucion++;
+                proceso_de_corte_finalizado = false;
+            }
 
-    function sendValue() {
-      const valorInput = document.getElementById('valor_input');
-      const valor = valorInput.value;
-      const accionInput = document.getElementById('accion_input');
-      const option = accionInput.value;
-      console.log(`Valor: ${valor}, Opción: ${option}`);
-      
-      // Aquí puedes agregar tu lógica para enviar los datos por serial o realizar otras acciones necesarias
-      //NOshowOptions('horizontalOptions','formModoProlijo','formModoVelocidad')
+            actualizarListaProximosCortes()
 
-      NOshowOptions('horizontalOptions');
-      NOshowOptions('formModoProlijo');
-      NOshowOptions('formModoVelocidad');
-    }
+            const Medicion = document.getElementById('PanelDeMedicion-dato')
+            Medicion.innerText = "esperando...";
+            const PanelDeMedicion = document.getElementById('PanelDeMedicion');
+            PanelDeMedicion.style.display = 'block';
 
-  </script>
+            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'graficoMedida', 'formModoProlijo']);
+
+            const GrficoContainer = document.getElementById('graficoMedida');
+            GrficoContainer.style.display = 'block';
+
+            areaPlacaMd.style.display = 'block'
+            areaPlacaMd.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
+            areaPlacaMd.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+
+            const response = await fetch('http://192.168.0.123/panelmedicion').catch(console.error)
+            const body = await response.json()
+
+            console.log(body.Medicion)
+
+            var MedicionAncho = body.MedicionAncho
+            var MedicionAlto = body.MedicionAlto
+
+            // console.log("En display ");
+            areaPlacaMd.style.display = 'block'
+            //AreaPlacaMed.style.display = 'block'
+            PlacaMedida.style.display = 'block'
+
+            //let MedicionAlto = getRandomInt(300, 1830);
+            //let MedicionAncho = getRandomInt(400, 2600);
+
+            const TextoMedicionAlto = document.getElementById('texto_alto');
+            TextoMedicionAlto.innerText = MedicionAlto + "mm";
+
+            const TextoMedicionAncho = document.getElementById('texto_ancho');
+            TextoMedicionAncho.innerText = MedicionAncho + "mm";
+
+            PlacaMedida.style.marginTop = (Placa_Alto - MedicionAlto) / (Coeficiente_reduccion) - 1 + 'px'
+            PlacaMedida.style.marginLeft = ((Placa_Ancho - MedicionAncho) / 2) / (Coeficiente_reduccion) + 'px'
+            PlacaMedida.style.width = (MedicionAncho / Coeficiente_reduccion) + 'px'
+            PlacaMedida.style.height = (MedicionAlto / Coeficiente_reduccion) + 'px'
+
+            Medicion.innerText = "ancho: " + MedicionAncho + " mm X alto :" + MedicionAlto + " mm";
+
+        }
+
+        function Pausarlista() {
+            if (pausar_lista) {
+                pausar_lista = false;
+                alert("lista en proceso >> >>");
+            } else {
+                pausar_lista = true;
+                alert("lista pausada - ulimo corte enviado " + listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre);
+            }
+
+        }
+
+        function Agregarespera() {
+
+            Espera_De_30seg = true;
+
+            const valor = "Accion/ "
+            const accion = 202;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+            const Espera_De_30seg_OBJ = Espera_De_30seg
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion, Espera_De_30seg_OBJ);
+
+            Espera_De_30seg = false;
+
+            // ----------------------------
+            //Logica para la espera
+            //-----------------------------
+        }
+
+    </script>
+
+    <script>
+
+        const rebajeForm = document.getElementById('miFormulario')
+        rebajeForm.onsubmit = handlerebajeForm
+
+
+        const accionInputvalor2 = document.getElementById('accion_input2');
+
+
+
+        function handlerebajeForm(event) {
+            event.preventDefault() // prevenir el comportamiento por defecto
+
+
+            const valor = event.target.Altura.value
+            const accion = accion_Rebaje;
+            const eepromDir = 0;
+            const margen = event.target.margen.value
+            const ancho = event.target.ancho.value
+            const profundidad = event.target.profundidad.value
+            const Solicitud_Medicion = false
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+
+            //enviar al array
+            NOshowOptions(['horizontalOptions', 'content4', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'graficoMedida', 'PanelDeMedicion']);
+            event.target.reset()
+
+
+
+        }
+
+    </script>
+
+    <script>
+
+
+        actualizarListaauto();
+
+
+        // setInterval(modificadorDeTiempo,5000)
+        /*
+                let contador_de_espera;
+                function  modificadorDeTiempo(){
+        
+                    //console.log("hola!");
+        
+                    var tamañoLista = listaDeCortes.length;
+                    if(tamañoLista > posicion_de_ejecucion){
+                               actualizarListaauto();
+               console.log("actualizolista!");
+               }else if (tamañoLista == posicion_de_ejecucion){
+               contador_de_espera++;
+               if (contador_de_espera > 100) {
+                actualizarListaauto();
+                console.log("actualizolista porque paso 10");
+                contador_de_espera = 0;
+               }
+               }
+                }
+                */
+
+        setInterval(actualizarListaauto, Tiempo_Actualizacion_lista);
+
+        function actualizarListaauto() {
+
+
+            if (!proceso_de_corte_finalizado) {
+                var tamañoLista = listaDeCortes.length;
+                console.log("en proceso_de_corte_finalizado")
+
+                //contador_consulta++;
+
+                if (tamañoLista > 0 && posicion_de_ejecucion <= tamañoLista) { //&& contador_consulta > 1) {
+                    console.log("antes del fetch consulta")
+                    fetch_consulta = true;
+                    fetchcorte(0, 0, 0, 0, 0, 0, 0, 0, fetch_consulta);
+                    console.log("antes del fetch Axcctualzizar panel")
+                    actualizarpanel();
+                    //contador_consulta = 0;
+                }
+            } else {
+                if (!pausar_lista) {
+                    console.log("en pausar lista adennntro!")
+                    var tamañoLista = listaDeCortes.length;
+
+                    if (tamañoLista > 0 && posicion_de_ejecucion >= 0 && tamañoLista > posicion_de_ejecucion) {
+                        //procesadorDeCortes();
+                        if (listaDeCortes[posicion_de_ejecucion]["Espera_30Seg"]) {
+                            pausar_lista = true;
+                            alert("programa Pausado");
+                            listaDeCortes[posicion_de_ejecucion]["Espera_30Seg"] = false;
+                        } else {
+                            procesadorDeCortes();
+                        }
+                    }
+                }
+            }
+            actualizarListaProximosCortes();
+
+        }
+
+        function actualizarListaProximosCortes() {
+
+            var tamañoLista = listaDeCortes.length;
+            console.log("tamañoLista" + tamañoLista + ", pos de ej" + posicion_de_ejecucion);
+            // - - - - - - - - - - - - - 
+            // actualizo y muestro el corte actual 
+            if (tamañoLista == 0) {
+                const Medida0 = document.getElementById('listaDeCortes-dato0')
+                Medida0.innerText = "No hay cortes pendientes";
+            }
+            else if ((posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
+                (!proceso_de_corte_finalizado && posicion_de_ejecucion === tamañoLista && tamañoLista > 0 && posicion_de_ejecucion > 0)) {
+                const Medida0 = document.getElementById('listaDeCortes-dato0')
+                Medida0.innerText = listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
+            }
+            else if (posicion_de_ejecucion == tamañoLista && proceso_de_corte_finalizado) {
+                const Medida0 = document.getElementById('listaDeCortes-dato0')
+                Medida0.innerText = "No hay cortes pendientes, ulitmo: " + listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
+            }
+            if (tamañoLista > posicion_de_ejecucion) {
+                const Medida1 = document.getElementById('listaDeCortes-dato1')
+                Medida1.style.display = 'block'
+                Medida1.innerText = listaDeCortes[posicion_de_ejecucion].valor + "mm " + listaDeCortes[posicion_de_ejecucion].accion_nombre;
+            } else {
+                const Medida1 = document.getElementById('listaDeCortes-dato1')
+                Medida1.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 1) {
+                const Medida2 = document.getElementById('listaDeCortes-dato2')
+                Medida2.style.display = 'block'
+                Medida2.innerText = listaDeCortes[posicion_de_ejecucion + 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 1].accion_nombre;
+            } else {
+                const Medida2 = document.getElementById('listaDeCortes-dato2')
+                Medida2.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 2) {
+                const Medida3 = document.getElementById('listaDeCortes-dato3')
+                Medida3.style.display = 'block'
+                Medida3.innerText = listaDeCortes[posicion_de_ejecucion + 2].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 2].accion_nombre;
+            } else {
+                const Medida3 = document.getElementById('listaDeCortes-dato3')
+                Medida3.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 3) {
+                const Medida4 = document.getElementById('listaDeCortes-dato4')
+                Medida4.style.display = 'block'
+                Medida4.innerText = listaDeCortes[posicion_de_ejecucion + 3].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 3].accion_nombre;
+            } else {
+                const Medida4 = document.getElementById('listaDeCortes-dato4')
+                Medida4.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 4) {
+                const Medida5 = document.getElementById('listaDeCortes-dato5')
+                Medida5.style.display = 'block'
+                Medida5.innerText = listaDeCortes[posicion_de_ejecucion + 4].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 4].accion_nombre;
+            } else {
+                const Medida5 = document.getElementById('listaDeCortes-dato5')
+                Medida5.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 5) {
+                const Medida6 = document.getElementById('listaDeCortes-dato6')
+                Medida6.style.display = 'block'
+                Medida6.innerText = listaDeCortes[posicion_de_ejecucion + 5].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 5].accion_nombre;
+            } else {
+                const Medida6 = document.getElementById('listaDeCortes-dato6')
+                Medida6.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 6) {
+                const Medida7 = document.getElementById('listaDeCortes-dato7')
+                Medida7.style.display = 'block'
+                Medida7.innerText = listaDeCortes[posicion_de_ejecucion + 6].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 6].accion_nombre;
+            } else {
+                const Medida7 = document.getElementById('listaDeCortes-dato7')
+                Medida7.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 7) {
+                const Medida8 = document.getElementById('listaDeCortes-dato8')
+                Medida8.style.display = 'block'
+                Medida8.innerText = listaDeCortes[posicion_de_ejecucion + 7].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 7].accion_nombre;
+            } else {
+                const Medida8 = document.getElementById('listaDeCortes-dato8')
+                Medida8.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 8) {
+                const Medida9 = document.getElementById('listaDeCortes-dato9')
+                Medida9.style.display = 'block'
+                Medida9.innerText = listaDeCortes[posicion_de_ejecucion + 8].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 8].accion_nombre;
+            } else {
+                const Medida8 = document.getElementById('listaDeCortes-dato9')
+                Medida8.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 9) {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'block'
+                Medida10.innerText = listaDeCortes[posicion_de_ejecucion + 9].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 9].accion_nombre;
+            } else {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'none'
+            }
+            if (tamañoLista > posicion_de_ejecucion + 10) {
+                const Medida10 = document.getElementById('listaDeCortes-dato10')
+                Medida10.style.display = 'block'
+                Medida10.innerText = "Existen cortes que aun no se muestran. ";
+            }
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+        const fomrConfig = document.getElementById('modalConfig-form')
+        fomrConfig.onsubmit = manejarFormConfig
+
+        // -------------------------------------------
+        // guardadode eprrom
+        function manejarFormConfig(event) {
+            event.preventDefault()
+
+            console.log(event.target.configId.value);
+            console.log(event.target[1].value);
+            const campo = event.target.configId.value;
+            const valor = event.target[1].value;
+
+            fetch('http://192.168.0.123/config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `valor=${valor}&accion=${8}&accion2=${campo}`
+            }).then(response => {
+                alert("se guardo correctamente");
+
+            }).catch(error => { alert("Error en la operacion de guardado en la eeprom"); });
+
+            NOshowOptions(['horizontalOptions', 'rebajeHorizontalOpcion', 'formModoProlijo', 'content', 'modalConfig', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida']);
+        }
+
+
+
+
+        function showModalConfig() {
+            const modalConfig = document.getElementById('modalConfig');
+            modalConfig.style.display = 'flex';
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida']);
+        }
+
+        function Apagoreglamedia(option) {
+
+
+            if (regla_media_activada) {
+
+                const valor = "Accion /";
+                const accion = option;
+                const eepromDir = 0;
+                const margen = 0;
+                const ancho = 0;
+                const profundidad = 0;
+                const Solicitud_Medicion = false
+
+                procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+                regla_media_activada = false;
+            }
+
+        }
+
+        function showForm(option) {
+
+            const formContainer = document.getElementById('content');
+            formContainer.style.display = 'block';
+
+            const accionInput = document.getElementById('accion_input');
+            accionInput.value = option;
+
+            const valor = "Accion /";
+            const accion = option;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content4', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+
+            //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+        }
+
+        function showImputRebajeH(option) {
+
+            const formContainer = document.getElementById('content4');
+            formContainer.style.display = 'block';
+
+            const valor = "Accion /";
+            const accion = option;
+            accion_Rebaje = option;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+
+            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida']);
+
+            //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+
+
+        }
+
+        function sendoptionForm(option) {
+
+            const valor = "Accion /";
+            const accion = option;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'rebajeHorizontalOpcion', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+        }
+
+        function showModoProlijo() {
+            const formModoProlijo = document.getElementById('formModoProlijo');
+            formModoProlijo.style.display = 'block';
+            NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida']);
+        }
+
+        async function actualizarpanel() {
+
+            //const PanelDeEstado = document.getElementById('PanelDeEstado');
+            //PanelDeEstado.style.display = 'flow-root';
+
+           // NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'formModoProlijo']);
+            const response = await fetch('http://192.168.0.123/panel').catch(console.error)
+            const body = await response.json()
+
+            console.log(body.modoProlijo)
+            console.log(body.velocidad)
+            console.log(body.Ultimo_Corte_V)
+            console.log(body.Ultimo_Corte_H)
+            console.log(body.temperatura)
+            console.log(body.Pos_CP)
+            console.log(body.Pos_CV)
+            console.log(body.Pos_CT)
+            console.log(body.Pos_TVV)
+            console.log(body.Pos_TVH)
+            console.log(body.Regla_media)
+            console.log(body.Error)
+            console.log(body.Mediciones)
+            console.log(body.Piston_Parrilla)
+
+           
+            const Parrilla = document.getElementById('panelDeEstado-parrilla')
+            Parrilla.innerText = body.Piston_Parrilla;
+            const UltimaMediccion = document.getElementById('panelDeEstado-UltimaMediccion')
+            UltimaMediccion.innerText = body.Mediciones;
+            const Libre = document.getElementById('panelDeEstado-Libre')
+            Libre.innerText = "Espacio disponible";
+            const mP = document.getElementById('panelDeEstado-modoProlijo')
+            mP.innerText = body.modoProlijo
+            const vel = document.getElementById('panelDeEstado-velocidad')
+            vel.innerText = body.velocidad
+            const Ultimo_Corte_V = document.getElementById('panelDeEstado-Ultimo_Corte_V')
+            Ultimo_Corte_V.innerText = body.Ultimo_Corte_V.toFixed(2)
+            const Ultimo_Corte_H = document.getElementById('panelDeEstado-Ultimo_Corte_H')
+            Ultimo_Corte_H.innerText = body.Ultimo_Corte_H.toFixed(2)
+            const temp = document.getElementById('panelDeEstado-Temperatura')
+            temp.innerText = body.temperatura.toFixed(2)+ "grados / hum:" + body.humidity.toFixed(2) + " % "
+            const Pos_CP = document.getElementById('panelDeEstado-Pos_CP')
+            Pos_CP.innerText = body.Pos_CP.toFixed(2)
+            const Pos_CV = document.getElementById('panelDeEstado-Pos_CV')
+            Pos_CV.innerText = body.Pos_CV.toFixed(2)
+            const Pos_CT = document.getElementById('panelDeEstado-Pos_CT')
+            Pos_CT.innerText = body.Pos_CT.toFixed(2)
+            const Pos_TVV = document.getElementById('panelDeEstado-Pos_TVV')
+            Pos_TVV.innerText = body.Pos_TVV.toFixed(2)
+            const Pos_TVH = document.getElementById('panelDeEstado-Pos_TVH')
+            Pos_TVH.innerText = body.Pos_TVH.toFixed(2)
+            const Regla_Media = document.getElementById('panelDeEstado-Regla_Media')
+            Regla_Media.innerText = body.Regla_Media
+            const Error = document.getElementById('panelDeEstado-Error')
+            Error.innerText = body.Error
+
+
+
+        }
+
+        function showHorizontalRebajeOptions(option) {
+
+            const horizontalOptions = document.getElementById('rebajeHorizontalOpcion');
+            horizontalOptions.style.display = 'block';
+            const accionInput = document.getElementById('accion_input');
+            accionInput.value = option;
+
+            NOshowOptions(['formModoProlijo', 'content', 'formModoVelocidad', 'modalConfig', 'horizontalOptions', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+            // mandar a guardar al array 
+        }
+
+        function showHorizontalOptions(option) {
+
+
+            const horizontalOptions = document.getElementById('horizontalOptions');
+            horizontalOptions.style.display = 'block';
+
+            NOshowOptions(['formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+
+            const valor = "Accion /";
+            const accion = option;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+
+        }
+
+        function showhorizontalReglamediaOptions(option) {
+
+            regla_media_activada = true;
+
+            const horizontalreglamediaOptions = document.getElementById('horizontalReglamediaOptions');
+            horizontalreglamediaOptions.style.display = 'block';
+
+            const valor = "Accion /";
+            const accion = option;
+            const eepromDir = 0;
+            const margen = 0;
+            const ancho = 0;
+            const profundidad = 0;
+            const Solicitud_Medicion = false
+
+            procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
+        }
+
+        function formModoVelocidad() {
+            const formModoVelocidad = document.getElementById('formModoVelocidad');
+            formModoVelocidad.style.display = 'block';
+
+            NOshowOptions(['horizontalOptions', 'content', 'rebajeHorizontalOpcion', 'formModoProlijo', 'modalConfig', 'PanelDeMedicion', 'graficoMedida']);
+        }
+
+        function NOshowOptions(parametros) {
+            for (let index = 0; index < parametros.length; index++) {
+                const element = parametros[index];
+                const nomostrar = document.getElementById(element);
+                nomostrar.style.display = 'none';
+            }
+        }
+
+    </script>
+    <script>
+
+        const CONFIG = [
+            ['Espesor Sierra', 0],
+            ['Recorrido Máximo TVH', 4],
+            ['Profundidad Negativa Inscisor', 8],
+            ['Despejar CT después del corte Vertical', 12],
+            ['Recorrido Mínimo CP durante el corte H', 16],
+            ['Velocidad de multiplicación en primera pasada', 20],
+            ['Pasos CP', 24],
+            ['Pasos CV', 28],
+            ['Pasos CT', 32],
+            ['Pasos TVH', 36],
+            ['Pasos TVV', 40],
+            ['Altura de corte mínima de CV', 48],
+            ['Altura Corte máxima CV', 52],
+            ['Altura ajuste de regla media', 56],
+            ['Altura mínima sobre regla media', 60],
+            ['Recorrido máximo CP durante el corte H', 64],
+            ['Recorrido máximo CT', 68],
+            ['Posición CP en corte V', 72],
+            ['Posición CT en corte H', 76],
+            ['Posición CP al usar función Refilar', 80],
+            ['Posición CT al usar función Refilar', 84],
+            ['Alarma de temperatura Máxima', 88],
+            ['Zona Segura al activar Regla media', 92],
+            ['Subir mínima CV durante corte V', 96],
+            ['Subir CV post Fin de Detección de placa', 100],
+            ['Delay Teclado', 104],
+            ['Ajuste + Medicion Horizontal', 108],
+            ['Ajuste - Medicion Horizontal', 112],
+            ['Ajuste + Medicion Vertical', 116],
+            ['Velocidad Inicio CP', 120],
+            ['Velocidad Inicio CT', 124],
+            ['Velocidad Inicio CV', 128],
+            ['Velocidad Inicio TVH', 132],
+            ['Velocidad Inicio TVV', 136],
+            ['Aceleración general', 140],
+            ['Velocidad CP Normal', 144],
+            ['Velocidad CV Normal', 148],
+            ['Velocidad CT Normal', 152],
+            ['Velocidad TVH Normal', 156],
+            ['Velocidad TVV Normal', 160],
+            ['Velocidad Corte Vertical Baja', 168],
+            ['Velocidad Corte Vertical Media', 172],
+            ['Velocidad Corte Vertical Alta', 176],
+            ['Velocidad Corte Horizontal Baja', 180],
+            ['Velocidad Corte Horizontal Media', 184],
+            ['Velocidad Corte Horizontal Alta', 188]
+        ];
+
+        const select = document.getElementById('configId')
+        for (let index = 0; index < CONFIG.length; index++) {
+            const element = CONFIG[index];
+            const etiquetaoption = document.createElement('option')
+            etiquetaoption.innerText = element[0]
+            etiquetaoption.value = element[1]
+
+            select.appendChild(etiquetaoption)
+        }
+
+        async function getConfig() {
+
+            const configuracionASeleccionar = select.value
+            const URL = 'http://192.168.0.123/config?id=' + configuracionASeleccionar
+            const response = await fetch(URL)
+            const body = await response.json()
+            console.log(body)
+            console.log(body.Valor_leido)
+            const Input = document.getElementById('modalConfigInput')
+            Input.value = body.Valor_leido.toFixed(2)
+        }
+
+        select.onchange = getConfig
+
+
+        // -----------------------------------------------------------------------------
+        // -----------------Simulador de cortes visual----------------------------------
+
+        const inputHeight = document.getElementById('Altura')
+        const box1_1 = document.getElementsByClassName('Box')[0]
+
+        inputHeight.oninput = actualizarBox1Height
+
+        function actualizarBox1Height() {
+            const valor = inputHeight.value / 4
+            box1_1.style.height = valor + 'px'
+            box1_1.style.display = 'block'
+        }
+
+        const imputmargin = document.getElementById('margen')
+        const box1_2 = document.getElementsByClassName('Box2')[0]
+
+        imputmargin.oninput = actualizarBox2margin
+
+        function actualizarBox2margin() {
+            const valor = imputmargin.value / 4
+            box1_2.style.marginTop = valor + 'px'
+            box1_2.style.display = 'block'
+        }
+
+        const imputancho = document.getElementById('ancho')
+        const box1_3 = document.getElementsByClassName('Box2')[0]
+
+        imputancho.oninput = actualizarBox2ancho
+
+        function actualizarBox2ancho() {
+            const valor = imputancho.value / 4
+            box1_3.style.height = valor + 'px'
+        }
+
+        const inputHeight3 = document.getElementById('valor_input')
+        const areaPlaca = document.getElementsByClassName('areaPlacaid')[0]
+        const areaDesplazoCorteV = document.getElementsByClassName('areaDesplazoCorteV')[0]
+        const areaACortar_1 = document.getElementsByClassName('areaACortar')[0]
+        const areaBajoReglaMedia_1 = document.getElementsByClassName('areaBajoReglaMedia')[0]
+
+
+        const areaPlacaMd = document.getElementsByClassName('areaPlacaMd')[0]
+        //const AreaPlacaMed = document.getElementsByClassName('AreaPlacaMed')[0]
+        const PlacaMedida = document.getElementsByClassName('PlacaMedida')[0]
+        const areaBajoReglaMediaMedicion = document.getElementsByClassName('areaBajoReglaMediaMedicion')[0]
+
+
+
+
+        inputHeight3.oninput = actualizarareaPlacaidHeight
+
+        Modo_V = false
+        Modo_H1 = false // H1 desde abajo
+        Modo_H2 = false // H2 desde arriba
+        Modo_H3 = false // H3 Sobre regla media
+
+        function ActivoModo_V() {
+            Modo_V = true
+            Modo_H1 = false
+            Modo_H2 = false
+            Modo_H3 = false
+        }
+        function ActivoModo_H1() {
+            Modo_V = false
+            Modo_H1 = true
+            Modo_H2 = false
+            Modo_H3 = false
+        }
+        function ActivoModo_H2() {
+            Modo_V = false
+            Modo_H1 = false
+            Modo_H2 = true
+            Modo_H3 = false
+        }
+        function ActivoModo_H3() {
+            Modo_V = false
+            Modo_H1 = false
+            Modo_H2 = false
+            Modo_H3 = true
+        }
+
+        function actualizarareaPlacaidHeight() {
+            areaPlaca.style.display = 'block'
+            areaDesplazoCorteV.style.display = 'block'
+            areaACortar_1.style.display = 'block'
+
+            const valorInput = document.getElementById('valor_input');
+            const valorIngresado = valorInput.value;
+            var valor = inputHeight3.value / Coeficiente_reduccion
+
+
+            if (valorIngresado <= 0) {
+                areaACortar_1.style.display = 'none'
+            }
+
+            if (Modo_V) {
+
+                areaPlaca.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = 0 + 'px'
+                areaDesplazoCorteV.style.marginLeft = ((Placa_Ancho / Coeficiente_reduccion) - valor) - (1) + 'px'
+                areaDesplazoCorteV.style.width = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.height = (Placa_Alto / Coeficiente_reduccion) - 1 + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = (Placa_Alto / Coeficiente_reduccion) - 4 + 'px'
+                areaACortar_1.style.marginLeft = -2 + 'px'
+                areaACortar_1.style.width = ((valor) - 1) + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
+
+            } else if (Modo_H1) {
+
+                areaPlaca.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = (Placa_Alto / Coeficiente_reduccion) - valor + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Ancho / Coeficiente_reduccion) - 2 + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = valor + 'px'
+                areaACortar_1.style.width = (Placa_Ancho / Coeficiente_reduccion) - 4 + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
+            }
+
+            else if (Modo_H2) {
+
+                areaPlaca.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = valor + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Ancho / Coeficiente_reduccion) - 1 + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = -valor + 'px'
+                areaACortar_1.style.height = valor + 'px'
+                areaACortar_1.style.width = (Placa_Ancho / Coeficiente_reduccion) - 4 + 'px'
+                areaBajoReglaMedia_1.style.display = 'none'
+            }
+
+            else if (Modo_H3) {
+
+                areaPlaca.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
+                areaPlaca.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaBajoReglaMedia_1.style.display = 'block'
+                areaBajoReglaMedia_1.style.marginBottom = 0 + 'px'
+                areaBajoReglaMedia_1.style.marginLeft = 0 + 'px'
+                areaBajoReglaMedia_1.style.height = (Altura_regla_media / Coeficiente_reduccion) - 2 + 'px'
+                areaBajoReglaMedia_1.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginTop = (Placa_Alto / Coeficiente_reduccion) - valor - (Altura_regla_media / Coeficiente_reduccion) + 'px'
+                areaDesplazoCorteV.style.marginLeft = 0 + 'px'
+                areaDesplazoCorteV.style.height = Grosor_linea_corte + 'px'
+                areaDesplazoCorteV.style.width = (Placa_Ancho / Coeficiente_reduccion) - 1 + 'px'
+                areaACortar_1.style.marginLeft = 0 + 'px'
+                areaACortar_1.style.marginTop = 0 + 'px'
+                areaACortar_1.style.height = valor - 2 + 'px'
+                areaACortar_1.style.width = (Placa_Ancho / Coeficiente_reduccion) - 4 + 'px'
+            }
+        }
+    </script>
 </body>
+
 </html>
