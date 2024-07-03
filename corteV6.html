@@ -102,7 +102,6 @@
             margin-left: 30%;
             margin-right: 1%;
             border-radius: 5px;
-
         }
 
         #menu2 button {
@@ -121,8 +120,12 @@
         }
 
 
-        #content, #formHorizontal, #horizontalOptions,
-        #rebajeHorizontalOpcion, #formModoProlijo, #formModoVelocidad,
+        #content,
+        #formHorizontal,
+        #horizontalOptions,
+        #rebajeHorizontalOpcion,
+        #formModoProlijo,
+        #formModoVelocidad,
         #horizontalReglamediaOptions {
             display: none;
             background-color: #333;
@@ -143,7 +146,6 @@
             margin-left: 30%;
             margin-right: 1%;
             max-width: 600px;
-
         }
 
 
@@ -170,7 +172,6 @@
             border-color: rgb(71, 68, 62);
             border: 10px;
             border: 2px solid rgb(32, 28, 28);
-
         }
 
         .Box2 {
@@ -198,7 +199,6 @@
             border: 10px;
             border: 2px solid rgb(32, 28, 28);
             position: relative;
-
         }
 
         .areaDesplazoCorteV,
@@ -247,10 +247,6 @@
             color: #000000;
             font-size: 20px;
         }
-
-
-        
-
 
         input[type='number']:focus {
             border: 1px solid #fff;
@@ -334,14 +330,19 @@
             color: #ffffff;
         }
 
-        #listaDeCortes-dato1, #listaDeCortes-dato2, #listaDeCortes-dato3, #listaDeCortes-dato4,
-        #listaDeCortes-dato5, #listaDeCortes-dato6, #listaDeCortes-dato7, #listaDeCortes-dato8,
-        #listaDeCortes-dato9, #listaDeCortes-dato10 {
+        #listaDeCortes-dato1,
+        #listaDeCortes-dato2,
+        #listaDeCortes-dato3,
+        #listaDeCortes-dato4,
+        #listaDeCortes-dato5,
+        #listaDeCortes-dato6,
+        #listaDeCortes-dato7,
+        #listaDeCortes-dato8,
+        #listaDeCortes-dato9,
+        #listaDeCortes-dato10 {
             font-size: 14px;
             color: #e4e4e4;
         }
-
-
 
         .modalConfig {
             width: 100%;
@@ -361,7 +362,6 @@
             height: 200px;
             display: none;
         }
-
     </style>
 </head>
 
@@ -373,21 +373,19 @@
         <button onclick='showForm(101),ActivoModo_V()'>Corte Vertical</button>
         <button onclick='showHorizontalOptions(20)'>Corte Horizontal </button>
         <button onclick='showHorizontalRebajeOptions()'>Modo Rebaje H</button>
-        <button onclick='sendoptionForm()'>Refilar</button>
+        <button onclick='sendoptionForm(102)'>Refilar</button>
     </div>
     <div id='menu1'>
         <button onclick='sendoptionForm(5)'>Cargar Placa</button>
         <button onclick='BotonMedicion()'>Medir Placa|--|</button>
         <button onclick='Agregarespera()'>Agregar pausa</button>
         <button onclick='Pausarlista()'>Pausar || Continuar |> </button>
-
     </div>
     <div id='menu2'>
         <button onclick='showModoProlijo()'>Modo Prolijo</button>
         <button onclick='formModoVelocidad()'>Velocidad</button>
         <button onclick='sendoptionForm(9)'>Reset</button>
         <button onclick='showModalConfig()'>Configuracion</button>
-
     </div>
 
     <div id='content'>
@@ -489,7 +487,7 @@
             <p>Posicion CT : <span id="panelDeEstado-Pos_CT">--</span></p>
         </div>
         <div>
-            <p>Parrilla  : <span id="panelDeEstado-parrilla">--</span></p>
+            <p>Parrilla : <span id="panelDeEstado-parrilla">--</span></p>
             <p>Ultima Med : <span id="panelDeEstado-UltimaMediccion">--</span></p>
             <p>-- : <span id="panelDeEstado-Libre">--</span></p>
         </div>
@@ -633,7 +631,6 @@
             const Solicitud_Medicion = true;
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
         }
 
 
@@ -643,6 +640,9 @@
 
                 case 101:
                     accion_nombre = "Corte vertical"
+                    break;
+                case 102:
+                    accion_nombre = "Refilar en Corte vertical"
                     break;
                 case 202:
                     accion_nombre = "Pausa Agregada por el usuario"
@@ -781,7 +781,7 @@
             actualizarListaProximosCortes();
 
 
-                fetch('http://192.168.0.123/corte', {
+            fetch('http://192.168.0.123/corte', {
 
                 method: 'POST',
                 headers: {
@@ -937,14 +937,10 @@
         const rebajeForm = document.getElementById('miFormulario')
         rebajeForm.onsubmit = handlerebajeForm
 
-
         const accionInputvalor2 = document.getElementById('accion_input2');
-
-
 
         function handlerebajeForm(event) {
             event.preventDefault() // prevenir el comportamiento por defecto
-
 
             const valor = event.target.Altura.value
             const accion = accion_Rebaje;
@@ -955,24 +951,16 @@
             const Solicitud_Medicion = false
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
-
             //enviar al array
             NOshowOptions(['horizontalOptions', 'content4', 'formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'graficoMedida', 'PanelDeMedicion']);
             event.target.reset()
-
-
-
         }
 
     </script>
 
     <script>
 
-
         actualizarListaauto();
-
-
         // setInterval(modificadorDeTiempo,5000)
         /*
                 let contador_de_espera;
@@ -1005,7 +993,6 @@
                 console.log("en proceso_de_corte_finalizado")
 
                 //contador_consulta++;
-
                 if (tamañoLista > 0 && posicion_de_ejecucion <= tamañoLista) { //&& contador_consulta > 1) {
                     console.log("antes del fetch consulta")
                     fetch_consulta = true;
@@ -1169,9 +1156,6 @@
             NOshowOptions(['horizontalOptions', 'rebajeHorizontalOpcion', 'formModoProlijo', 'content', 'modalConfig', 'formModoVelocidad', 'PanelDeMedicion', 'graficoMedida']);
         }
 
-
-
-
         function showModalConfig() {
             const modalConfig = document.getElementById('modalConfig');
             modalConfig.style.display = 'flex';
@@ -1201,7 +1185,6 @@
 
             const formContainer = document.getElementById('content');
             formContainer.style.display = 'block';
-
             const accionInput = document.getElementById('accion_input');
             accionInput.value = option;
 
@@ -1213,10 +1196,8 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content4', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
-
+            NOshowOptions(['horizontalOptions', 'formModoProlijo', 'content4', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'horizontalReglamediaOptions']);
             //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
         }
 
         function showImputRebajeH(option) {
@@ -1233,13 +1214,9 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-
             NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida']);
 
             //procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
-
-
         }
 
         function sendoptionForm(option) {
@@ -1252,10 +1229,9 @@
             const profundidad = 0;
             const Solicitud_Medicion = false
 
-            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'rebajeHorizontalOpcion', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+            NOshowOptions(['horizontalOptions', 'content', 'formModoProlijo', 'formModoVelocidad', 'rebajeHorizontalOpcion', 'modalConfig', 'PanelDeMedicion', 'graficoMedida', 'horizontalReglamediaOptions']);
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
         }
 
         function showModoProlijo() {
@@ -1269,7 +1245,7 @@
             //const PanelDeEstado = document.getElementById('PanelDeEstado');
             //PanelDeEstado.style.display = 'flow-root';
 
-           // NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'formModoProlijo']);
+            // NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'formModoProlijo']);
             const response = await fetch('http://192.168.0.123/panel').catch(console.error)
             const body = await response.json()
 
@@ -1288,7 +1264,6 @@
             console.log(body.Mediciones)
             console.log(body.Piston_Parrilla)
 
-           
             const Parrilla = document.getElementById('panelDeEstado-parrilla')
             Parrilla.innerText = body.Piston_Parrilla;
             const UltimaMediccion = document.getElementById('panelDeEstado-UltimaMediccion')
@@ -1304,7 +1279,7 @@
             const Ultimo_Corte_H = document.getElementById('panelDeEstado-Ultimo_Corte_H')
             Ultimo_Corte_H.innerText = body.Ultimo_Corte_H.toFixed(2)
             const temp = document.getElementById('panelDeEstado-Temperatura')
-            temp.innerText = body.temperatura.toFixed(2)+ "grados / hum:" + body.humidity.toFixed(2) + " % "
+            temp.innerText = body.temperatura.toFixed(2) + "grados / hum:" + body.humidity.toFixed(2) + " % "
             const Pos_CP = document.getElementById('panelDeEstado-Pos_CP')
             Pos_CP.innerText = body.Pos_CP.toFixed(2)
             const Pos_CV = document.getElementById('panelDeEstado-Pos_CV')
@@ -1320,8 +1295,6 @@
             const Error = document.getElementById('panelDeEstado-Error')
             Error.innerText = body.Error
 
-
-
         }
 
         function showHorizontalRebajeOptions(option) {
@@ -1331,7 +1304,7 @@
             const accionInput = document.getElementById('accion_input');
             accionInput.value = option;
 
-            NOshowOptions(['formModoProlijo', 'content', 'formModoVelocidad', 'modalConfig', 'horizontalOptions', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+            NOshowOptions(['formModoProlijo', 'content', 'formModoVelocidad', 'modalConfig', 'horizontalOptions', 'PanelDeMedicion', 'graficoMedida', 'horizontalReglamediaOptions']);
             // mandar a guardar al array 
         }
 
@@ -1341,7 +1314,7 @@
             const horizontalOptions = document.getElementById('horizontalOptions');
             horizontalOptions.style.display = 'block';
 
-            NOshowOptions(['formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'modalConfig', 'PanelDeMedicion', 'graficoMedida','horizontalReglamediaOptions']);
+            NOshowOptions(['formModoProlijo', 'content', 'rebajeHorizontalOpcion', 'formModoVelocidad', 'modalConfig', 'PanelDeMedicion', 'graficoMedida', 'horizontalReglamediaOptions']);
 
             const valor = "Accion /";
             const accion = option;
@@ -1352,7 +1325,6 @@
             const Solicitud_Medicion = false
 
             procesadorGuardado(valor, accion, eepromDir, margen, ancho, profundidad, Solicitud_Medicion);
-
         }
 
         function showhorizontalReglamediaOptions(option) {
@@ -1427,17 +1399,17 @@
             ['Velocidad Inicio TVH', 132],
             ['Velocidad Inicio TVV', 136],
             ['Aceleración general', 140],
-            ['Velocidad CP Normal', 144],
-            ['Velocidad CV Normal', 148],
-            ['Velocidad CT Normal', 152],
-            ['Velocidad TVH Normal', 156],
-            ['Velocidad TVV Normal', 160],
-            ['Velocidad Corte Vertical Baja', 168],
-            ['Velocidad Corte Vertical Media', 172],
-            ['Velocidad Corte Vertical Alta', 176],
-            ['Velocidad Corte Horizontal Baja', 180],
-            ['Velocidad Corte Horizontal Media', 184],
-            ['Velocidad Corte Horizontal Alta', 188]
+            ['Velocidad CP De posicionamiento Sin accion', 144],
+            ['Velocidad CV De posicionamiento Sin accion', 148],
+            ['Velocidad CT De posicionamiento Sin accion', 152],
+            ['Velocidad TVH De posicionamiento Sin accion', 156],
+            ['Velocidad TVV De posicionamiento Sin accion', 160],
+            ['Velocidad De Corte Vertical Baja', 168],
+            ['Velocidad De Corte Vertical Media', 172],
+            ['Velocidad De Corte Vertical Alta', 176],
+            ['Velocidad De Corte Horizontal Baja', 180],
+            ['Velocidad De Corte Horizontal Media', 184],
+            ['Velocidad De Corte Horizontal Alta', 188]
         ];
 
         const select = document.getElementById('configId')
@@ -1463,7 +1435,6 @@
         }
 
         select.onchange = getConfig
-
 
         // -----------------------------------------------------------------------------
         // -----------------Simulador de cortes visual----------------------------------
@@ -1506,14 +1477,10 @@
         const areaACortar_1 = document.getElementsByClassName('areaACortar')[0]
         const areaBajoReglaMedia_1 = document.getElementsByClassName('areaBajoReglaMedia')[0]
 
-
         const areaPlacaMd = document.getElementsByClassName('areaPlacaMd')[0]
         //const AreaPlacaMed = document.getElementsByClassName('AreaPlacaMed')[0]
         const PlacaMedida = document.getElementsByClassName('PlacaMedida')[0]
         const areaBajoReglaMediaMedicion = document.getElementsByClassName('areaBajoReglaMediaMedicion')[0]
-
-
-
 
         inputHeight3.oninput = actualizarareaPlacaidHeight
 
@@ -1555,7 +1522,6 @@
             const valorInput = document.getElementById('valor_input');
             const valorIngresado = valorInput.value;
             var valor = inputHeight3.value / Coeficiente_reduccion
-
 
             if (valorIngresado <= 0) {
                 areaACortar_1.style.display = 'none'
