@@ -44,6 +44,19 @@
             border-radius: 5px;
         }
 
+        #BotonBorrar {
+            display: flex;
+            align-items: center;
+
+        }
+
+        #BotonBorrarcorte {
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+            background-color: #dd3838;
+
+        }
+
         #menu button,
         #menu1 button {
             background-color: #666;
@@ -374,7 +387,7 @@
         <button onclick='showHorizontalOptions(20)'>Corte Horizontal </button>
         <button onclick='showHorizontalRebajeOptions()'>Modo Rebaje H</button>
         <button onclick='sendoptionForm(102)'>Refilar</button>
-    </div>
+        </div>
     <div id='menu1'>
         <button onclick='sendoptionForm(5)'>Cargar Placa</button>
         <button onclick='BotonMedicion()'>Medir Placa|--|</button>
@@ -517,10 +530,14 @@
 
     <div id="listaDeCortes">
         <div>
-            <p>Accion actual:</p>
+            <p>Accion actual: </p>
             <p id="listaDeCortes-dato0">--</p>
             <p id="listaDeCortes-dato00">>> >></p>
             <p>Proximos cortes en lista </p>
+            <div id="BotonBorrar">
+              <p> Borrar Ultimo corte >> </p>
+              <button id="BotonBorrarcorte" onclick='FuncionBorrar()'>X </button>
+            </div>
             <p id="listaDeCortes-dato1">--</p>
             <p id="listaDeCortes-dato2">--</p>
             <p id="listaDeCortes-dato3">--</p>
@@ -566,6 +583,21 @@
         const Altura_regla_media = 500
 
         //------- ajusto el coeficiente segun tamaño de pantalla------
+
+
+        //----------borrar ultimo corte de la lista-------------------
+
+        function FuncionBorrar() {
+
+            // Eliminar el último elemento
+
+            let CorteEliminado = listaDeCortes.pop()
+
+            console.log(listaDeCortes); // [1, 2, 3, 4]
+            console.log(CorteEliminado); // 5
+            alert("Se elimino el ultimo corte de la lista!");
+
+        }
 
         function AjusteDeCoeficienteReducccion() {
 
@@ -1035,7 +1067,7 @@
             else if ((posicion_de_ejecucion > 0 && posicion_de_ejecucion !== tamañoLista) ||
                 (!proceso_de_corte_finalizado && posicion_de_ejecucion === tamañoLista && tamañoLista > 0 && posicion_de_ejecucion > 0)) {
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
-                Medida0.innerText = listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
+                Medida0.innerText = "- " + listaDeCortes[posicion_de_ejecucion - 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion - 1].accion_nombre;
             }
             else if (posicion_de_ejecucion == tamañoLista && proceso_de_corte_finalizado) {
                 const Medida0 = document.getElementById('listaDeCortes-dato0')
@@ -1044,7 +1076,7 @@
             if (tamañoLista > posicion_de_ejecucion) {
                 const Medida1 = document.getElementById('listaDeCortes-dato1')
                 Medida1.style.display = 'block'
-                Medida1.innerText = listaDeCortes[posicion_de_ejecucion].valor + "mm " + listaDeCortes[posicion_de_ejecucion].accion_nombre;
+                Medida1.innerText = "1-" +listaDeCortes[posicion_de_ejecucion].valor + "mm " + listaDeCortes[posicion_de_ejecucion].accion_nombre;
             } else {
                 const Medida1 = document.getElementById('listaDeCortes-dato1')
                 Medida1.style.display = 'none'
@@ -1052,7 +1084,7 @@
             if (tamañoLista > posicion_de_ejecucion + 1) {
                 const Medida2 = document.getElementById('listaDeCortes-dato2')
                 Medida2.style.display = 'block'
-                Medida2.innerText = listaDeCortes[posicion_de_ejecucion + 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 1].accion_nombre;
+                Medida2.innerText = "2-"+ listaDeCortes[posicion_de_ejecucion + 1].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 1].accion_nombre;
             } else {
                 const Medida2 = document.getElementById('listaDeCortes-dato2')
                 Medida2.style.display = 'none'
@@ -1060,7 +1092,7 @@
             if (tamañoLista > posicion_de_ejecucion + 2) {
                 const Medida3 = document.getElementById('listaDeCortes-dato3')
                 Medida3.style.display = 'block'
-                Medida3.innerText = listaDeCortes[posicion_de_ejecucion + 2].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 2].accion_nombre;
+                Medida3.innerText = "3-"+ listaDeCortes[posicion_de_ejecucion + 2].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 2].accion_nombre;
             } else {
                 const Medida3 = document.getElementById('listaDeCortes-dato3')
                 Medida3.style.display = 'none'
@@ -1068,7 +1100,7 @@
             if (tamañoLista > posicion_de_ejecucion + 3) {
                 const Medida4 = document.getElementById('listaDeCortes-dato4')
                 Medida4.style.display = 'block'
-                Medida4.innerText = listaDeCortes[posicion_de_ejecucion + 3].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 3].accion_nombre;
+                Medida4.innerText ="4-"+  listaDeCortes[posicion_de_ejecucion + 3].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 3].accion_nombre;
             } else {
                 const Medida4 = document.getElementById('listaDeCortes-dato4')
                 Medida4.style.display = 'none'
@@ -1076,7 +1108,7 @@
             if (tamañoLista > posicion_de_ejecucion + 4) {
                 const Medida5 = document.getElementById('listaDeCortes-dato5')
                 Medida5.style.display = 'block'
-                Medida5.innerText = listaDeCortes[posicion_de_ejecucion + 4].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 4].accion_nombre;
+                Medida5.innerText ="5-"+  listaDeCortes[posicion_de_ejecucion + 4].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 4].accion_nombre;
             } else {
                 const Medida5 = document.getElementById('listaDeCortes-dato5')
                 Medida5.style.display = 'none'
@@ -1084,7 +1116,7 @@
             if (tamañoLista > posicion_de_ejecucion + 5) {
                 const Medida6 = document.getElementById('listaDeCortes-dato6')
                 Medida6.style.display = 'block'
-                Medida6.innerText = listaDeCortes[posicion_de_ejecucion + 5].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 5].accion_nombre;
+                Medida6.innerText ="6-"+  listaDeCortes[posicion_de_ejecucion + 5].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 5].accion_nombre;
             } else {
                 const Medida6 = document.getElementById('listaDeCortes-dato6')
                 Medida6.style.display = 'none'
@@ -1092,7 +1124,7 @@
             if (tamañoLista > posicion_de_ejecucion + 6) {
                 const Medida7 = document.getElementById('listaDeCortes-dato7')
                 Medida7.style.display = 'block'
-                Medida7.innerText = listaDeCortes[posicion_de_ejecucion + 6].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 6].accion_nombre;
+                Medida7.innerText ="7-"+  listaDeCortes[posicion_de_ejecucion + 6].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 6].accion_nombre;
             } else {
                 const Medida7 = document.getElementById('listaDeCortes-dato7')
                 Medida7.style.display = 'none'
@@ -1100,7 +1132,7 @@
             if (tamañoLista > posicion_de_ejecucion + 7) {
                 const Medida8 = document.getElementById('listaDeCortes-dato8')
                 Medida8.style.display = 'block'
-                Medida8.innerText = listaDeCortes[posicion_de_ejecucion + 7].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 7].accion_nombre;
+                Medida8.innerText = "8-"+ listaDeCortes[posicion_de_ejecucion + 7].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 7].accion_nombre;
             } else {
                 const Medida8 = document.getElementById('listaDeCortes-dato8')
                 Medida8.style.display = 'none'
@@ -1108,7 +1140,7 @@
             if (tamañoLista > posicion_de_ejecucion + 8) {
                 const Medida9 = document.getElementById('listaDeCortes-dato9')
                 Medida9.style.display = 'block'
-                Medida9.innerText = listaDeCortes[posicion_de_ejecucion + 8].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 8].accion_nombre;
+                Medida9.innerText = "9-"+ listaDeCortes[posicion_de_ejecucion + 8].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 8].accion_nombre;
             } else {
                 const Medida8 = document.getElementById('listaDeCortes-dato9')
                 Medida8.style.display = 'none'
@@ -1116,7 +1148,7 @@
             if (tamañoLista > posicion_de_ejecucion + 9) {
                 const Medida10 = document.getElementById('listaDeCortes-dato10')
                 Medida10.style.display = 'block'
-                Medida10.innerText = listaDeCortes[posicion_de_ejecucion + 9].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 9].accion_nombre;
+                Medida10.innerText = "10-"+ listaDeCortes[posicion_de_ejecucion + 9].valor + "mm " + listaDeCortes[posicion_de_ejecucion + 9].accion_nombre;
             } else {
                 const Medida10 = document.getElementById('listaDeCortes-dato10')
                 Medida10.style.display = 'none'
