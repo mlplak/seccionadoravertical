@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Alarma</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f4f4f9;
+            margin: 0;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #0056b3;
+        }
+
+        .button:active {
+            background: #00408b;
+        }
+
+        .panel {
+            margin-top: 20px;
+            background: #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panel-item {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Control de Alarma</h1>
+        <button class="button" onclick="sendCommand('/on')">Activar Alarma</button>
+        <button class="button" onclick="sendCommand('/off')">Desactivar Alarma</button>
+        
+        <div class="panel" id="panel">
+            <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
+            <div class="panel-item" id="temperature">Temperatura: --°C</div>
+        </div>
+    </div>
+
+    <script>
+        function sendCommand(command) {
+            fetch(command)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    updatePanel();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updatePanel() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.sensors;
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.temperature + '°C';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Actualiza el panel cada 5 segundos
+        setInterval(updatePanel, 5000);
+
+        // Actualiza el panel al cargar la página
+        window.onload = updatePanel;
+    </script>
+</body>
+</html>
