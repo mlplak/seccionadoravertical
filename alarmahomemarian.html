@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Alarma</title>
-    
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -71,10 +70,9 @@
 </head>
 <body>
     <div class="container">
-        <h2>Control de Alarma</h2>
-        <h2>Wailyzonia</H2>
-        <button class="button" onclick="sendCommand('/on')">Activar Alarma</button>
-        <button class="button" onclick="sendCommand('/off')">Desactivar Alarma</button>
+        <h1>Control de Alarma</h1>
+        <button class="button" onclick="promptPassword('/on')">Activar Alarma</button>
+        <button class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
         
         <div class="panel" id="panel">
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
@@ -83,6 +81,17 @@
     </div>
 
     <script>
+        const correctPassword = "1234"; // Establece aquí tu contraseña
+
+        function promptPassword(action) {
+            let password = prompt("Introduce la contraseña:");
+            if (password === correctPassword) {
+                sendCommand(action);
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        }
+
         function sendCommand(command) {
             fetch(command)
                 .then(response => response.text())
