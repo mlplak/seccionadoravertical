@@ -77,6 +77,14 @@
         <div class="panel" id="panel">
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
             <div class="panel-item" id="temperature">Temperatura: --°C</div>
+            <div class="panel-item" id="Humedad">Hum: --</div>
+            <div class="panel-item" id="Alarma"> --</div>
+            <div class="panel-item" id="ip">--</div>
+            <div class="panel-item" id="Wifi">--</div>
+            <div class="panel-item" id="Sim">--</div>
+            <div class="panel-item" id="Señal_Antena">--</div>
+        
+            
         </div>
     </div>
 
@@ -106,8 +114,16 @@
             fetch('/status')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.sensors;
-                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.temperature + '°C';
+                    document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura + '°C';
+                    document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
+                    document.getElementById('Alarma').textContent = 'Alarma: ' + data.Estado ;
+                    document.getElementById('ip').textContent = 'ip: ' + data.ip ;
+                    document.getElementById('Wifi').textContent = 'Wifi : ' + data.ssid ;
+                    document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength ;
+                    document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre ;
+                    
+
                 })
                 .catch(error => console.error('Error:', error));
         }
