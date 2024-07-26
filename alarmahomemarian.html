@@ -80,7 +80,8 @@
             <div class="panel-item" id="Humedad">Hum: --</div>
             <div class="panel-item" id="Alarma"> --</div>
             <div class="panel-item" id="ip">--</div>
-            <div class="panel-item" id="Wifi">--</div>
+            <div class="panel-item" id="Wifired">--</div>
+            <div class="panel-item" id="Wifiestado">--</div>
             <div class="panel-item" id="Sim">--</div>
             <div class="panel-item" id="Señal_Antena">--</div>
         
@@ -117,9 +118,10 @@
                     document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
                     document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura + '°C';
                     document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
-                    document.getElementById('Alarma').textContent = 'Alarma: ' + data.Estado ;
+                    document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado ;
                     document.getElementById('ip').textContent = 'ip: ' + data.ip ;
-                    document.getElementById('Wifi').textContent = 'Wifi : ' + data.ssid ;
+                    document.getElementById('Wifired').textContent = 'Wifi REd: ' + data.ssid ;
+                    document.getElementById('Wifiestado').textContent = 'Estado Wifi: ' + data.Wifi ;
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength ;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre ;
                     
@@ -136,3 +138,4 @@
     </script>
 </body>
 </html>
+
