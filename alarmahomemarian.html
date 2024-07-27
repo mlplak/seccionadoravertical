@@ -113,6 +113,7 @@
         const correctPassword = "1234"; // Establece aquí tu contraseña
         var alarmaActiva = false;
         var estado = "";
+        const estadoON = "ON";
 
 
         function promptPassword(action) {
@@ -152,15 +153,15 @@
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
 
-                    estado = data.AlarmaEstado;
+                    estado = data.AlarmaEstado.trim();
+                  
 
                     console.log("estado: ");
                     console.log(estado);
 
-                    if (estado === "ON") {
+                    if (estado === estadoON) {
                         alarmaActiva = true;
-                        console.log("alarmaActiva: ");
-                    console.log(alarmaActiva);
+                    
                     }
                     else {alarmaActiva = false; }
 
@@ -180,10 +181,6 @@
 
                 })
                 .catch(error => console.error('Error:', error));
-
-
-
-
 
         }
 
