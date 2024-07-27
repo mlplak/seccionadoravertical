@@ -110,6 +110,8 @@
 
         const correctPassword = "1234"; // Establece aquí tu contraseña
         var alarmaActiva = false;
+        var estado = ""; 
+        
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -131,7 +133,8 @@
         }
 
         function updatePanel() {
-            var estado = ""; 
+
+           
 
             fetch('/status')
                 .then(response => response.json())
@@ -148,8 +151,14 @@
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion ;
 
                     estado = data.AlarmaEstado;
-                   
-                    console.log("estado: ");
+
+                    
+
+                })
+                .catch(error => console.error('Error:', error));
+                
+
+                console.log("estado: ");
                 console.log(estado);
                 if(estado == "ON"){
                 alarmaActiva = true;}
@@ -164,12 +173,6 @@
                     container.style.borderColor  =  '#e03a3a';
                     container.style.background = '#b1b1b1;';
                 }
-
-                    
-
-                })
-                .catch(error => console.error('Error:', error));
-                
 
             
         }
