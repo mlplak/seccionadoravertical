@@ -93,6 +93,9 @@
             <div class="panel-item" id="Wifiestado">--</div>
             <div class="panel-item" id="Sim">--</div>
             <div class="panel-item" id="Señal_Antena">--</div>
+            <div class="panel-item" id="Intrucion">--</div>
+
+
         
             
         </div>
@@ -141,6 +144,8 @@
                     document.getElementById('Wifiestado').textContent = 'Estado Wifi: ' + data.Wifi ;
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength ;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre ;
+                    document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion ;
+
                     estado = data.AlarmaEstado;
                     
 
