@@ -14,7 +14,7 @@
             height: 100vh;
             background: #f4f4f9;
             margin: 0;
-            color: #333;
+            color: #222222;
         }
 
         h1 {
@@ -24,17 +24,26 @@
 
         .container {
             text-align: center;
-            background: #fff;
+            background: #b1b1b1;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
+            border-radius: 3%;
+            border-width: 10%;
+            border: 4px solid #d11818d7;
+            border-color: #8461bdd7;
+            padding: 10px; 
+            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801); 
+            z-index: 5; 
+     
         }
 
         .button {
-            background: #007BFF;
-            color: #fff;
+            background: #2c3c4d;
+            background: #4e4747;
+            color: #eeeeee;
             border: none;
             padding: 15px 25px;
             font-size: 1em;
@@ -69,10 +78,10 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="container" class="container">
         <h1>Control de Alarma</h1>
-        <button class="button" onclick="promptPassword('/on')">Activar Alarma</button>
-        <button class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
+        <button id="buttonAct" class="button" onclick="promptPassword('/on')">Activar Alarma</button>
+        <button id="buttonDesAct" class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
         
         <div class="panel" id="panel">
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
@@ -87,10 +96,17 @@
         
             
         </div>
+        <div class="config" id="Config">
+            <button class="button" onclick="promptPassword('/reset')">Rst</button>
+            
+        </div>
+
     </div>
 
     <script>
+
         const correctPassword = "1234"; // Establece aquí tu contraseña
+        var alarmaActiva = false;
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -112,6 +128,7 @@
         }
 
         function updatePanel() {
+            var estado = "";
             fetch('/status')
                 .then(response => response.json())
                 .then(data => {
@@ -124,10 +141,26 @@
                     document.getElementById('Wifiestado').textContent = 'Estado Wifi: ' + data.Wifi ;
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength ;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre ;
+                    estado = data.AlarmaEstado;
                     
 
                 })
                 .catch(error => console.error('Error:', error));
+                
+                if(estado == "ON"){
+                alarmaActiva = true;}
+                else{alarmaActiva = false;}
+
+                const container = document.getElementById('container');
+
+                if(alarmaActiva){
+                    container.style.borderColor  = '#30b44d';
+                    container.style.background = '#b1b1b1;';
+                }else if(!alarmaActiva){
+                    container.style.borderColor  =  '#e03a3a';
+                    container.style.background = '#b1b1b1;';
+                }
+
         }
 
         // Actualiza el panel cada 5 segundos
@@ -138,4 +171,5 @@
     </script>
 </body>
 </html>
+
 
