@@ -49,7 +49,6 @@
             padding: 10px;
             box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
             z-index: 5;
-          
 
         }
 
@@ -113,9 +112,6 @@
             <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="Intrucion">--</div>
 
-
-
-
         </div>
         <div class="config" id="Config">
             <button class="button" onclick="promptPassword('/reset')">Rst</button>
@@ -131,7 +127,6 @@
         var estado = "";
         const estadoON = "ON";
         var disparos = 0;
-
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -153,7 +148,6 @@
         }
 
         function updatePanel() {
-
 
 
             fetch('/status')
@@ -193,12 +187,12 @@
                         container.style.background = '#b1b1b1;';
                         console.log("Acntivo colores de descativados");
                     }
-                    
                     if(alarmaActiva && disparos > 0){
                           container.classList.add('blink');
                     } else {
                          container.classList.remove('blink');
                     }
+
                 })
                 .catch(error => console.error('Error:', error));
 
