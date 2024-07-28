@@ -1,187 +1,198 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Alarma</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: #f4f4f9;
-            margin: 0;
-            color: #222222;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            text-align: center;
-            background: #b1b1b1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 98%;
-            border-radius: 6%;
-            border-width: 10%;
-            border: 4px solid #3235ffd7;
-            border-color: #8461bdd7;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
-            z-index: 5;
-
-        }
-
-        .button {
-            background: #2c3c4d;
-            background: #4e4747;
-            color: #eeeeee;
-            border: none;
-            padding: 15px 25px;
-            font-size: 1em;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .button:hover {
-            background: #0056b3;
-        }
-
-        .button:active {
-            background: #00408b;
-        }
-
-        .panel {
-            margin-top: 20px;
-            background: #e0e0e0;
-            padding: 15px;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .panel-item {
-            margin: 10px 0;
-            font-size: 1.2em;
-        }
-    </style>
+  <title>Maquina de Cortes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+    }
+    #banner {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    #menu {
+      background-color: #1d1c1c;
+      color: white;
+      text-align: center;
+    }
+    #menu button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #menu2 {
+      background-color: #4d4d4d;
+      color: rgb(146, 146, 146);
+      text-align: center;
+    }
+    #menu2 button {
+      background-color: #363636;
+      color: rgb(207, 206, 206);
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #content,#formHorizontal,#horizontalOptions, #formModoProlijo, #formModoVelocidad, #horizontalReglamediaOptions {
+      display: none;
+      background-color: #686868;
+      padding: 10px;
+      text-align: center;
+    }
+    input[type='number'] {
+      width: 300px;
+      padding: 15px;
+    }
+    #submit-button {
+      background-color: #444;
+      color: rgb(106, 201, 98);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-    <div id="container" class="container">
-        <h1>Control de Alarma</h1>
-        <button id="buttonAct" class="button" onclick="promptPassword('/on')">Activar Alarma</button>
-        <button id="buttonDesAct" class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
+  <div id='banner'>
+    <h2>Seccionadora Vertical</h2>
+  </div>
+  <div id='menu'>
+    <button onclick='showForm(1)'>Corte Vertical</button>
+    <button onclick='showHorizontalOptions()'>Corte Horizontal</button>
+  </div>
 
-        <div class="panel" id="panel">
-            <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
-            <div class="panel-item" id="temperature">Temperatura: --°C</div>
-            <div class="panel-item" id="Humedad">Hum: --</div>
-            <div class="panel-item" id="Alarma"> --</div>
-            <div class="panel-item" id="ip">--</div>
-            <div class="panel-item" id="Wifired">--</div>
-            <div class="panel-item" id="Wifiestado">--</div>
-            <div class="panel-item" id="Sim">--</div>
-            <div class="panel-item" id="Señal_Antena">--</div>
-            <div class="panel-item" id="Intrucion">--</div>
-            <div class="panel-item" id="disparos">--</div>
+  <div id='menu2'>
+    <button onclick='showModoProlijo()'>Modo Prolijo</button>
+    <button onclick='formModoVelocidad()'>Velocidad</button>
+    <button onclick='sendoptionForm(5)'>Cargar Placa</button>
+     <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='sendoptionForm(6)'>Estado actual</button>
+    <button onclick='sendoptionForm(7)'>Modo Rebaje H</button>
+    <button onclick='sendoptionForm(8)'>Menu configuracion</button>
+    <button onclick='sendoptionForm(9)'>Reinicar carros</button>
+    <button onclick='sendoptionForm(10)'>Reset</button>
+  </div>
 
-        </div>
-        <div class="config" id="Config">
-            <button class="button" onclick="promptPassword('/reset')">Rst</button>
-        </div>
-    </div>
+  <div id='content'>  <!-- de esto solo entiendo que se hace un post a /corte y despues se ejecuta sendvalue. -->
+    <form action='/corte' method='POST' id='corteForm'>
+      <input type='number' name='valor' step='0.01' placeholder='Ingrese la medida' id='valor_input'>
+      <input type='hidden' name='accion' id='accion_input'>
+      <button type='submit' name='enviar' value='Enviar' onclick='sendValue()'>OK</button>
+    </form>
+  </div>
 
-    <script>
+  <div id="horizontalOptions">
+    <button onclick='showForm(21)'>Desde Abajo</button>
+    <button onclick='showForm(22)'>Desde Arriba</button> 
+    <!-- aca hay que hacer funciones que envien solo los valores option y luego permitan ingresar luego omgrear el numero en el cuadro -->
+    <button onclick='showhorizontalReglamediaOptions(23)'>Sobre Regla Media</button>
+  </div>
 
-        const correctPassword = "1234"; // Establece aquí tu contraseña
-        var alarmaActiva = false;
-        var estado = "";
-        const estadoON = "ON";
-       // var disparos = 0;
+  <div id="horizontalReglamediaOptions">
+    <button onclick='showForm(231)'>Desde Regla</button>
+    <button onclick='showForm(232)'>Desde Arriba</button> 
+  </div>
 
-        function promptPassword(action) {
-            let password = prompt("Introduce la contraseña:");
-            if (password === correctPassword) {
-                sendCommand(action);
-            } else {
-                alert("Contraseña incorrecta");
-            }
-        }
+  <div id="formModoProlijo">
+    <button onclick='showFormOptions(31)'>1 pasada de sierra</button> 
+    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='showFormOptions(32)'>2 pasadas de sierra</button>
+    <!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+  </div>
 
-        function sendCommand(command) {
-            fetch(command)
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                    updatePanel();
-                })
-                .catch(error => console.error('Error:', error));
-        }
+  <div id="formModoVelocidad">
+    <button onclick='showFormOptions(41)'>Velocidad Baja</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='showFormOptions(42)'>Velocidad Normal</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+    <button onclick='showFormOptions(43)'>Velocidad Rapida</button><!-- aca hay que hacer funciones que envien solo los valores option al precionar el boton -->
+  </div>
+  <script>
 
-        function updatePanel() {
+    function showForm(option) {
+      const formContainer = document.getElementById('content');
+      formContainer.style.display = 'block';
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
+
+    function showFormOptions(option) {
+      const accionInput = document.getElementById('accion_input');
+      accionInput.value = option;
+      // como tengo que tratar los valores para enviarlos? por consola se ven bien. 
+      
+  // Por ejemplo:
+  fetch('http://192.168.0.123/corte', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: `valor=${0}&accion=${accionInput.value}`
+}).then(response => {
+  // Lógica para manejar la respuesta si es necesario
+});
+
+  // Restablecer los campos del formulario y ocultar las opciones
+ //valorInput.value = '';
+
+      console.log(`valor: ${0}, accion: ${option}`);
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+     }
 
 
-            fetch('/status')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
-                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura + '°C';
-                    document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
-                    document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
-                    document.getElementById('ip').textContent = 'ip: ' + data.ip;
-                    document.getElementById('Wifired').textContent = 'Wifi REd: ' + data.ssid;
-                    document.getElementById('Wifiestado').textContent = 'Estado Wifi: ' + data.Wifi;
-                    document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength;
-                    document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
-                    document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
-                    //document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
 
-                    estado = data.AlarmaEstado.trim();
-                    //disparos = data.disparos.trim();
+    function showModoProlijo() {
+      const formModoProlijo = document.getElementById('formModoProlijo');
+      formModoProlijo.style.display = 'block';
+    }
 
-                    console.log("estado: ");
-                    console.log(estado);
+    function showHorizontalOptions() {
+      const horizontalOptions = document.getElementById('horizontalOptions');
+      horizontalOptions.style.display = 'block';
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
 
-                    if (estado === estadoON) {
-                        alarmaActiva = true;
-                    }
-                    else {alarmaActiva = false; }
+    function showhorizontalReglamediaOptions() {
+      const horizontalreglamediaOptions = document.getElementById('horizontalReglamediaOptions');
+      horizontalreglamediaOptions.style.display = 'block';
+    }
+    
+    function formModoVelocidad() {
+      const formModoVelocidad = document.getElementById('formModoVelocidad');
+      formModoVelocidad.style.display = 'block';
+    }
 
-                    const container = document.getElementById('container');
+    function NOshowOptions(parametro) {
+      const horizontalOptions = document.getElementById(parametro);
+      horizontalOptions.style.display = 'none';
 
-                    if (alarmaActiva) {
-                        container.style.borderColor = '#30b44d';
-                        container.style.background = '#b1b1b1;';
-                        console.log("Acntivo colores de Atctiva");
-                    } else if (!alarmaActiva) {
-                        container.style.borderColor = '#e03a3a';
-                        container.style.background = '#b1b1b1;';
-                        console.log("Acntivo colores de descativados");
-                    }
+    }
 
-                })
-                .catch(error => console.error('Error:', error));
-        }
+    function sendValue() {
+      const valorInput = document.getElementById('valor_input');
+      const valor = valorInput.value;
+      const accionInput = document.getElementById('accion_input');
+      const option = accionInput.value;
+      console.log(`Valor: ${valor}, Opción: ${option}`);
+      
+      // Aquí puedes agregar tu lógica para enviar los datos por serial o realizar otras acciones necesarias
+      //NOshowOptions('horizontalOptions','formModoProlijo','formModoVelocidad')
 
-        // Actualiza el panel cada 5 segundos
-        setInterval(updatePanel, 5000);
+      NOshowOptions('horizontalOptions');
+      NOshowOptions('formModoProlijo');
+      NOshowOptions('formModoVelocidad');
+    }
 
-        // Actualiza el panel al cargar la página
-        window.onload = updatePanel;
-    </script>
+  </script>
 </body>
-
 </html>
