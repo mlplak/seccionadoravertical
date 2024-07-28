@@ -1,12 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-  <title>Prueba ESP8266</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Alarma</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f4f4f9;
+            margin: 0;
+            color: #222222;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: #b1b1b1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 98%;
+            border-radius: 6%;
+            border-width: 10%;
+            border: 4px solid #3235ffd7;
+            border-color: #8461bdd7;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            z-index: 5;
+        }
+
+        .button {
+            background: #2c3c4d;
+            background: #4e4747;
+            color: #eeeeee;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #0056b3;
+        }
+
+        .button:active {
+            background: #00408b;
+        }
+
+        .panel {
+            margin-top: 20px;
+            background: #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panel-item {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Hola, ESP8266!</h1>
-  <p>Esta es una prueba simple de HTML.</p>
+    <div id="container" class="container">
+        <h1>Control de Alarma</h1>
+        <button id="buttonAct" class="button" onclick="promptPassword('/on')">Activar Alarma</button>
+        <button id="buttonDesAct" class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
+
+        <div class="panel" id="panel">
+            <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
+            <div class="panel-item" id="temperature">Temperatura: --°C</div>
+            <div class="panel-item" id="Humedad">Hum: --</div>
+            <div class="panel-item" id="Alarma"> --</div>
+            <div class="panel-item" id="ip">--</div>
+            <div class="panel-item" id="Wifired">--</div>
+            <div class="panel-item" id="Wifiestado">--</div>
+            <div class="panel-item" id="Sim">--</div>
+            <div class="panel-item" id="Señal_Antena">--</div>
+            <div class="panel-item" id="Intrucion">--</div>
+
+    </div>
+
+    <script>
+
+        const correctPassword = "1234"; // Establece aquí tu contraseña
+        var alarmaActiva = false;
+        var estado = "";
+        const estadoON = "ON";
+        var disparos = 0;
+
+        function promptPassword(action) {
+            let password = prompt("Introduce la contraseña:");
+            if (password === correctPassword) {
+                sendCommand(action);
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        }
+
+        function sendCommand(command) {
+            fetch(command)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    updatePanel();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updatePanel() {
+
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura + '°C';
+                    document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
+                    document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
+                    document.getElementById('ip').textContent = 'ip: ' + data.ip;
+                    document.getElementById('Wifired').textContent = 'Wifi REd: ' + data.ssid;
+                    document.getElementById('Wifiestado').textContent = 'Estado Wifi: ' + data.Wifi;
+                    document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength;
+                    document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
+                    document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
+                    estado = data.AlarmaEstado.trim();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        // Actualiza el panel cada 5 segundos
+        setInterval(updatePanel, 5000);
+        // Actualiza el panel al cargar la página
+        window.onload = updatePanel;
+    </script>
 </body>
 </html>
-
-
