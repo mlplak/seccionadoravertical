@@ -23,8 +23,6 @@
             margin-bottom: 20px;
         }
 
-
-
         .container {
             text-align: center;
             background: #b1b1b1;
@@ -58,7 +56,6 @@
         border-color: rgb(0, 0, 0);
     }
 }*/
-
 
         .button {
             background: #2c3c4d;
@@ -115,17 +112,15 @@
             <div class="panel-item" id="Sim">--</div>
             <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="Intrucion">--</div>
+            <div class="panel-item" id="disparos">--</div>
 
         </div>
         <div class="config" id="Config">
             <button class="button" onclick="promptPassword('/reset')">Rst</button>
-
         </div>
-
     </div>
 
     <script>
-
 
         const correctPassword = "1234"; // Establece aquí tu contraseña
         var alarmaActiva = false;
@@ -168,7 +163,7 @@
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
-                    //document.getElementById('Disparos').textContent = 'Disparos : ' + data.disparos;
+                    //document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
 
                     estado = data.AlarmaEstado.trim();
                     //disparos = data.disparos.trim();
@@ -201,7 +196,6 @@
 */
                 })
                 .catch(error => console.error('Error:', error));
-
         }
 
         // Actualiza el panel cada 5 segundos
