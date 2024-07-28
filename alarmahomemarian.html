@@ -42,10 +42,23 @@
             z-index: 5;
 
         }
-
+/*
 .blink {
     animation: blink 1s infinite;
 }
+
+@keyframes blink {
+    20% {
+        border-color: rgb(255, 0, 0);
+    }
+    70% {
+        border-color: rgb(255, 255, 255);
+    }
+    100% {
+        border-color: rgb(0, 0, 0);
+    }
+}*/
+
 
         .button {
             background: #2c3c4d;
@@ -112,18 +125,7 @@
     </div>
 
     <script>
-/*
-@keyframes blink {
-    20% {
-        border-color: rgb(255, 0, 0);
-    }
-    70% {
-        border-color: rgb(255, 255, 255);
-    }
-    100% {
-        border-color: rgb(0, 0, 0);
-    }
-}*/
+
 
         const correctPassword = "1234"; // Establece aquí tu contraseña
         var alarmaActiva = false;
