@@ -31,23 +31,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 98%;
-            border-radius: 6%;
-            border-width: 10%;
+            border-radius: 15%;
+            border-width: 6%;
             border: 4px solid #3235ffd7;
             border-color: #8461bdd7;
             padding: 10px;
-            box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
+            box-shadow: 0 0 10px rgba(58, 37, 37, 0.801);
             z-index: 5;
-        }
 
-        @keyframes blink {
-            20% { border-color: rgb(255, 0, 0); }
-            70% { border-color: rgb(255, 255, 255); }
-            100% { border-color: rgb(0, 0, 0); }
-        }
-
-        .blink {
-            animation: blink 1s infinite;
         }
 
         .button {
@@ -105,12 +96,16 @@
             <div class="panel-item" id="Sim">--</div>
             <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="Intrucion">--</div>
-            <div class="panel-item" id="disparos">--</div>
+
+
+
 
         </div>
         <div class="config" id="Config">
             <button class="button" onclick="promptPassword('/reset')">Rst</button>
+
         </div>
+
     </div>
 
     <script>
@@ -119,7 +114,7 @@
         var alarmaActiva = false;
         var estado = "";
         const estadoON = "ON";
-        var disparos = 0;
+
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -143,6 +138,7 @@
         function updatePanel() {
 
 
+
             fetch('/status')
                 .then(response => response.json())
                 .then(data => {
@@ -156,39 +152,36 @@
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
-                    document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
 
                     estado = data.AlarmaEstado.trim();
-                    disparos = data.disparos.trim();
+                  
 
                     console.log("estado: ");
                     console.log(estado);
 
                     if (estado === estadoON) {
                         alarmaActiva = true;
+                    
                     }
-                    else { alarmaActiva = false; }
+                    else {alarmaActiva = false; }
 
                     const container = document.getElementById('container');
 
                     if (alarmaActiva) {
                         container.style.borderColor = '#30b44d';
-                        container.style.background = '#b1b1b1';
+                        container.style.background = '#b1b1b1;';
                         console.log("Acntivo colores de Atctiva");
                     } else if (!alarmaActiva) {
                         container.style.borderColor = '#e03a3a';
-                        container.style.background = '#b1b1b1';
+                        container.style.background = '#b1b1b1;';
                         console.log("Acntivo colores de descativados");
                     }
 
-                    if (alarmaActiva && disparos > 0) {
-                        container.classList.add('blink');
-                    } else {
-                        container.classList.remove('blink');
-                    }
+
 
                 })
                 .catch(error => console.error('Error:', error));
+
         }
 
         // Actualiza el panel cada 5 segundos
