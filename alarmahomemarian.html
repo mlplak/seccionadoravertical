@@ -142,10 +142,10 @@
                     document.getElementById('Sim').textContent = 'Sim : ' + data.SimStrength;
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
-                    //document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
+                    document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
 
                     estado = data.AlarmaEstado.trim();
-                    //disparos = data.disparos.trim();
+                    disparos = data.disparos.trim();
 
                     if (estado === estadoON) {
                         alarmaActiva = true;
@@ -159,6 +159,14 @@
                         container.style.borderColor = '#e03a3a';
                         container.style.background = '#b1b1b1';
                     }
+                    if (alarmaActiva && disparos > 0) {
+                        console.log("esta ");
+                        //container.classList.add('blink');
+                    } else {
+                        console.log("esta cheee");
+                        //container.classList.remove('blink');
+                    }
+                    
                 })
                 .catch(error => console.error('Error:', error));
         }
