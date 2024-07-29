@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,17 +169,9 @@
                         container.style.background = '#b1b1b1';
                         console.log("Acntivo colores de descativados");
                     }
-
-                    if (alarmaActiva && disparos > 0) {
-                        container.classList.add('blink');
-                    } else {
-                        container.classList.remove('blink');
-                    }
-
                 })
                 .catch(error => console.error('Error:', error));
         }
-
         // Actualiza el panel cada 5 segundos
         setInterval(updatePanel, 5000);
 
