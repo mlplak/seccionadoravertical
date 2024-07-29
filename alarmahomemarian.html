@@ -149,7 +149,7 @@
                     document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
 
                     estado = data.AlarmaEstado.trim();
-                    disparos = data.disparos.trim();
+                    disparos = data.disparos;
 
                     if (estado === estadoON) {
                         alarmaActiva = true;
