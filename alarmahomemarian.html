@@ -14,19 +14,19 @@
             justify-content: center;
             height: 100vh;
             background: #f4f4f9;
-            margin: 0;
+            margin: 1;
             color: #222222;
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 1.5em;
             margin-bottom: 20px;
         }
 
         .container {
             text-align: center;
             background: #b1b1b1;
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -38,7 +38,19 @@
             padding: 10px;
             box-shadow: 0 0 10px rgba(211, 155, 155, 0.801);
             z-index: 5;
+            margin-left: 20px;
         }
+
+         @keyframes blink {
+            20% { border-color: rgb(255, 0, 0); }
+            70% { border-color: rgb(255, 255, 255); }
+            100% { border-color: rgb(0, 0, 0); }
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
 
         .button {
             background: #2c3c4d;
@@ -85,10 +97,12 @@
         <button id="buttonDesAct" class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
 
         <div class="panel" id="panel">
+            <div class="panel-item" id="Alarma"> --</div>
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
             <div class="panel-item" id="temperature">Temperatura: --°C</div>
             <div class="panel-item" id="Humedad">Hum: --</div>
-            <div class="panel-item" id="Alarma"> --</div>
+            <div class="panel-item" id="Gas">--</div>
+            <div class="panel-item" id="GasHumo">--</div>
             <div class="panel-item" id="ip">--</div>
             <div class="panel-item" id="Wifired">--</div>
             <div class="panel-item" id="Wifiestado">--</div>
@@ -96,6 +110,7 @@
             <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="Intrucion">--</div>
             <div class="panel-item" id="disparos">--</div>
+           
 
         </div>
         <div class="config" id="Config">
@@ -147,6 +162,10 @@
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
                     document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
+                    document.getElementById('Gas').textContent = 'Gas : ' + data.Gas;
+                    document.getElementById('GasHumo').textContent = 'Gas Humo : ' + data.GasHUmo;
+                    
+
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
@@ -167,10 +186,22 @@
                         container.style.background = '#b1b1b1';
                         console.log("Acntivo colores de descativados");
                     }
-/*
+
+                    console.log("disparos");
+                    console.log(disparos);
+
                     if(disparos > 0){
+
                         container.style.background = '#aa3232';
-                    }*/
+                    }
+                       if (/*alarmaActiva &&*/ disparos > 0) {
+                        container.classList.add('blink');
+                        container.style.background = '#eeeeee;';
+                    } else {
+                        container.classList.remove('blink');
+                        
+                    }
+                    
 
                 })
                 .catch(error => console.error('Error:', error));
