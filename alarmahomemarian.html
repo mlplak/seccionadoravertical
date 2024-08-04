@@ -125,6 +125,8 @@
         var estado = "";
         const estadoON = "ON";
         var disparos = 0;
+        var Gas =0;
+        var Temperatura =0;
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -168,6 +170,9 @@
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
+                    Gas = data.Gas;
+                    Temperatura = data.Temperatura;
+
 
                     if (estado === estadoON) {
                         alarmaActiva = true;
@@ -193,7 +198,7 @@
 
                         container.style.background = '#aa3232';
                     }
-                       if (/*alarmaActiva &&*/ disparos > 0) {
+                       if ((alarmaActiva && disparos > 0) || Temperatura > 40 || Gas > 400) {
                         container.classList.add('blink');
                         container.style.background = '#eeeeee;';
                     } else {
@@ -201,7 +206,6 @@
                         
                     }
                     
-
                 })
                 .catch(error => console.error('Error:', error));
         }
