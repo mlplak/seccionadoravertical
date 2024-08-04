@@ -64,6 +64,10 @@
             margin: 10px;
             transition: background 0.3s ease;
         }
+        #tempHumo{
+            background: #328049;
+
+        }
 
         .button:hover {
             background: #0056b3;
@@ -114,7 +118,9 @@
 
         </div>
         <div class="config" id="Config">
-            <button class="button" onclick="promptPassword('/reset')">Rst</button>
+            <button class="button" onclick="promptPassword('/reset')">Reset</button>
+            <button id="tempHumo" class="button" onclick="promptPassword('/TempHumo')">Temperatura/humo</button>
+  
         </div>
     </div>
 
@@ -127,6 +133,7 @@
         var disparos = 0;
         var Gas =0;
         var Temperatura =0;
+        var TempHumo = "OFF";
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -166,12 +173,14 @@
                     document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
                     document.getElementById('Gas').textContent = 'Gas : ' + data.Gas +  '- Max 500';
                     document.getElementById('GasHumo').textContent = 'Gas Humo : ' + data.GasHUmo;
-                    
+                    document.getElementById('GasHumo').textContent = 'Alarma Temperatura y gases : ' + data.TempHumoActivadaEstado;
+
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
                     Gas = data.Gas;
                     Temperatura = data.Temperatura;
+                    TempHumo = data.TempHumoActivadaEstado.trim();
 
 
                     if (estado === estadoON) {
@@ -189,7 +198,22 @@
                         container.style.borderColor = '#e03a3a';
                         container.style.background = '#b1b1b1';
                         console.log("Acntivo colores de descativados");
+                    } 
+
+                    const tempHumoBoton = document.getElementById('tempHumo');
+
+
+                    console.log("temphumo");
+                    console.log(TempHumo);
+
+
+                    if(TempHumo === "ON"){
+                        tempHumoBoton.style.background = '#3b814e';
+
+                    }else if(TempHumo === "OFF"){
+                        tempHumoBoton.style.background = '#be7245';
                     }
+
 
                     console.log("disparos");
                     console.log(disparos);
@@ -205,6 +229,8 @@
                         container.classList.remove('blink');
                         
                     }
+
+
                     
                 })
                 .catch(error => console.error('Error:', error));
