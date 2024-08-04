@@ -124,7 +124,7 @@
         var alarmaActiva = false;
         var estado = "";
         const estadoON = "ON";
-        var disparos = 5;
+        var disparos = 0;
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -162,10 +162,9 @@
                     document.getElementById('Señal_Antena').textContent = 'Señal Antena : ' + data.SenalNombre;
                     document.getElementById('Intrucion').textContent = 'Intrusion : ' + data.Intrucion;
                     document.getElementById('disparos').textContent = 'Disparos : ' + data.disparos;
-                    document.getElementById('Gas').textContent = 'Gas : ' + data.Gas;
+                    document.getElementById('Gas').textContent = 'Gas : ' + data.Gas +  '- Max 500';
                     document.getElementById('GasHumo').textContent = 'Gas Humo : ' + data.GasHUmo;
                     
-
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
