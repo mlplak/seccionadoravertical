@@ -102,16 +102,16 @@
 
         <div class="panel" id="panel">
             <div class="panel-item" id="Alarma"> --</div>
+            <div class="panel-item" id="GasHumo">--</div>
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
             <div class="panel-item" id="temperature">Temperatura: --°C</div>
             <div class="panel-item" id="Humedad">Hum: --</div>
             <div class="panel-item" id="Gas">--</div>
-            <div class="panel-item" id="GasHumo">--</div>
+            <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="ip">--</div>
             <div class="panel-item" id="Wifired">--</div>
             <div class="panel-item" id="Wifiestado">--</div>
             <div class="panel-item" id="Sim">--</div>
-            <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="Intrucion">--</div>
             <div class="panel-item" id="disparos">--</div>
            
@@ -161,7 +161,7 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
-                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura + '°C';
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura.toFixed(1) + '°C';
                     document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
                     document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
                     document.getElementById('ip').textContent = 'ip: ' + data.ip;
