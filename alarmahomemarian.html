@@ -166,7 +166,7 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
-                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura.toFixed(1) + '°C';
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura.toFixed(2) + '°C';
                     document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
                     document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
                     document.getElementById('ip').textContent = 'ip: ' + data.ip;
