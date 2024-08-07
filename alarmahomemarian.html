@@ -24,6 +24,10 @@
             margin-bottom: 6px;
         }
 
+        #Config{
+            display:none;
+        }
+
         .container {
             text-align: center;
             background: #b1b1b1;
@@ -99,8 +103,8 @@
 <body>
     <div id="container" class="container">
         <h1>Control de Alarma</h1>
-        <button id="buttonAct" class="button" onclick="promptPassword('/on')">Activar Alarma</button>
-        <button id="buttonDesAct" class="button" onclick="promptPassword('/off')">Desactivar Alarma</button>
+        <button id="buttonAct" class="button" onclick="promptPassword('/on'),ocultarOpcionesFunc()">Activar Alarma</button>
+        <button id="buttonDesAct" class="button" onclick="promptPassword('/off'),ocultarOpcionesFunc()">Desactivar Alarma</button>
 
         <div class="panel" id="panel">
             <div class="panel-item" id="Alarma"> --</div>
@@ -118,14 +122,14 @@
             <div class="panel-item" id="Intrucion">--</div>
             <div class="panel-item" id="disparos">--</div>
            
+            <button id="tempHumo" class="button" onclick="promptPassword('/TempHumo'),ocultarOpcionesFunc()">Temperatura/humo ON/OFF</button>
+            <button id="verOpciones" class="button" onclick="verOpcionesFunc()">Opciones/Config</button>
 
         </div>
         <div class="config" id="Config">
-            <button class="button" onclick="promptPassword('/reset')">Reset</button>
-            <button class="button" onclick="promptPassword('/Guardarsensor')">Grabar Sensor</button>
-            <button class="button" onclick="promptPassword('/Borrarsensores')">Borrar Sensores</button>
-            <button id="tempHumo" class="button" onclick="promptPassword('/TempHumo')">Temperatura/humo</button>
-  
+            <button class="button" onclick="promptPassword('/reset'),ocultarOpcionesFunc()">Reset</button>
+            <button class="button" onclick="promptPassword('/Guardarsensor'),ocultarOpcionesFunc()">Grabar Sensor</button>
+            <button class="button" onclick="promptPassword('/Borrarsensores'),ocultarOpcionesFunc()">Borrar Sensores</button>
         </div>
     </div>
 
@@ -149,6 +153,7 @@
             }
         }
 
+
         function sendCommand(command) {
             fetch(command)
                 .then(response => response.text())
@@ -159,6 +164,19 @@
                 .catch(error => console.error('Error:', error));
         }
 
+        function verOpcionesFunc(){
+           // const config = document.getElementById('config');
+            const config = document.getElementsByClassName('config')[0];
+            config.style.display =  'block';
+
+        }
+
+        function ocultarOpcionesFunc(){
+           // const config = document.getElementById('config');
+            const config = document.getElementsByClassName('config')[0];
+            config.style.display =  'none';
+        }
+
         function updatePanel() {
 
 
@@ -166,7 +184,7 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('sensorStatus').textContent = 'Estado de los Sensores: ' + data.Sensor;
-                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura.toFixed(2) + '°C';
+                    document.getElementById('temperature').textContent = 'Temperatura: ' + data.Temperatura.toFixed(1) + '°C';
                     document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
                     document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
                     document.getElementById('ip').textContent = 'ip: ' + data.ip;
@@ -208,10 +226,8 @@
 
                     const tempHumoBoton = document.getElementById('tempHumo');
 
-
                     console.log("temphumo");
                     console.log(TempHumo);
-
 
                     if(TempHumo === "ON"){
                         tempHumoBoton.style.background = '#3b814e';
@@ -219,13 +235,10 @@
                     }else if(TempHumo === "OFF"){
                         tempHumoBoton.style.background = '#be7245';
                     }
-
-
                     console.log("disparos");
                     console.log(disparos);
 
                     if(disparos > 0){
-
                         container.style.background = '#aa3232';
                     }
                        if ((alarmaActiva && disparos > 0) || Temperatura > 40 || Gas > 400) {
@@ -233,11 +246,7 @@
                         container.style.background = '#eeeeee;';
                     } else {
                         container.classList.remove('blink');
-                        
                     }
-
-
-                    
                 })
                 .catch(error => console.error('Error:', error));
         }
