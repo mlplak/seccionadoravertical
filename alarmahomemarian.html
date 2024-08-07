@@ -13,7 +13,7 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: #f4f4f9;
+            background: #f9f4f4;
             margin: 1;
             color: #222222;
         }
@@ -252,10 +252,9 @@
                         tempHumoBoton.style.background = '#3b814e';
 
                     } else if (TempHumo === "OFF") {
-                        tempHumoBoton.style.background = '#be7245';
+                        tempHumoBoton.style.background = '#b62828';
+                        tempHumoBoton.classList.add('blink');
                     }
-                    console.log("disparos");
-                    console.log(disparos);
 
                     if (disparos > 0) {
                         container.style.background = '#aa3232';
