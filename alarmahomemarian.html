@@ -144,6 +144,7 @@
             <div class="panel-item" id="Humedad">Hum: --</div>
             <div class="panel-item" id="Gas">--</div>
             <div class="panel-item" id="Sensores">--</div>
+            <div class="panel-item" id="Controles">--</div>
             <div class="panel-item" id="Señal_Antena">--</div>
             <div class="panel-item" id="ip">--</div>
             <div class="panel-item" id="Wifired">--</div>
@@ -262,8 +263,8 @@
                     document.getElementById('GasHumo').textContent = 'Gas Humo : ' + data.GasHUmo;
                     document.getElementById('GasHumo').textContent = 'Alarma Temperatura y gases : ' + data.TempHumoActivadaEstado;
                     document.getElementById('Sensores').textContent = 'N° de sensores Vinculados : ' + data.SensorActual;
-                    document.getElementById('Sensores').textContent = 'N° de controles Vinculados : ' + data.ControlActual;
-                    document.getElementById('Sensores').textContent = 'Estado de sirena : ' + data.SirenaEstado;
+                    document.getElementById('Controles').textContent = 'N° de controles Vinculados : ' + data.ControlActual;
+                    document.getElementById('SirenaEstado').textContent = 'Estado de sirena : ' + data.SirenaEstado;
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
