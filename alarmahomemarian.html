@@ -106,6 +106,24 @@
             margin: 2px 0;
             font-size: 1.2em;
         }
+
+        .panelconfig {
+
+            margin-top: 6px;
+            margin-bottom: 6px;
+            background: #969696;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panelconfig-item {
+            margin: 2px 0;
+            font-size: 1.2em;
+        }
+
     </style>
 </head>
 
@@ -119,6 +137,7 @@
 
         <div class="panel" id="panel">
             <div class="panel-item" id="Alarma"> --</div>
+            <div class="panel-item" id="SirenaEstado">--</div>
             <div class="panel-item" id="GasHumo">--</div>
             <div class="panel-item" id="sensorStatus">Estado de los Sensores: Desconocido</div>
             <div class="panel-item" id="temperature">Temperatura: --°C</div>
@@ -132,19 +151,34 @@
             <div class="panel-item" id="Sim">--</div>
             <div class="panel-item" id="Intrucion">--</div>
             <div class="panel-item" id="disparos">--</div>
+            
+
 
             <button id="tempHumo" class="button"
                 onclick="promptPassword('/TempHumo'),ocultarOpcionesFunc()">Temperatura/humo ON/OFF</button>
-            <button id="verOpciones" class="button" onclick="verOpcionesFunc()">Opciones/Config</button>
+            <button id="verOpciones" class="button" onclick="Mostarpanelconfig()">Avanzado</button>
 
         </div>
-        <div class="config" id="Config">
-            <button class="button" onclick="promptPassword('/reset'),ocultarOpcionesFunc()">Reset</button>
-            <button class="button" onclick="promptPassword('/Guardarsensor'),ocultarOpcionesFunc()">Grabar
-                Sensor</button>
-            <button class="button" onclick="promptPassword('/Borrarsensores'),ocultarOpcionesFunc()">Borrar
-                Sensores</button>
-        </div>
+
+         <div class="panelconfig" id="panelconfig">
+
+                <button id="tempHumo" class="button"
+                onclick="promptPassword('/TempHumo'),ocultarOpcionesFunc()">Temperatura/humo ON/OFF</button>
+            <button id="verOpciones" class="button" onclick="Mostarpanelconfig()">Volver a menu principal</button>
+
+            <div class="config" id="Config">
+                <div><button class="button" onclick="promptPassword('/reset'),ocultarOpcionesFunc()">Reset</button></div>
+                <div><button class="button" onclick="promptPassword('/Guardarsensor'),ocultarOpcionesFunc()">Grabar Nuevo Sensor</button></div>
+                <div><button class="button" onclick="promptPassword('/RenombrearSensores'),ocultarOpcionesFunc()">Renombrar Sensores</button></div>
+                <div><button class="button" onclick="promptPassword('/Borrarsensores'),ocultarOpcionesFunc()">Borrar Sensores</button></div>
+                <div><button class="button" onclick="promptPassword('/Grabarcontrol'),ocultarOpcionesFunc()">Grabar control</button></div>
+                <div><button class="button" onclick="promptPassword('/Borrarcontroles'),ocultarOpcionesFunc()">Borrar controles</button></div>
+
+                <div><button class="button" onclick="promptPassword('/SirenaONOFF'),ocultarOpcionesFunc()">Activar/Desactivar Sirena</button></div>
+                <div><button class="button" onclick="promptPassword('/NumerosDeTelefono'),ocultarOpcionesFunc()">Registar Modificar Numeros de Tel</button></div>
+                <div><button class="button" onclick="promptPassword('/Configuracdiondehorarios'),ocultarOpcionesFunc()">Configurar horarios</button></div>
+            </div>
+        </div>   
     </div>
 
     <script>
@@ -157,6 +191,7 @@
         var Gas = 0;
         var Temperatura = 0;
         var TempHumo = "OFF";
+        var configestado = false
 
         function promptPassword(action) {
             let password = prompt("Introduce la contraseña:");
@@ -166,7 +201,6 @@
                 alert("Contraseña incorrecta");
             }
         }
-
 
         function sendCommand(command) {
             fetch(command)
@@ -178,21 +212,31 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        function verOpcionesFunc() {
+         function Mostarpanelconfig() {
+
+            if(configestado === false) {
             // const config = document.getElementById('config');
+            const panelconfig = document.getElementsByClassName('panelconfig')[0];
+            panelconfig.style.display = 'flex';
+            const panel = document.getElementsByClassName('panel')[0];
+            panel.style.display = 'none';
             const config = document.getElementsByClassName('config')[0];
             config.style.display = 'block';
+            configestado = true;
 
-        }
-
-        function ocultarOpcionesFunc() {
-            // const config = document.getElementById('config');
+            } 
+            else if (configestado === true){
+                const panelconfig = document.getElementsByClassName('panelconfig')[0];
+            panelconfig.style.display = 'none';
+            const panel = document.getElementsByClassName('panel')[0];
+            panel.style.display = 'flex';
             const config = document.getElementsByClassName('config')[0];
             config.style.display = 'none';
+            configestado = false;
+            }
         }
 
         function updatePanel() {
-
 
             fetch('/status')
                 .then(response => response.json())
@@ -204,6 +248,7 @@
                     } else {
                         document.getElementById('temperature').textContent = 'Temperatura: N/A';
                     }
+
                     document.getElementById('Humedad').textContent = 'Humedad ' + data.Humedad + '%';
                     document.getElementById('Alarma').textContent = 'Alarma: ' + data.AlarmaEstado;
                     document.getElementById('ip').textContent = 'ip: ' + data.ip;
@@ -217,14 +262,14 @@
                     document.getElementById('GasHumo').textContent = 'Gas Humo : ' + data.GasHUmo;
                     document.getElementById('GasHumo').textContent = 'Alarma Temperatura y gases : ' + data.TempHumoActivadaEstado;
                     document.getElementById('Sensores').textContent = 'N° de sensores Vinculados : ' + data.SensorActual;
-
+                    document.getElementById('Sensores').textContent = 'N° de controles Vinculados : ' + data.ControlActual;
+                    document.getElementById('Sensores').textContent = 'Estado de sirena : ' + data.SirenaEstado;
 
                     estado = data.AlarmaEstado.trim();
                     disparos = data.disparos;
                     Gas = data.Gas;
                     Temperatura = data.Temperatura;
                     TempHumo = data.TempHumoActivadaEstado.trim();
-
 
                     if (estado === estadoON) {
                         alarmaActiva = true;
