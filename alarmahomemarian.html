@@ -207,7 +207,7 @@
             fetch(command)
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
+                   // console.log(data);
                     updatePanel();
                 })
                 .catch(error => console.error('Error:', error));
@@ -282,17 +282,17 @@
                     if (alarmaActiva) {
                         container.style.borderColor = '#30b44d';
                         container.style.background = '#b1b1b1';
-                        console.log("Acntivo colores de Atctiva");
+                       // console.log("Acntivo colores de Atctiva");
                     } else if (!alarmaActiva) {
                         container.style.borderColor = '#e03a3a';
                         container.style.background = '#b1b1b1';
-                        console.log("Acntivo colores de descativados");
+                        //console.log("Acntivo colores de descativados");
                     }
 
                     const tempHumoBoton = document.getElementById('tempHumo');
 
-                    console.log("temphumo");
-                    console.log(TempHumo);
+                    //console.log("temphumo");
+                    //console.log(TempHumo);
 
                     if (TempHumo === "ON") {
                         tempHumoBoton.style.background = '#3b814e';
