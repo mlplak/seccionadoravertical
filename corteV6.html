@@ -814,7 +814,7 @@
             actualizarListaProximosCortes();
 
 
-            fetch('http://192.168.0.212/corte', {
+            fetch('http://192.168.0.212:8002/corte', {
 
                 method: 'POST',
                 headers: {
@@ -899,7 +899,7 @@
             areaPlacaMd.style.height = (Placa_Alto / Coeficiente_reduccion) + 'px'
             areaPlacaMd.style.width = (Placa_Ancho / Coeficiente_reduccion) + 'px'
 
-            const response = await fetch('http://192.168.0.212/panelmedicion').catch(console.error)
+            const response = await fetch('http://192.168.0.212:8002/panelmedicion').catch(console.error)
             const body = await response.json()
 
             console.log(body.Medicion)
@@ -1175,7 +1175,7 @@
             const campo = event.target.configId.value;
             const valor = event.target[1].value;
 
-            fetch('http://192.168.0.212/config', {
+            fetch('http://192.168.0.212:8002/config', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -1279,7 +1279,7 @@
             //PanelDeEstado.style.display = 'flow-root';
 
             // NOshowOptions(['horizontalOptions', 'content', 'formModoVelocidad', 'modalConfig', 'rebajeHorizontalOpcion', 'PanelDeMedicion', 'graficoMedida', 'formModoProlijo']);
-            const response = await fetch('http://192.168.0.212/panel').catch(console.error)
+            const response = await fetch('http://192.168.0.212:8002/panel').catch(console.error)
             const body = await response.json()
 
             console.log(body.modoProlijo)
@@ -1458,7 +1458,7 @@
         async function getConfig() {
 
             const configuracionASeleccionar = select.value
-            const URL = 'http://192.168.0.212/config?id=' + configuracionASeleccionar
+            const URL = 'http://192.168.0.212:8002/config?id=' + configuracionASeleccionar
             const response = await fetch(URL)
             const body = await response.json()
             console.log(body)
