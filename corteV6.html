@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -515,7 +516,7 @@
         <form id="modalConfig-form">
             <select name="configId" id="configId">
             </select>
-            <input name="valor" type="number" step='0.01' required id="modalConfigInput">
+            <input name="valor" type="number" step='0.0001' required id="modalConfigInput">
             <button>Actualizar</button>
         </form>
     </div>
@@ -556,7 +557,7 @@
         //decalracion de variables y constantes 
         // tiempos de ejecucion y reitentos
         var contador = 0;
-        var ms = 5000;
+        var ms = 1000;
         var contador_consulta = 0;
         //--------------------------------------------------------
         // Array y objetos de listas de guardado y ejecucion
@@ -572,7 +573,7 @@
         let tiempo_de_espera = 0;
         let En_espera = false;
         let pausar_lista = false;
-        let Tiempo_Actualizacion_lista = 5000;
+        let Tiempo_Actualizacion_lista = 1000;
         let accion_Rebaje;
         //------------------------------------------------------------
 
@@ -837,9 +838,9 @@
                 .catch(async (error) => {
                     if (contador < 4) {
                         await wait(ms);
-                        console.log("reenviando el fetch ")
-                        console.log("valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta")
-                        console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
+                        //console.log("reenviando el fetch ")
+                        //console.log("valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion, fetch_consulta")
+                        //console.log(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj)
                         fetchcorte(valor, accion, eepromDir, margen, ancho, profundidad, posicion_de_guardado_Obj, posicion_de_ejecucion_OBJ, fetch_consulta_Obj);
                         contador++;
                     } else {
@@ -1463,7 +1464,7 @@
             console.log(body)
             console.log(body.Valor_leido)
             const Input = document.getElementById('modalConfigInput')
-            Input.value = body.Valor_leido.toFixed(2)
+            Input.value = body.Valor_leido.toFixed(4)
         }
 
         select.onchange = getConfig
@@ -1626,3 +1627,4 @@
 </body>
 
 </html>
+
