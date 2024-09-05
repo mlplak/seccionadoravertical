@@ -369,7 +369,7 @@
 </head>
 <body>
     <div id='banner'>
-        <h3>Seccionadora Vertical V22.21 On-LINE!</h3>
+        <h3>Seccionadora Vertical V22.25 On-LINE!</h3>
     </div>
     <div id='menu'>
         <button onclick='showForm(101),ActivoModo_V()'>Corte Vertical</button>
@@ -1234,8 +1234,6 @@ const response = await fetch('http://192.168.0.212:8002/panel').catch(console.er
             ModoIncisor.innerText = body.Incisor
             const Error = document.getElementById('panelDeEstado-Error')
             Error.innerText = body.Error
-
-            Incisor
         }
 
         function showHorizontalRebajeOptions(option) {
